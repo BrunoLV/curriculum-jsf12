@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- © Copyright 2009-2012 Piotr Soróbka <psorobka@gmail.com>. Licensed under
+the Apache License, Version 2.0 (the "License"); you may not use this file
+except in compliance with the License. You may obtain a copy of the License
+at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable
+law or agreed to in writing, software distributed under the License is distributed
+on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+express or implied. See the License for the specific language governing permissions
+and limitations under the License. -->
+<faces-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2"
+              xmlns="http://java.sun.com/xml/ns/javaee"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd">
+
+    <managed-bean>
+        <managed-bean-name>cargoMB</managed-bean-name>
+        <managed-bean-class>com.valhala.curriculum.web.mb.crud.CargoMB</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>sessaoMB</property-name>
+            <value>#{controleSessaoMB}</value>
+        </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>empresaMB</managed-bean-name>
+        <managed-bean-class>com.valhala.curriculum.web.mb.crud.EmpresaMB</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>usuarioMB</managed-bean-name>
+        <managed-bean-class>com.valhala.curriculum.web.mb.crud.UsuarioMB</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>curriculoMB</managed-bean-name>
+        <managed-bean-class>com.valhala.curriculum.web.mb.crud.CurriculoMB</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>sessaoMB</property-name>
+            <value>#{controleSessaoMB}</value>
+        </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>controleSessaoMB</managed-bean-name>
+        <managed-bean-class>com.valhala.curriculum.web.mb.controle.ControleSessaoMB</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+
+    <navigation-rule>
+        <from-view-id>/index.xhtml</from-view-id>
+
+        <navigation-case>
+            <from-outcome>cargos</from-outcome>
+            <to-view-id>/pages/protected/user/listagem-cargos.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>empresas</from-outcome>
+            <to-view-id>/pages/protected/user/listagem-empresa.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>usuarios</from-outcome>
+            <to-view-id>/pages/protected/user/listagem-usuario.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>curriculos</from-outcome>
+            <to-view-id>/pages/protected/user/listagem-curriculo.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/pages/protected/admin/cadastro-cargos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>listar</from-outcome>
+            <to-view-id>/pages/protected/user/listagem-cargos.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/pages/protected/admin/cadastro-empresa.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>listar</from-outcome>
+            <to-view-id>/pages/protected/user/listagem-empresa.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/pages/protected/admin/cadastro-usuario.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>listar</from-outcome>
+            <to-view-id>/pages/protected/user/listagem-usuario.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/pages/protected/admin/cadastro-curriculo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>listar</from-outcome>
+            <to-view-id>/pages/protected/user/listagem-curriculo.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/pages/protected/user/listagem-cargos.xhtml</from-view-id>
+
+        <navigation-case>
+            <from-outcome>novo</from-outcome>
+            <to-view-id>/pages/protected/admin/cadastro-cargos.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>editar</from-outcome>
+            <to-view-id>/pages/protected/admin/cadastro-cargos.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/pages/protected/user/listagem-empresa.xhtml</from-view-id>
+
+        <navigation-case>
+            <from-outcome>novo</from-outcome>
+            <to-view-id>/pages/protected/admin/cadastro-empresa.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>editar</from-outcome>
+            <to-view-id>/pages/protected/admin/cadastro-empresa.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/pages/protected/user/listagem-usuario.xhtml</from-view-id>
+
+        <navigation-case>
+            <from-outcome>novo</from-outcome>
+            <to-view-id>/pages/protected/admin/cadastro-usuario.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>editar</from-outcome>
+            <to-view-id>/pages/protected/admin/cadastro-usuario.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/pages/protected/user/listagem-curriculo.xhtml</from-view-id>
+
+        <navigation-case>
+            <from-outcome>novo</from-outcome>
+            <to-view-id>/pages/protected/admin/cadastro-curriculo.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>editar</from-outcome>
+            <to-view-id>/pages/protected/admin/cadastro-curriculo.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <application>
+        <view-handler>org.ajax4jsf.application.AjaxViewHandler</view-handler>
+        <!--<view-handler>com.sun.facelets.FaceletViewHandler</view-handler>-->
+        <locale-config>
+            <default-locale>pt_BR</default-locale>
+            <supported-locale>pt_BR</supported-locale>
+        </locale-config>
+        <resource-bundle>
+            <base-name>recursos.messages</base-name>
+            <var>msgs</var>
+        </resource-bundle>
+    </application>
+
+</faces-config>

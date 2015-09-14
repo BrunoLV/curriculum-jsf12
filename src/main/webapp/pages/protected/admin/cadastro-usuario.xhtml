@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j">
+
+<ui:composition template="/WEB-INF/template/template.xhtml">
+    <ui:define name="content">
+
+        <h:form id="cadastroUsuario">
+            <rich:panel>
+                <rich:messages id="globalMessages" globalOnly="true" showSummary="false" showDetail="true"/>
+                <f:facet name="header">
+                    <h:outputText value="#{msgs['text.panel.cadusuario']}"/>
+                </f:facet>
+                <h:inputHidden id="idInputHidden" value="#{usuarioMB.usuarioDTO.id}"/>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{msgs['label.form.nome']}" for="nomeInputText"/>
+                    <h:inputText id="nomeInputText" value="#{usuarioMB.usuarioDTO.nome}"/>
+                    <h:outputLabel value="#{msgs['label.form.email']}" for="emailInputText"/>
+                    <h:inputText id="emailInputText" value="#{usuarioMB.usuarioDTO.email}"/>
+                    <f:facet name="footer">
+                        <a4j:commandButton id="salvarCommandButton" value="#{msgs['label.button.salvar']}"
+                                           action="#{usuarioMB.salvar}"/>
+                    </f:facet>
+                </h:panelGrid>
+            </rich:panel>
+            <br/>
+            <h:commandButton id="listagemCommandButton" value="#{msgs['label.button.listar']}" action="listar"/>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+
+</html>

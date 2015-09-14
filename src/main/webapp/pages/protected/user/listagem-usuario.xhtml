@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j">
+
+<ui:composition template="/WEB-INF/template/template.xhtml">
+    <ui:define name="content">
+
+        <h:form id="listagemUsuario">
+            <rich:panel>
+                <f:facet name="header">
+                    <h:outputText value="#{msgs['text.panel.listusuario']}"/>
+                </f:facet>
+
+                <rich:messages id="globalMessages" globalOnly="true" showSummary="false" showDetail="true"/>
+
+                <br/>
+                <h:commandButton id="novoCommandButton" value="#{msgs['label.button.novo']}"
+                                 rendered="#{usuarioMB.userInRoleAdmin}" action="novo"/>
+                <br/>
+                <br/>
+
+                <rich:dataTable id="usuarioDataTable" value="#{usuarioMB.usuarioDTOs}" var="usuario">
+                    <rich:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['label.column.id']}"/>
+                        </f:facet>
+                        <h:outputText value="#{usuario.id}"/>
+                    </rich:column>
+                    <rich:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['label.column.nome']}"/>
+                        </f:facet>
+                        <h:outputText value="#{usuario.nome}"/>
+                    </rich:column>
+                    <rich:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['label.column.email']}"/>
+                        </f:facet>
+                        <h:outputText value="#{usuario.email}"/>
+                    </rich:column>
+                    <rich:column rendered="#{usuarioMB.userInRoleAdmin}">
+                        <h:commandLink value="#{msgs['label.button.editar']}" action="editar"
+                                       rendered="#{usuario.email != usuarioMB.principalName}">
+                            <f:actionListener type="com.valhala.curriculum.web.actionlisteners.EdicaoActionListener"/>
+                            <f:param id="idEdicao" name="idEdicao" value="#{usuario.id}"/>
+                        </h:commandLink>
+                    </rich:column>
+                    <rich:column rendered="#{usuarioMB.userInRoleAdmin}">
+                        <a4j:commandLink value="#{msgs['label.button.deletar']}" action="#{usuarioMB.deletar}"
+                                         rendered="#{usuario.email != usuarioMB.principalName}"
+                                         reRender="usuarioDataTable">
+                            <f:setPropertyActionListener value="#{usuario.id}" target="#{usuarioMB.usuarioDTO.id}"/>
+                        </a4j:commandLink>
+                    </rich:column>
+                </rich:dataTable>
+            </rich:panel>
+            <br/>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+
+</html>

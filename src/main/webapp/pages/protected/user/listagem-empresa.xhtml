@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j">
+
+<ui:composition template="/WEB-INF/template/template.xhtml">
+    <ui:define name="content">
+
+        <h:form id="listagemEmpresa">
+            <rich:panel>
+                <f:facet name="header">
+                    <h:outputText value="#{msgs['text.panel.listempresa']}"/>
+                </f:facet>
+
+                <rich:messages id="globalMessages" globalOnly="true" showSummary="false" showDetail="true"/>
+
+                <br/>
+                <h:commandButton id="novoCommandButton" value="#{msgs['label.button.novo']}"
+                                 rendered="#{usuarioMB.userInRoleAdmin}" action="novo"/>
+                <br/>
+                <br/>
+
+                <rich:dataTable id="empresaDataTable" value="#{empresaMB.empresaDTOs}" var="empresa">
+                    <rich:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['label.column.id']}"/>
+                        </f:facet>
+                        <h:outputText value="#{empresa.id}"/>
+                    </rich:column>
+                    <rich:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{msgs['label.column.nome']}"/>
+                        </f:facet>
+                        <h:outputText value="#{empresa.nome}"/>
+                    </rich:column>
+                    <rich:column rendered="#{usuarioMB.userInRoleAdmin}">
+                        <h:commandLink value="#{msgs['label.button.editar']}" action="editar">
+                            <f:actionListener type="com.valhala.curriculum.web.actionlisteners.EdicaoActionListener"/>
+                            <f:param id="idEdicao" name="idEdicao" value="#{empresa.id}"/>
+                        </h:commandLink>
+                    </rich:column>
+                    <rich:column rendered="#{usuarioMB.userInRoleAdmin}">
+                        <a4j:commandLink value="#{msgs['label.button.deletar']}" action="#{empresaMB.deletar}"
+                                         reRender="empresaDataTable">
+                            <f:setPropertyActionListener value="#{empresa.id}" target="#{empresaMB.empresaDTO.id}"/>
+                        </a4j:commandLink>
+                    </rich:column>
+                </rich:dataTable>
+            </rich:panel>
+            <br/>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+
+</html>

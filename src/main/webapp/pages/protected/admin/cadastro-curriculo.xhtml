@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:a4j="http://richfaces.org/a4j">
+
+<ui:composition template="/WEB-INF/template/template.xhtml">
+    <ui:define name="content">
+
+        <h:form id="cadastroCurriculo">
+
+            <a4j:keepAlive beanName="curriculoMB"/>
+            <h:inputHidden value="#{curriculoMB.curriculoDTO.id}" />
+            <rich:panel>
+                <rich:messages id="globalMessages" globalOnly="true" showSummary="false" showDetail="true"/>
+                <f:facet name="header">
+                    <h:outputText value="#{msgs['text.panel.cadcurriculo']}"/>
+                </f:facet>
+
+                <h:commandButton value="#{msgs['label.button.salvar']}" action="#{curriculoMB.salvar}"/>
+                <br/><br/>
+
+                <rich:tabPanel switchType="ajax">
+                    <rich:tab label="#{msgs['label.tab.experiencia']}">
+                            <rich:panel>
+                                <f:facet name="header">
+                                    <h:outputText value="#{msgs['text.panel.experiencia']}"/>
+                                </f:facet>
+                                <h:panelGrid id="panelGridDadosExperiencia" columns="2">
+                                    <h:outputLabel value="#{msgs['label.form.empresa']}" for="empresaSelectOneMenu"/>
+                                    <h:selectOneMenu id="empresaSelectOneMenu"
+                                                     value="#{curriculoMB.experienciaProfissionalDTO.empresaDTO.id}">
+                                        <f:selectItem itemDisabled="true" itemLabel="Selecione..."/>
+                                        <f:selectItems value="#{curriculoMB.empresas}"/>
+                                    </h:selectOneMenu>
+                                    <h:outputLabel value="#{msgs['label.form.cargo']}" for="cargoSelectOneMenu"/>
+                                    <h:selectOneMenu id="cargoSelectOneMenu"
+                                                     value="#{curriculoMB.experienciaProfissionalDTO.cargoDTO.id}">
+                                        <f:selectItem itemDisabled="true" itemLabel="Selecione..."/>
+                                        <f:selectItems value="#{curriculoMB.cargos}"/>
+                                    </h:selectOneMenu>
+                                    <h:outputLabel value="#{msgs['label.form.dataInicio']}" for="dataInicioCalendar"/>
+                                    <rich:calendar id="dataInicioCalendar" datePattern="dd/MM/yyyy"
+                                                   value="#{curriculoMB.experienciaProfissionalDTO.dataInicio}"/>
+                                    <h:outputLabel value="#{msgs['label.form.dataFinal']}" for="dataFinalCalendar"/>
+                                    <rich:calendar id="dataFinalCalendar" datePattern="dd/MM/yyyy"
+                                                   value="#{curriculoMB.experienciaProfissionalDTO.dataSaida}"/>
+                                    <f:facet name="footer">
+                                        <a4j:commandButton value="Incluir Experiencia"
+                                                           action="#{curriculoMB.incluirExperiencia}"
+                                                           reRender="panelGridDadosExperiencia, experienciaProfissionalDataTable"/>
+                                    </f:facet>
+                                </h:panelGrid>
+                                <br/>
+                                <rich:separator/>
+                                <br/>
+                                <rich:dataTable id="experienciaProfissionalDataTable"
+                                                value="#{curriculoMB.curriculoDTO.experienciaProfissionalDTOsIncluir}"
+                                                var="experiencia">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{msgs['label.tab.experiencia']}"/>
+                                    </f:facet>
+                                    <rich:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msgs['label.column.id']}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{experiencia.id}"/>
+                                    </rich:column>
+                                    <rich:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msgs['label.column.empresa']}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{experiencia.empresaDTO.nome}"/>
+                                    </rich:column>
+                                    <rich:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msgs['label.column.cargo']}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{experiencia.cargoDTO.nome}"/>
+                                    </rich:column>
+                                    <rich:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msgs['label.column.dataInicio']}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{experiencia.dataInicio}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </h:outputText>
+                                    </rich:column>
+                                    <rich:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{msgs['label.column.dataSaida']}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{experiencia.dataSaida}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </h:outputText>
+                                    </rich:column>
+                                    <rich:column>
+                                        <a4j:commandButton value="#{msgs['label.button.remover']}" action="#{curriculoMB.removerExperiencia}" reRender="experienciaProfissionalDataTable">
+                                            <f:setPropertyActionListener value="#{experiencia}" target="#{curriculoMB.experienciaProfissionalDTO}" />
+                                                </a4j:commandButton>
+                                    </rich:column>
+                                </rich:dataTable>
+                            </rich:panel>
+                    </rich:tab>
+                </rich:tabPanel>
+
+            </rich:panel>
+            <br/>
+            <br/>
+            <h:commandButton id="listagemCommandButton" value="#{msgs['label.button.listar']}" action="listar"/>
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+
+</html>

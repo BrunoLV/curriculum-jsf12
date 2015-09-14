@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  Template page.
+  Developer: Bruno Luiz Viana
+  Date: 09/07/15
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<head>
+    <title><h:outputText value="#{msgs['text.title']}"/></title>
+    <link rel="stylesheet" href="${facesContext.externalContext.requestContextPath}/css/style.css" type="text/css"/>
+</head>
+
+<body>
+<div class="wrapper">
+    <div id="header" class="header">
+        <ui:insert name="header">
+            <ui:include src="/WEB-INF/template/header.xhtml"/>
+        </ui:insert>
+    </div>
+
+    <div id="content" class="content">
+        <ui:insert name="content">
+        </ui:insert>
+    </div>
+
+    <div id="footer" class="footer">
+        <ui:insert name="footer">
+            <ui:include src="/WEB-INF/template/footer.xhtml"/>
+        </ui:insert>
+    </div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/WEB-INF/template/template.xhtml">
+    <ui:define name="content">
+        <form method="post" action="j_security_check">
+            <rich:panel>
+                <f:facet name="header">
+                    <h:outputText value="#{msgs['text.panel.login']}"/>
+                </f:facet>
+                <h:panelGrid columns="2">
+                    <h:outputLabel for="j_username" value="#{msgs['label.form.email']}"/>
+                    <input type="text" id="j_username" name="j_username"/>
+                    <h:outputLabel for="j_password" value="#{msgs['label.form.password']}"/>
+                    <input type="password" id="j_password" name="j_password"/>
+                    <f:facet name="footer">
+                        <input type="submit" name="submit" value="#{msgs['label.button.login']}"/>
+                    </f:facet>
+                </h:panelGrid>
+            </rich:panel>
+        </form>
+    </ui:define>
+</ui:composition>
+</html>

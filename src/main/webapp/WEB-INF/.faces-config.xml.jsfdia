@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#index.xhtml" PATH="/index.xhtml"
+  SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#index.xhtml:0" NAME="item"
+   PATH="/index.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="cargos::#pages#public#listagem-cargos.xhtml"
+    NAME="output" PATH="/pages/public/listagem-cargos.xhtml"
+    SHAPE="-1,16" TARGET="rules:#pages#public#listagem-cargos.xhtml"
+    TITLE="cargos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="empresas::#pages#public#listagem-empresa.xhtml" NAME="output1"
+    PATH="/pages/public/listagem-empresa.xhtml" SHAPE="-1,24"
+    TARGET="rules:#pages#public#listagem-empresa.xhtml" TITLE="empresas" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="usuarios::#pages#public#listagem-usuario.xhtml" NAME="output2"
+    PATH="/pages/public/listagem-usuario.xhtml" SHAPE="-1,32"
+    TARGET="rules:#pages#public#listagem-usuario.xhtml" TITLE="usuarios" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#admin#cadastro-cargos.xhtml"
+  PATH="/pages/admin/cadastro-cargos.xhtml" SHAPE="496,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#pages#admin#cadastro-cargos.xhtml:0"
+   NAME="item" PATH="/pages/admin/cadastro-cargos.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="listar::#pages#public#listagem-cargos.xhtml"
+    NAME="output" PATH="/pages/public/listagem-cargos.xhtml"
+    SHAPE="-1,16" TARGET="rules:#pages#public#listagem-cargos.xhtml"
+    TITLE="listar" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#admin#cadastro-empresa.xhtml"
+  PATH="/pages/admin/cadastro-empresa.xhtml" SHAPE="496,193,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#pages#admin#cadastro-empresa.xhtml:0"
+   NAME="item" PATH="/pages/admin/cadastro-empresa.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="listar::#pages#public#listagem-empresa.xhtml" NAME="output"
+    PATH="/pages/public/listagem-empresa.xhtml" SHAPE="-1,24"
+    TARGET="rules:#pages#public#listagem-empresa.xhtml" TITLE="listar" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#admin#cadastro-usuario.xhtml"
+  PATH="/pages/admin/cadastro-usuario.xhtml" SHAPE="496,337,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#pages#admin#cadastro-usuario.xhtml:0"
+   NAME="item" PATH="/pages/admin/cadastro-usuario.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="listar::#pages#public#listagem-usuario.xhtml" NAME="output"
+    PATH="/pages/public/listagem-usuario.xhtml" SHAPE="-1,32"
+    TARGET="rules:#pages#public#listagem-usuario.xhtml" TITLE="listar" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#public#listagem-cargos.xhtml"
+  PATH="/pages/public/listagem-cargos.xhtml" SHAPE="272,33,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#pages#public#listagem-cargos.xhtml:0"
+   NAME="item" PATH="/pages/public/listagem-cargos.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="novo::#pages#admin#cadastro-cargos.xhtml"
+    NAME="output" PATH="/pages/admin/cadastro-cargos.xhtml"
+    SHAPE="-1,16" TARGET="rules:#pages#admin#cadastro-cargos.xhtml"
+    TITLE="novo" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="editar::#pages#admin#cadastro-cargos.xhtml"
+    NAME="output1" PATH="/pages/admin/cadastro-cargos.xhtml"
+    SHAPE="-1,16" TARGET="rules:#pages#admin#cadastro-cargos.xhtml"
+    TITLE="editar" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#public#listagem-empresa.xhtml"
+  PATH="/pages/public/listagem-empresa.xhtml" SHAPE="272,209,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#pages#public#listagem-empresa.xhtml:0"
+   NAME="item" PATH="/pages/public/listagem-empresa.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="novo::#pages#admin#cadastro-empresa.xhtml"
+    NAME="output" PATH="/pages/admin/cadastro-empresa.xhtml"
+    SHAPE="-1,16" TARGET="rules:#pages#admin#cadastro-empresa.xhtml"
+    TITLE="novo" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="editar::#pages#admin#cadastro-empresa.xhtml"
+    NAME="output1" PATH="/pages/admin/cadastro-empresa.xhtml"
+    SHAPE="-1,16" TARGET="rules:#pages#admin#cadastro-empresa.xhtml"
+    TITLE="editar" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#public#listagem-usuario.xhtml"
+  PATH="/pages/public/listagem-usuario.xhtml" SHAPE="272,353,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#pages#public#listagem-usuario.xhtml:0"
+   NAME="item" PATH="/pages/public/listagem-usuario.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="novo::#pages#admin#cadastro-usuario.xhtml"
+    NAME="output" PATH="/pages/admin/cadastro-usuario.xhtml"
+    SHAPE="-1,16" TARGET="rules:#pages#admin#cadastro-usuario.xhtml"
+    TITLE="novo" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="editar::#pages#admin#cadastro-usuario.xhtml"
+    NAME="output1" PATH="/pages/admin/cadastro-usuario.xhtml"
+    SHAPE="-1,16" TARGET="rules:#pages#admin#cadastro-usuario.xhtml"
+    TITLE="editar" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+</PROCESS>
