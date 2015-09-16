@@ -1,12 +1,12 @@
 package com.valhala.curriculum.web.mb.controle;
 
 import com.valhala.curriculum.model.Roles;
-import com.valhala.curriculum.web.mb.BaseMB;
+import com.valhala.curriculum.web.mb.BaseMb;
 
 /**
  * Created by bruno on 05/09/15.
  */
-public class ControleSessaoMB extends BaseMB {
+public class ControleSessaoMb extends BaseMb {
 
     public boolean isUserInRoleUser() {
         return getRequest().isUserInRole(Roles.USER.getNome());

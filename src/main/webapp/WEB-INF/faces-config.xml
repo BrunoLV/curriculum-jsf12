@@ -13,39 +13,35 @@ and limitations under the License. -->
 
     <managed-bean>
         <managed-bean-name>cargoMB</managed-bean-name>
-        <managed-bean-class>com.valhala.curriculum.web.mb.crud.CargoMB</managed-bean-class>
+        <managed-bean-class>com.valhala.curriculum.web.mb.crud.CargoMb</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
-        <managed-property>
-            <property-name>sessaoMB</property-name>
-            <value>#{controleSessaoMB}</value>
-        </managed-property>
     </managed-bean>
 
     <managed-bean>
         <managed-bean-name>empresaMB</managed-bean-name>
-        <managed-bean-class>com.valhala.curriculum.web.mb.crud.EmpresaMB</managed-bean-class>
+        <managed-bean-class>com.valhala.curriculum.web.mb.crud.EmpresaMb</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 
     <managed-bean>
         <managed-bean-name>usuarioMB</managed-bean-name>
-        <managed-bean-class>com.valhala.curriculum.web.mb.crud.UsuarioMB</managed-bean-class>
+        <managed-bean-class>com.valhala.curriculum.web.mb.crud.UsuarioMb</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 
     <managed-bean>
         <managed-bean-name>curriculoMB</managed-bean-name>
-        <managed-bean-class>com.valhala.curriculum.web.mb.crud.CurriculoMB</managed-bean-class>
+        <managed-bean-class>com.valhala.curriculum.web.mb.crud.CurriculoMb</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
         <managed-property>
-            <property-name>sessaoMB</property-name>
+            <property-name>controleSessaoMb</property-name>
             <value>#{controleSessaoMB}</value>
         </managed-property>
     </managed-bean>
 
     <managed-bean>
         <managed-bean-name>controleSessaoMB</managed-bean-name>
-        <managed-bean-class>com.valhala.curriculum.web.mb.controle.ControleSessaoMB</managed-bean-class>
+        <managed-bean-class>com.valhala.curriculum.web.mb.controle.ControleSessaoMb</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
 

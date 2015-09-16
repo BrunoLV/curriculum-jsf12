@@ -22,15 +22,15 @@ public class Curriculo extends BaseEntity implements Serializable {
     private Usuario usuario;
 
     @OneToMany(mappedBy = "curriculo", cascade = CascadeType.ALL)
-    private List<ExperienciaProfissional> experienciasProfissionais = new ArrayList<ExperienciaProfissional>();
+    private List<ExperienciaProfissional> listaExperienciaProfissional = new ArrayList<ExperienciaProfissional>();
 
     public Curriculo() {
     }
 
-    public Curriculo(Integer id, Usuario usuario, List<ExperienciaProfissional> experienciasProfissionais) {
+    public Curriculo(Integer id, Usuario usuario, List<ExperienciaProfissional> listaExperienciaProfissional) {
         this.id = id;
         this.usuario = usuario;
-        this.experienciasProfissionais = experienciasProfissionais;
+        this.listaExperienciaProfissional = listaExperienciaProfissional;
     }
 
     public Usuario getUsuario() {
@@ -41,21 +41,21 @@ public class Curriculo extends BaseEntity implements Serializable {
         this.usuario = usuario;
     }
 
-    public List<ExperienciaProfissional> getExperienciasProfissionais() {
-        return experienciasProfissionais;
+    public List<ExperienciaProfissional> getListaExperienciaProfissional() {
+        return listaExperienciaProfissional;
     }
 
-    public void setExperienciasProfissionais(List<ExperienciaProfissional> experienciasProfissionais) {
-        this.experienciasProfissionais = experienciasProfissionais;
+    public void setListaExperienciaProfissional(List<ExperienciaProfissional> experienciasProfissionais) {
+        this.listaExperienciaProfissional = experienciasProfissionais;
     }
 
     public void adicionarExperienciaProfissional(ExperienciaProfissional experienciaProfissional) {
-        getExperienciasProfissionais().add(experienciaProfissional);
+        getListaExperienciaProfissional().add(experienciaProfissional);
         experienciaProfissional.setCurriculo(this);
     }
 
     public void removerExperienciaProfissional(ExperienciaProfissional experienciaProfissional) {
-        getExperienciasProfissionais().remove(experienciaProfissional);
+        getListaExperienciaProfissional().remove(experienciaProfissional);
         experienciaProfissional.setCurriculo(null);
     }
 
@@ -83,7 +83,7 @@ public class Curriculo extends BaseEntity implements Serializable {
 
     @Override
     public String toString() {
-    return "Curriculo{" + "id=" + id + ", usuario=" + usuario + '}';
+        return "Curriculo{" + "id=" + id + ", usuario=" + usuario + '}';
     }
 
 }

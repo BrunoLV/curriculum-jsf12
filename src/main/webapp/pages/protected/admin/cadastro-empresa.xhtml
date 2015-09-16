@@ -21,10 +21,10 @@ and open the template in the editor.
                 <f:facet name="header">
                     <h:outputText value="#{msgs['text.panel.cadempresa']}"/>
                 </f:facet>
-                <h:inputHidden id="idInputHidden" value="#{empresaMB.empresaDTO.id}"/>
+                <h:inputHidden id="idInputHidden" value="#{empresaMB.empresa.id}"/>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="#{msgs['label.form.nome']}" for="nomeInputText"/>
-                    <h:inputText id="nomeInputText" value="#{empresaMB.empresaDTO.nome}"/>
+                    <h:inputText id="nomeInputText" value="#{empresaMB.empresa.nome}"/>
                     <f:facet name="footer">
                         <a4j:commandButton id="salvarCommandButton" value="#{msgs['label.button.salvar']}"
                                            action="#{empresaMB.salvar}"/>

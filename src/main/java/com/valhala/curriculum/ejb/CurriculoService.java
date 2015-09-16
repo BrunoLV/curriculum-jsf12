@@ -14,9 +14,13 @@ import java.util.List;
 public interface CurriculoService extends BaseService<Curriculo> {
 
     Curriculo buscarPorIdComRelacionamento(Serializable id);
+
     void salvar(Curriculo curriculo, List<ExperienciaProfissional> experienciasProfissionaisInclusao);
+
     void editar(Curriculo curriculo, List<ExperienciaProfissional> experienciasProfissionaisInclusao, List<ExperienciaProfissional> experienciasProfissionaisRemocao);
+
     void adicionarExperienciasAoCurriculo(Curriculo curriculo, List<ExperienciaProfissional> experienciasProfissionais);
+
     void removerExperienciasDoCurriculo(Curriculo curriculo, List<ExperienciaProfissional> experienciasProfissionais);
 
 }

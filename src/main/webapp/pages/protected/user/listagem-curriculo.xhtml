@@ -28,7 +28,7 @@ and open the template in the editor.
                 <br/>
                 <br/>
 
-                <rich:dataTable id="curriculoDataTable" value="#{curriculoMB.curriculoDTOs}" var="curriculo">
+                <rich:dataTable id="curriculoDataTable" value="#{curriculoMB.listaCurriculo}" var="curriculo">
                     <rich:column>
                         <f:facet name="header">
                             <h:outputText value="#{msgs['label.column.id']}"/>
@@ -39,18 +39,19 @@ and open the template in the editor.
                         <f:facet name="header">
                             <h:outputText value="#{msgs['label.column.usuario']}"/>
                         </f:facet>
-                        <h:outputText value="#{curriculo.usuarioDTO.nome}"/>
+                        <h:outputText value="#{curriculo.usuario.nome}"/>
                     </rich:column>
                     <rich:column rendered="#{controleSessaoMB.userInRoleAdmin}">
                         <h:commandLink value="#{msgs['label.button.editar']}" action="editar">
-                            <f:actionListener type="com.valhala.curriculum.web.actionlisteners.EdicaoActionListener"/>
+                            <f:actionListener type="com.valhala.curriculum.web.listeners.EdicaoActionListener"/>
                             <f:param id="idEdicao" name="idEdicao" value="#{curriculo.id}"/>
                         </h:commandLink>
                     </rich:column>
                     <rich:column rendered="#{controleSessaoMB.userInRoleAdmin}">
                         <a4j:commandLink value="#{msgs['label.button.deletar']}" action="#{curriculoMB.deletar}"
                                          reRender="curriculoDataTable">
-                            <f:setPropertyActionListener value="#{curriculo.id}" target="#{curriculoMB.curriculoDTO.id}"/>
+                            <f:setPropertyActionListener value="#{curriculo.id}"
+                                                         target="#{curriculoMB.curriculo.id}"/>
                         </a4j:commandLink>
                     </rich:column>
                 </rich:dataTable>

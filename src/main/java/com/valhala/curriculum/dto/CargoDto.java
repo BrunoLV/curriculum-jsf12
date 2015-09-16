@@ -10,11 +10,20 @@ import java.io.Serializable;
 /**
  * @author bruno
  */
-public class UsuarioDTO implements Serializable {
+public class CargoDto implements Serializable {
 
     private Integer id;
     private String nome;
-    private String email;
+
+    public CargoDto() {
+        super();
+    }
+
+    public CargoDto(Integer id, String nome) {
+        super();
+        this.id = id;
+        this.nome = nome;
+    }
 
     public Integer getId() {
         return id;
@@ -30,14 +39,6 @@ public class UsuarioDTO implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
 }

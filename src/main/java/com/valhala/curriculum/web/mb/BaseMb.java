@@ -15,7 +15,7 @@ import java.io.Serializable;
 /**
  * @author bruno
  */
-public abstract class BaseMB implements Serializable {
+public abstract class BaseMb implements Serializable {
 
     protected FacesContext getFacesContext() {
         return FacesContext.getCurrentInstance();

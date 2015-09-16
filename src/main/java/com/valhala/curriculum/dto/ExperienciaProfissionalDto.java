@@ -11,24 +11,24 @@ import java.util.Date;
 /**
  * @author bruno
  */
-public class ExperienciaProfissionalDTO implements Serializable {
+public class ExperienciaProfissionalDto implements Serializable {
 
     private Integer id;
     private Date dataInicio;
     private Date dataSaida;
-    private CargoDTO cargoDTO = new CargoDTO();
-    private EmpresaDTO empresaDTO = new EmpresaDTO();
-    private CurriculoDTO curriculoDTO = new CurriculoDTO();
+    private CargoDto cargo = new CargoDto();
+    private EmpresaDto empresa = new EmpresaDto();
+    private CurriculoDto curriculo = new CurriculoDto();
 
-    public ExperienciaProfissionalDTO() {
+    public ExperienciaProfissionalDto() {
     }
 
-    public ExperienciaProfissionalDTO(Integer id, Date dataInicio, Date dataSaida, CargoDTO cargoDTO, EmpresaDTO empresaDTO) {
+    public ExperienciaProfissionalDto(Integer id, Date dataInicio, Date dataSaida, CargoDto cargo, EmpresaDto empresa) {
         this.id = id;
         this.dataInicio = dataInicio;
         this.dataSaida = dataSaida;
-        this.cargoDTO = cargoDTO;
-        this.empresaDTO = empresaDTO;
+        this.cargo = cargo;
+        this.empresa = empresa;
     }
 
     public Integer getId() {
@@ -55,27 +55,27 @@ public class ExperienciaProfissionalDTO implements Serializable {
         this.dataSaida = dataSaida;
     }
 
-    public CargoDTO getCargoDTO() {
-        return cargoDTO;
+    public CargoDto getCargo() {
+        return cargo;
     }
 
-    public void setCargoDTO(CargoDTO cargoDTO) {
-        this.cargoDTO = cargoDTO;
+    public void setCargo(CargoDto cargo) {
+        this.cargo = cargo;
     }
 
-    public EmpresaDTO getEmpresaDTO() {
-        return empresaDTO;
+    public EmpresaDto getEmpresa() {
+        return empresa;
     }
 
-    public void setEmpresaDTO(EmpresaDTO empresaDTO) {
-        this.empresaDTO = empresaDTO;
+    public void setEmpresa(EmpresaDto empresa) {
+        this.empresa = empresa;
     }
 
-    public CurriculoDTO getCurriculoDTO() {
-        return curriculoDTO;
+    public CurriculoDto getCurriculo() {
+        return curriculo;
     }
 
-    public void setCurriculoDTO(CurriculoDTO curriculoDTO) {
-        this.curriculoDTO = curriculoDTO;
+    public void setCurriculo(CurriculoDto curriculo) {
+        this.curriculo = curriculo;
     }
 }

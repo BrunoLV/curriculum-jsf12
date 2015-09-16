@@ -95,7 +95,7 @@ public class CurriculoServiceBean extends BaseServiceBean implements CurriculoSe
             if (ex.getId() != null && ex.getId() > 0) {
                 ex = experienciaProfissionalDao.buscarPorId(ex.getId());
             }
-            if (!curriculo.getExperienciasProfissionais().contains(ex)) {
+            if (!curriculo.getListaExperienciaProfissional().contains(ex)) {
                 curriculo.adicionarExperienciaProfissional(ex);
                 curriculoDao.editar(curriculo);
             }
@@ -108,9 +108,9 @@ public class CurriculoServiceBean extends BaseServiceBean implements CurriculoSe
         System.out.println("Tamanho: " + experienciasProfissionais.size());
         for (ExperienciaProfissional ex : experienciasProfissionais) {
             ex = experienciaProfissionalDao.buscarPorId(ex.getId());
-                curriculo.removerExperienciaProfissional(ex);
-                curriculoDao.editar(curriculo);
-                experienciaProfissionalDao.deletar(ex);
+            curriculo.removerExperienciaProfissional(ex);
+            curriculoDao.editar(curriculo);
+            experienciaProfissionalDao.deletar(ex);
         }
     }
 }

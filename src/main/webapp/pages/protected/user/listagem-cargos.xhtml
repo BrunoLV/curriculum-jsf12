@@ -24,11 +24,11 @@ and open the template in the editor.
 
                 <br/>
                 <h:commandButton id="novoCommandButton" value="#{msgs['label.button.novo']}"
-                                 rendered="#{usuarioMB.userInRoleAdmin}" action="novo"/>
+                                 rendered="#{controleSessaoMB.userInRoleAdmin}" action="novo"/>
                 <br/>
                 <br/>
 
-                <rich:dataTable id="cargosDataTable" value="#{cargoMB.cargosDTOs}" var="cargo">
+                <rich:dataTable id="cargosDataTable" value="#{cargoMB.listaCargo}" var="cargo">
                     <rich:column>
                         <f:facet name="header">
                             <h:outputText value="#{msgs['label.column.id']}"/>
@@ -41,16 +41,16 @@ and open the template in the editor.
                         </f:facet>
                         <h:outputText value="#{cargo.nome}"/>
                     </rich:column>
-                    <rich:column rendered="#{usuarioMB.userInRoleAdmin}">
+                    <rich:column rendered="#{controleSessaoMB.userInRoleAdmin}">
                         <h:commandLink value="#{msgs['label.button.editar']}" action="editar">
-                            <f:actionListener type="com.valhala.curriculum.web.actionlisteners.EdicaoActionListener"/>
+                            <f:actionListener type="com.valhala.curriculum.web.listeners.EdicaoActionListener"/>
                             <f:param id="idEdicao" name="idEdicao" value="#{cargo.id}"/>
                         </h:commandLink>
                     </rich:column>
-                    <rich:column rendered="#{usuarioMB.userInRoleAdmin}">
+                    <rich:column rendered="#{controleSessaoMB.userInRoleAdmin}">
                         <a4j:commandLink value="#{msgs['label.button.deletar']}" action="#{cargoMB.deletar}"
                                          reRender="cargosDataTable">
-                            <f:setPropertyActionListener value="#{cargo.id}" target="#{cargoMB.cargoDTO.id}"/>
+                            <f:setPropertyActionListener value="#{cargo.id}" target="#{cargoMB.cargo.id}"/>
                         </a4j:commandLink>
                     </rich:column>
                 </rich:dataTable>

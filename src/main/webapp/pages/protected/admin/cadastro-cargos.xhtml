@@ -21,10 +21,10 @@ and open the template in the editor.
                 <f:facet name="header">
                     <h:outputText value="#{msgs['text.panel.cadcargo']}"/>
                 </f:facet>
-                <h:inputHidden id="idInputHidden" value="#{cargoMB.cargoDTO.id}"/>
+                <h:inputHidden id="idInputHidden" value="#{cargoMB.cargo.id}"/>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="#{msgs['label.form.nome']}" for="nomeInputText"/>
-                    <h:inputText id="nomeInputText" value="#{cargoMB.cargoDTO.nome}"/>
+                    <h:inputText id="nomeInputText" value="#{cargoMB.cargo.nome}"/>
                     <f:facet name="footer">
                         <a4j:commandButton id="salvarCommandButton" value="#{msgs['label.button.salvar']}"
                                            action="#{cargoMB.salvar}"/>

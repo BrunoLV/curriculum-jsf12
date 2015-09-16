@@ -10,15 +10,15 @@ import java.io.Serializable;
 /**
  * @author bruno
  */
-public class EmpresaDTO implements Serializable {
+public class EmpresaDto implements Serializable {
 
     private Integer id;
     private String nome;
 
-    public EmpresaDTO() {
+    public EmpresaDto() {
     }
 
-    public EmpresaDTO(Integer id, String nome) {
+    public EmpresaDto(Integer id, String nome) {
         this.id = id;
         this.nome = nome;
     }

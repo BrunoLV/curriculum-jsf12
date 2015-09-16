@@ -21,9 +21,11 @@ public class Cargo extends BaseEntity implements Serializable {
     private String nome;
 
     public Cargo() {
+        super();
     }
 
     public Cargo(Integer id, String nome) {
+        super();
         this.id = id;
         this.nome = nome;
     }
