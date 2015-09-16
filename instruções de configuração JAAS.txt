@@ -1,0 +1,17 @@
+Servidor utilizado: JBoss AS 6
+
+Configuração do modulo de login JAAS:
+
+Inserir trecho abaixo no arquivo login-config.xml em JBOSS_HOME/server/default/conf
+
+  <!-- Login Module curriculum-jsf12 -->
+  <application-policy name="LoginCurriculumRealm">
+    <authentication>
+      <login-module code="org.jboss.security.auth.spi.DatabaseServerLoginModule" flag="required">
+         <!-- Any existing security context will be restored on logout -->
+         <module-option name="dsJndiName">java:/curriculumDS</module-option>
+         <module-option name="principalsQuery">select b.senha from tb_usuario a, tb_usuario_senha b where a.email=? and a.id = b.id_usuario</module-option>
+         <module-option name="rolesQuery">select b.papel, 'Roles' from tb_usuario a, tb_usuario_papel b where a.email = ? and a.id = b.id_usuario</module-option>
+      </login-module>
+    </authentication>
+  </application-policy>
