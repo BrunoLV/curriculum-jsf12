@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  Header Template
+  Developer: Bruno Luiz Viana
+  Date: 09/07/15
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<body>
+<ui:composition>
+    <h:form>
+        <rich:toolBar>
+            <rich:dropDownMenu>
+                <f:facet name="label">
+                    <h:panelGroup>
+                        <h:outputText value="Cadastros"/>
+                    </h:panelGroup>
+                </f:facet>
+                <rich:menuItem value="Usuarios" action="usuarios"/>
+                <rich:menuItem value="Cargos" action="cargos"/>
+                <rich:menuItem value="Empresa" action="empresas"/>
+                <rich:menuItem value="Cursos" action="cursos"/>
+                <rich:menuItem value="Entidades de Ensino" action="entidadesEnsino"/>
+                <rich:menuItem value="Curriculos" action="curriculos"/>
+            </rich:dropDownMenu>
+        </rich:toolBar>
+    </h:form>
+    <br/>
+</ui:composition>
+</body>
+
+</html>

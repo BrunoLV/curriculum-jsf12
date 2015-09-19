@@ -9,6 +9,9 @@
         <class>com.valhala.curriculum.model.Empresa</class>
         <class>com.valhala.curriculum.model.ExperienciaProfissional</class>
         <class>com.valhala.curriculum.model.Usuario</class>
+        <class>com.valhala.curriculum.model.Curso</class>
+        <class>com.valhala.curriculum.model.EntidadeEnsino</class>
+        <class>com.valhala.curriculum.model.FormacaoAcademica</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
 
         <properties>

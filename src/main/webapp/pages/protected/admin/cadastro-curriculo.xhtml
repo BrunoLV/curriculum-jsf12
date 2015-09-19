@@ -11,7 +11,7 @@ and open the template in the editor.
       xmlns:rich="http://richfaces.org/rich"
       xmlns:f="http://java.sun.com/jsf/core" xmlns:a4j="http://richfaces.org/a4j">
 
-<ui:composition template="/WEB-INF/template/template.xhtml">
+<ui:composition template="/WEB-INF/template/template-with-menu.xhtml">
     <ui:define name="content">
 
         <h:form id="cadastroCurriculo">
@@ -107,6 +107,105 @@ and open the template in the editor.
                                                        reRender="experienciaProfissionalDataTable">
                                         <f:setPropertyActionListener value="#{experiencia}"
                                                                      target="#{curriculoMB.experienciaProfissional}"/>
+                                    </a4j:commandButton>
+                                </rich:column>
+                            </rich:dataTable>
+                        </rich:panel>
+                    </rich:tab>
+
+                    <rich:tab label="#{msgs['label.tab.formacao']}">
+                        <rich:panel>
+                            <f:facet name="header">
+                                <h:outputText value="#{msgs['text.panel.formacao']}"/>
+                            </f:facet>
+                            <h:panelGrid id="panelGridDadosFormacao" columns="2">
+                                <h:outputLabel value="#{msgs['label.form.entidadeEnsino']}"
+                                               for="entidadeEnsinoSelectOneMenu"/>
+                                <h:selectOneMenu id="entidadeEnsinoSelectOneMenu"
+                                                 value="#{curriculoMB.formacaoAcademica.entidadeEnsino.id}">
+                                    <f:selectItem itemDisabled="true" itemLabel="Selecione..."/>
+                                    <f:selectItems value="#{curriculoMB.listaEntidadeEnsino}"/>
+                                </h:selectOneMenu>
+                                <h:outputLabel value="#{msgs['label.form.curso']}" for="cursoSelectOneMenu"/>
+                                <h:selectOneMenu id="cursoSelectOneMenu"
+                                                 value="#{curriculoMB.formacaoAcademica.curso.id}">
+                                    <f:selectItem itemDisabled="true" itemLabel="Selecione..."/>
+                                    <f:selectItems value="#{curriculoMB.listaCurso}"/>
+                                </h:selectOneMenu>
+                                <h:outputLabel value="#{msgs['label.form.tipoFormacao']}"
+                                               for="tipoFormacaoSelectOneMenu"/>
+                                <h:selectOneMenu id="tipoFormacaoSelectOneMenu"
+                                                 value="#{curriculoMB.formacaoAcademica.tipoFormacao}">
+                                    <f:selectItem itemDisabled="true" itemLabel="Selecione..."/>
+                                    <f:selectItems value="#{curriculoMB.tiposFormacao}"/>
+                                </h:selectOneMenu>
+                                <h:outputLabel value="#{msgs['label.form.dataInicio']}" for="dataInicioCursoCalendar"/>
+                                <rich:calendar id="dataInicioCursoCalendar" datePattern="dd/MM/yyyy"
+                                               value="#{curriculoMB.formacaoAcademica.dataInicio}"/>
+                                <h:outputLabel value="#{msgs['label.form.dataTermino']}" for="dataTerminoCalendar"/>
+                                <rich:calendar id="dataTerminoCalendar" datePattern="dd/MM/yyyy"
+                                               value="#{curriculoMB.formacaoAcademica.dataTermino}"/>
+                                <f:facet name="footer">
+                                    <a4j:commandButton value="Incluir Formacao"
+                                                       action="#{curriculoMB.incluirFormacao}"
+                                                       reRender="panelGridDadosFormacao, formacaoAcademicaDataTable"/>
+                                </f:facet>
+                            </h:panelGrid>
+                            <br/>
+                            <rich:separator/>
+                            <br/>
+                            <rich:dataTable id="formacaoAcademicaDataTable"
+                                            value="#{curriculoMB.curriculo.listaFormacaoAcademica}"
+                                            var="formacao">
+                                <f:facet name="header">
+                                    <h:outputText value="#{msgs['label.tab.formacao']}"/>
+                                </f:facet>
+                                <rich:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{msgs['label.column.id']}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{formacao.id}"/>
+                                </rich:column>
+                                <rich:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{msgs['label.column.entidadeEnsino']}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{formacao.entidadeEnsino.nome}"/>
+                                </rich:column>
+                                <rich:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{msgs['label.column.curso']}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{formacao.curso.nome}"/>
+                                </rich:column>
+                                <rich:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{msgs['label.column.tipoFormacao']}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{formacao.tipoFormacao}"/>
+                                </rich:column>
+                                <rich:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{msgs['label.column.dataInicio']}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{formacao.dataInicio}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </h:outputText>
+                                </rich:column>
+                                <rich:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{msgs['label.column.dataTermino']}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{formacao.dataTermino}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </h:outputText>
+                                </rich:column>
+                                <rich:column>
+                                    <a4j:commandButton value="#{msgs['label.button.remover']}"
+                                                       action="#{curriculoMB.removerFormacao}"
+                                                       reRender="formacaoAcademicaDataTable">
+                                        <f:setPropertyActionListener value="#{formacao}"
+                                                                     target="#{curriculoMB.formacaoAcademica}"/>
                                     </a4j:commandButton>
                                 </rich:column>
                             </rich:dataTable>

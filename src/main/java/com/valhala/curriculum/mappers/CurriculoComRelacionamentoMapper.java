@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by bruno on 15/09/15.
  */
-@Mapper(uses = {UsuarioMapper.class, ExperienciaProfissionalMapper.class})
+@Mapper(uses = {UsuarioMapper.class, ExperienciaProfissionalMapper.class, FormacaoAcademicaMapper.class})
 public interface CurriculoComRelacionamentoMapper {
 
     CurriculoComRelacionamentoMapper INSTANCE = Mappers.getMapper(CurriculoComRelacionamentoMapper.class);

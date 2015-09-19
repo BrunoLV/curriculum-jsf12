@@ -5,6 +5,9 @@
  */
 package com.valhala.curriculum.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,6 +26,10 @@ public class Curriculo extends BaseEntity implements Serializable {
 
     @OneToMany(mappedBy = "curriculo", cascade = CascadeType.ALL)
     private List<ExperienciaProfissional> listaExperienciaProfissional = new ArrayList<ExperienciaProfissional>();
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "curriculo", cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SELECT)
+    private List<FormacaoAcademica> listaFormacaoAcademica = new ArrayList<FormacaoAcademica>();
 
     public Curriculo() {
     }
@@ -49,14 +56,40 @@ public class Curriculo extends BaseEntity implements Serializable {
         this.listaExperienciaProfissional = experienciasProfissionais;
     }
 
+    public List<FormacaoAcademica> getListaFormacaoAcademica() {
+        return listaFormacaoAcademica;
+    }
+
+    public void setListaFormacaoAcademica(List<FormacaoAcademica> listaFormacaoAcademica) {
+        this.listaFormacaoAcademica = listaFormacaoAcademica;
+    }
+
     public void adicionarExperienciaProfissional(ExperienciaProfissional experienciaProfissional) {
-        getListaExperienciaProfissional().add(experienciaProfissional);
-        experienciaProfissional.setCurriculo(this);
+        if (experienciaProfissional != null && !getListaExperienciaProfissional().contains(experienciaProfissional)) {
+            getListaExperienciaProfissional().add(experienciaProfissional);
+            experienciaProfissional.setCurriculo(this);
+        }
     }
 
     public void removerExperienciaProfissional(ExperienciaProfissional experienciaProfissional) {
-        getListaExperienciaProfissional().remove(experienciaProfissional);
-        experienciaProfissional.setCurriculo(null);
+        if (experienciaProfissional != null) {
+            getListaExperienciaProfissional().remove(experienciaProfissional);
+            experienciaProfissional.setCurriculo(null);
+        }
+    }
+
+    public void adicionarFormacaoAcademica(FormacaoAcademica formacaoAcademica) {
+        if (formacaoAcademica != null && !getListaFormacaoAcademica().contains(formacaoAcademica)) {
+            getListaFormacaoAcademica().add(formacaoAcademica);
+            formacaoAcademica.setCurriculo(this);
+        }
+    }
+
+    public void removerFormacaoAcademica(FormacaoAcademica formacaoAcademica) {
+        if (formacaoAcademica != null) {
+            getListaFormacaoAcademica().remove(formacaoAcademica);
+            formacaoAcademica.setCurriculo(null);
+        }
     }
 
     @Override

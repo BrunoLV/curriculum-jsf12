@@ -17,6 +17,7 @@ public class CurriculoDto implements Serializable {
     private Integer id;
     private UsuarioDto usuario = new UsuarioDto();
     private List<ExperienciaProfissionalDto> listaExperienciaProfissional = new ArrayList<ExperienciaProfissionalDto>();
+    private List<FormacaoAcademicaDto> listaFormacaoAcademica = new ArrayList<FormacaoAcademicaDto>();
 
     public CurriculoDto() {
     }
@@ -43,5 +44,13 @@ public class CurriculoDto implements Serializable {
 
     public void setListaExperienciaProfissional(List<ExperienciaProfissionalDto> listaExperienciaProfissional) {
         this.listaExperienciaProfissional = listaExperienciaProfissional;
+    }
+
+    public List<FormacaoAcademicaDto> getListaFormacaoAcademica() {
+        return listaFormacaoAcademica;
+    }
+
+    public void setListaFormacaoAcademica(List<FormacaoAcademicaDto> listaFormacaoAcademica) {
+        this.listaFormacaoAcademica = listaFormacaoAcademica;
     }
 }

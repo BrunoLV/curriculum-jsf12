@@ -11,7 +11,7 @@ and open the template in the editor.
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:a4j="http://richfaces.org/a4j">
 
-<ui:composition template="/WEB-INF/template/template.xhtml">
+<ui:composition template="/WEB-INF/template/template-with-menu.xhtml">
     <ui:define name="content">
 
         <h:form id="listagemUsuario">
@@ -28,7 +28,7 @@ and open the template in the editor.
                 <br/>
                 <br/>
 
-                <rich:dataTable id="usuarioDataTable" value="#{usuarioMB.listaUsuario}" var="usuario">
+                <rich:dataTable id="usuarioDataTable" value="#{usuarioMB.listaUsuario}" var="usuario" rows="10">
                     <rich:column>
                         <f:facet name="header">
                             <h:outputText value="#{msgs['label.column.id']}"/>
@@ -49,18 +49,23 @@ and open the template in the editor.
                     </rich:column>
                     <rich:column rendered="#{controleSessaoMB.userInRoleAdmin}">
                         <h:commandLink value="#{msgs['label.button.editar']}" action="editar"
-                                       rendered="#{usuario.email != usuarioMB.principalName}">
+                                       rendered="#{usuario.email != controleSessaoMB.principalName}">
                             <f:actionListener type="com.valhala.curriculum.web.listeners.EdicaoActionListener"/>
                             <f:param id="idEdicao" name="idEdicao" value="#{usuario.id}"/>
                         </h:commandLink>
                     </rich:column>
                     <rich:column rendered="#{controleSessaoMB.userInRoleAdmin}">
                         <a4j:commandLink value="#{msgs['label.button.deletar']}" action="#{usuarioMB.deletar}"
-                                         rendered="#{usuario.email != usuarioMB.principalName}"
+                                         rendered="#{usuario.email != controleSessaoMB.principalName}"
                                          reRender="usuarioDataTable">
                             <f:setPropertyActionListener value="#{usuario.id}" target="#{usuarioMB.usuario.id}"/>
                         </a4j:commandLink>
                     </rich:column>
+                    <f:facet name="footer">
+                        <rich:datascroller pageIndexVar="indexPagina" pagesVar="paginas">
+                            <h:outputText value="#{indexPagina} / #{paginas}"/>
+                        </rich:datascroller>
+                    </f:facet>
                 </rich:dataTable>
             </rich:panel>
             <br/>

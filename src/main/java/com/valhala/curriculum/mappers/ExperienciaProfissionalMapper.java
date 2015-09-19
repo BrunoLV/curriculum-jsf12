@@ -23,8 +23,8 @@ public interface ExperienciaProfissionalMapper {
     @InheritInverseConfiguration
     ExperienciaProfissionalDto experienciaProfissionalToExperienciaProfissionalDto(ExperienciaProfissional experienciaProfissional);
 
-    List<ExperienciaProfissional> listaExperienciaProfissionalToListaExperienciaProfissional(List<ExperienciaProfissionalDto> listaExperienciaProfissionalDto);
+    List<ExperienciaProfissional> listaExperienciaProfissionalDtoToListaExperienciaProfissional(List<ExperienciaProfissionalDto> listaExperienciaProfissionalDto);
 
-    List<ExperienciaProfissionalDto> ExperienciaProfissionalToExperienciaProfissionalDtoDto(List<ExperienciaProfissional> listaExperienciaProfissional);
+    List<ExperienciaProfissionalDto> listaExperienciaProfissionalToExperienciaProfissionalDto(List<ExperienciaProfissional> listaExperienciaProfissional);
 
 }

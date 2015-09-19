@@ -5,6 +5,7 @@ import com.valhala.curriculum.model.Curriculo;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -17,7 +18,11 @@ public interface CurriculoSemRelacionamentoMapper {
 
     CurriculoSemRelacionamentoMapper INSTANCE = Mappers.getMapper(CurriculoSemRelacionamentoMapper.class);
 
-    @Mapping(target = "listaExperienciaProfissional", ignore = true)
+
+    @Mappings({
+            @Mapping(target = "listaExperienciaProfissional", ignore = true),
+            @Mapping(target = "listaFormacaoAcademica", ignore = true)
+    })
     Curriculo curriculoDtoToCurriculo(CurriculoDto curriculoDto);
 
     @InheritInverseConfiguration

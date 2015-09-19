@@ -67,7 +67,11 @@ public class ExperienciaProfissional extends BaseEntity implements Serializable 
     }
 
     public void setCurriculo(Curriculo curriculo) {
+
         this.curriculo = curriculo;
+        if (curriculo != null) {
+            this.curriculo.adicionarExperienciaProfissional(this);
+        }
     }
 
     public Empresa getEmpresa() {
@@ -91,7 +95,6 @@ public class ExperienciaProfissional extends BaseEntity implements Serializable 
         int hash = 5;
         hash = 59 * hash + (this.dataInicio != null ? this.dataInicio.hashCode() : 0);
         hash = 59 * hash + (this.dataSaida != null ? this.dataSaida.hashCode() : 0);
-        hash = 59 * hash + (this.curriculo != null ? this.curriculo.hashCode() : 0);
         hash = 59 * hash + (this.empresa != null ? this.empresa.hashCode() : 0);
         hash = 59 * hash + (this.cargo != null ? this.cargo.hashCode() : 0);
         return hash;
@@ -110,9 +113,6 @@ public class ExperienciaProfissional extends BaseEntity implements Serializable 
             return false;
         }
         if (!this.dataSaida.equals(other.dataSaida)) {
-            return false;
-        }
-        if (!this.curriculo.equals(other.curriculo)) {
             return false;
         }
         if (!this.empresa.equals(other.empresa)) {

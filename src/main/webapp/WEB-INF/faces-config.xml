@@ -18,6 +18,18 @@ and limitations under the License. -->
     </managed-bean>
 
     <managed-bean>
+        <managed-bean-name>cursoMB</managed-bean-name>
+        <managed-bean-class>com.valhala.curriculum.web.mb.crud.CursoMb</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>entidadeEnsinoMB</managed-bean-name>
+        <managed-bean-class>com.valhala.curriculum.web.mb.crud.EntidadeEnsinoMb</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+
+    <managed-bean>
         <managed-bean-name>empresaMB</managed-bean-name>
         <managed-bean-class>com.valhala.curriculum.web.mb.crud.EmpresaMb</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
@@ -46,7 +58,7 @@ and limitations under the License. -->
     </managed-bean>
 
     <navigation-rule>
-        <from-view-id>/index.xhtml</from-view-id>
+        <from-view-id>/*</from-view-id>
 
         <navigation-case>
             <from-outcome>cargos</from-outcome>
@@ -69,6 +81,18 @@ and limitations under the License. -->
         <navigation-case>
             <from-outcome>curriculos</from-outcome>
             <to-view-id>/pages/protected/user/listagem-curriculo.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>cursos</from-outcome>
+            <to-view-id>/pages/protected/user/listagem-cursos.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>entidadesEnsino</from-outcome>
+            <to-view-id>/pages/protected/user/listagem-entidade-ensino.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>
@@ -105,6 +129,24 @@ and limitations under the License. -->
         <navigation-case>
             <from-outcome>listar</from-outcome>
             <to-view-id>/pages/protected/user/listagem-curriculo.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/pages/protected/admin/cadastro-cursos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>listar</from-outcome>
+            <to-view-id>/pages/protected/user/listagem-cursos.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/pages/protected/admin/cadastro-entidade-ensino.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>listar</from-outcome>
+            <to-view-id>/pages/protected/user/listagem-entidade-ensino.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>
@@ -169,6 +211,38 @@ and limitations under the License. -->
         <navigation-case>
             <from-outcome>editar</from-outcome>
             <to-view-id>/pages/protected/admin/cadastro-curriculo.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/pages/protected/user/listagem-cursos.xhtml</from-view-id>
+
+        <navigation-case>
+            <from-outcome>novo</from-outcome>
+            <to-view-id>/pages/protected/admin/cadastro-cursos.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>editar</from-outcome>
+            <to-view-id>/pages/protected/admin/cadastro-cursos.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/pages/protected/user/listagem-entidade-ensino.xhtml</from-view-id>
+
+        <navigation-case>
+            <from-outcome>novo</from-outcome>
+            <to-view-id>/pages/protected/admin/cadastro-entidade-ensino.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>editar</from-outcome>
+            <to-view-id>/pages/protected/admin/cadastro-entidade-ensino.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>
