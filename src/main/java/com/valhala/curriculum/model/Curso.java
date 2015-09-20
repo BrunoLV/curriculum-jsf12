@@ -12,6 +12,8 @@ import java.io.Serializable;
 @Table(name = "tb_curso")
 public class Curso extends BaseEntity implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+	
     @Column(name = "nome", nullable = false, unique = true)
     private String nome;
 

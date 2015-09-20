@@ -17,6 +17,8 @@ import java.io.Serializable;
 @Table(name = "tb_cargo")
 public class Cargo extends BaseEntity implements Serializable {
 
+    private static final long serialVersionUID = -3190631462867154400L;
+	
     @Column(name = "nome", unique = true, nullable = false)
     private String nome;
 

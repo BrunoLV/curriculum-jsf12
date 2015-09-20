@@ -19,7 +19,9 @@ import java.util.List;
  */
 public class EmpresaMb extends BaseMb {
 
-    private static final String ID_EDICAO_SESSAO = "idParaEdicao";
+    private static final long serialVersionUID = 5906333509526366720L;
+
+	private static final String ID_EDICAO_SESSAO = "idParaEdicao";
 
     @EJB
     private EmpresaService service;

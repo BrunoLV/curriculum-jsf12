@@ -9,6 +9,7 @@ import com.valhala.curriculum.web.mb.controle.ControleSessaoMb;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.model.SelectItem;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +20,9 @@ import java.util.Map;
  */
 public class CurriculoMb extends BaseMb {
 
-    private static final String ID_EDICAO_SESSAO = "idParaEdicao";
+    private static final long serialVersionUID = -7851091313961665265L;
+
+	private static final String ID_EDICAO_SESSAO = "idParaEdicao";
 
     @EJB
     private CurriculoService curriculoService;
@@ -123,7 +126,8 @@ public class CurriculoMb extends BaseMb {
             inserirMensagemInformativa("Curriculo inserido com sucesso!!!");
             this.curriculo = new CurriculoDto();
         } else {
-            Map<String, List> mapaDeListaRemocaoRelacionamento = new HashMap<String, List>();
+            @SuppressWarnings("rawtypes")
+			Map<String, List> mapaDeListaRemocaoRelacionamento = new HashMap<String, List>();
             mapaDeListaRemocaoRelacionamento.put("ExperienciaProfissional", experienciaProfissionalMapper.listaExperienciaProfissionalDtoToListaExperienciaProfissional(this.listaExperienciaProfissionalRemover));
             mapaDeListaRemocaoRelacionamento.put("FormacaoAcademica", formacaoAcademicaMapper.listaFormacaoAcademicaDtoToListaFormacaoAcademica(this.listaFormacaoAcademicaRemover));
             this.curriculoService.editar(curriculoComRelacionamentoMapper.curriculoDtoToCurriculo(this.curriculo), mapaDeListaRemocaoRelacionamento);

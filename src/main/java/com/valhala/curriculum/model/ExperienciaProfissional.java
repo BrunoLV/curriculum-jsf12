@@ -16,7 +16,9 @@ import java.util.Date;
 @Table(name = "tb_exp_prof_curriculo")
 public class ExperienciaProfissional extends BaseEntity implements Serializable {
 
-    @Column(name = "data_inicio", nullable = false)
+	private static final long serialVersionUID = 2431264352699029440L;
+
+	@Column(name = "data_inicio", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date dataInicio;
 

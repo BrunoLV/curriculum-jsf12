@@ -3,12 +3,11 @@ package com.valhala.curriculum.web.mb.controle;
 import com.valhala.curriculum.model.Roles;
 import com.valhala.curriculum.web.mb.BaseMb;
 
-/**
- * Created by bruno on 05/09/15.
- */
 public class ControleSessaoMb extends BaseMb {
 
-    public boolean isUserInRoleUser() {
+    private static final long serialVersionUID = -5989290915191663301L;
+
+	public boolean isUserInRoleUser() {
         return getRequest().isUserInRole(Roles.USER.getNome());
     }
 

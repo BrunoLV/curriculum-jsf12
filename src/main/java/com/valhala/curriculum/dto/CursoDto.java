@@ -7,6 +7,8 @@ import java.io.Serializable;
  */
 public class CursoDto implements Serializable {
 
+    private static final long serialVersionUID = 8648671112829745049L;
+	
     private Integer id;
     private String nome;
 

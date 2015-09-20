@@ -5,6 +5,7 @@ import com.valhala.curriculum.model.Usuario;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -24,7 +25,8 @@ public class UsuarioDaoImpl extends BaseDao<Usuario> implements UsuarioDao {
 
     public List<Usuario> listarTodos() {
         Query query = this.manager.createQuery(JPQL_ALL_USUARIO);
-        List<Usuario> usuarios = query.getResultList();
+        @SuppressWarnings("unchecked")
+		List<Usuario> usuarios = query.getResultList();
         return usuarios;
     }
 

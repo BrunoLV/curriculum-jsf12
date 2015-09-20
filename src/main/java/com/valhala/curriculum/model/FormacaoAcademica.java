@@ -11,6 +11,8 @@ import java.util.Date;
 @Table(name = "tb_formacao_academica")
 public class FormacaoAcademica extends BaseEntity implements Serializable {
 
+    private static final long serialVersionUID = -2312078967255925815L;
+	
     @ManyToOne
     @JoinColumn(name = "id_curso")
     private Curso curso;

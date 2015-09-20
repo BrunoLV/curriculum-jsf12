@@ -5,6 +5,7 @@ import com.valhala.curriculum.model.Curriculo;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -32,7 +33,8 @@ public class CurriculoDaoImpl extends BaseDao<Curriculo> implements CurriculoDao
 
     public List<Curriculo> listarTodos() {
         Query query = this.manager.createQuery(SQL_ALL_CURRICULO);
-        List<Curriculo> curriculos = query.getResultList();
+        @SuppressWarnings("unchecked")
+		List<Curriculo> curriculos = query.getResultList();
         for (Curriculo curriculo : curriculos) {
             curriculo.getListaExperienciaProfissional();
         }

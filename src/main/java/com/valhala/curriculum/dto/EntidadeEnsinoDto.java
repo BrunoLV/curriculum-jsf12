@@ -7,6 +7,8 @@ import java.io.Serializable;
  */
 public class EntidadeEnsinoDto implements Serializable {
 
+    private static final long serialVersionUID = -2254023025622888141L;
+	
     private Integer id;
     private String nome;
 

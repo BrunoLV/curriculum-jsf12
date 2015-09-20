@@ -20,7 +20,9 @@ import java.util.List;
 @Table(name = "tb_curriculo")
 public class Curriculo extends BaseEntity implements Serializable {
 
-    @ManyToOne
+    private static final long serialVersionUID = -3875979851399236476L;
+
+	@ManyToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 

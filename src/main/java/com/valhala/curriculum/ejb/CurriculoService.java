@@ -5,6 +5,7 @@ import com.valhala.curriculum.model.ExperienciaProfissional;
 import com.valhala.curriculum.model.FormacaoAcademica;
 
 import javax.ejb.Local;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -27,5 +28,5 @@ public interface CurriculoService extends BaseService<Curriculo> {
                 List<ExperienciaProfissional> experienciasProfissionaisRemocao,
                 List<FormacaoAcademica> formacoesAcademicas);
 
-    void editar(Curriculo curriculo, Map<String, List> mapaDeListaRemocaoRelacionamento);
+    void editar(Curriculo curriculo, @SuppressWarnings("rawtypes") Map<String, List> mapaDeListaRemocaoRelacionamento);
 }

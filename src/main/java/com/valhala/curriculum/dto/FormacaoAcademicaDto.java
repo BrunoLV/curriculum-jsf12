@@ -8,6 +8,8 @@ import java.util.Date;
  */
 public class FormacaoAcademicaDto implements Serializable {
 
+    private static final long serialVersionUID = 2910277007490051611L;
+	
     private Long id;
     private Date dataInicio;
     private Date dataTermino;

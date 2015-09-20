@@ -11,7 +11,9 @@ import java.util.List;
 
 public class UsuarioMb extends BaseMb {
 
-    private static final String ID_EDICAO_SESSAO = "idParaEdicao";
+    private static final long serialVersionUID = -3564941728014454592L;
+
+	private static final String ID_EDICAO_SESSAO = "idParaEdicao";
 
     private UsuarioDto usuario;
     private List<UsuarioDto> listaUsuario;

@@ -13,6 +13,7 @@ import com.valhala.curriculum.model.FormacaoAcademica;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.*;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -75,11 +76,12 @@ public class CurriculoServiceBean extends BaseServiceBean implements CurriculoSe
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void editar(Curriculo curriculo, Map<String, List> mapRemocaoRelacionamento) {
+    public void editar(Curriculo curriculo, @SuppressWarnings("rawtypes") Map<String, List> mapRemocaoRelacionamento) {
         Set<String> keySet = mapRemocaoRelacionamento.keySet();
         for (String key : keySet) {
             if (key.equals("ExperienciaProfissional")) {
-                List<ExperienciaProfissional> exps = mapRemocaoRelacionamento.get(key);
+                @SuppressWarnings("unchecked")
+				List<ExperienciaProfissional> exps = mapRemocaoRelacionamento.get(key);
                 for (ExperienciaProfissional exp : exps) {
                     exp = this.experienciaProfissionalDao.buscarPorId(exp.getId());
                     exp.setCurriculo(null);
@@ -87,7 +89,8 @@ public class CurriculoServiceBean extends BaseServiceBean implements CurriculoSe
                 }
             }
             if (key.equals("FormacaoAcademica")) {
-                List<FormacaoAcademica> fas = mapRemocaoRelacionamento.get(key);
+                @SuppressWarnings("unchecked")
+				List<FormacaoAcademica> fas = mapRemocaoRelacionamento.get(key);
                 for (FormacaoAcademica fa : fas) {
                     fa = this.formacaoAcademicaDao.buscarPorId(fa.getId());
                     fa.setCurriculo(null);

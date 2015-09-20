@@ -5,6 +5,7 @@ import com.valhala.curriculum.model.EntidadeEnsino;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -25,7 +26,8 @@ public class EntidadeEnsinoDaoImpl extends BaseDao<EntidadeEnsino> implements En
 
     public List<EntidadeEnsino> listarTodos() {
         Query query = this.manager.createQuery(JPQL_ALL_ENTIDADE_ENSINO);
-        List<EntidadeEnsino> entidadesEnsino = query.getResultList();
+        @SuppressWarnings("unchecked")
+		List<EntidadeEnsino> entidadesEnsino = query.getResultList();
         return entidadesEnsino;
     }
 }

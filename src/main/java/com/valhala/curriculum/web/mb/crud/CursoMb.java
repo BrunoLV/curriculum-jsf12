@@ -19,7 +19,9 @@ import java.util.List;
  */
 public class CursoMb extends BaseMb {
 
-    private static final String ID_EDICAO_SESSAO = "idParaEdicao";
+    private static final long serialVersionUID = 6604716796555886204L;
+
+	private static final String ID_EDICAO_SESSAO = "idParaEdicao";
 
     @EJB
     private CursoService cursoService;

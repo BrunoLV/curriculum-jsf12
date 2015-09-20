@@ -10,6 +10,7 @@ import com.valhala.curriculum.model.Empresa;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -31,7 +32,8 @@ public class EmpresaDaoImpl extends BaseDao<Empresa> implements EmpresaDao {
 
     public List<Empresa> listarTodos() {
         Query query = this.manager.createQuery(JPQL_ALL_EMPRESA);
-        List<Empresa> empresas = query.getResultList();
+        @SuppressWarnings("unchecked")
+		List<Empresa> empresas = query.getResultList();
         return empresas;
     }
 

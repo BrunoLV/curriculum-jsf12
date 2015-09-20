@@ -12,6 +12,8 @@ import java.io.Serializable;
  */
 public class CargoDto implements Serializable {
 
+    private static final long serialVersionUID = -747323525388389196L;
+	
     private Integer id;
     private String nome;
 

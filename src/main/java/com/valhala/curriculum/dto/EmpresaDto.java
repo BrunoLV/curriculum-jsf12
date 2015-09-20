@@ -12,6 +12,8 @@ import java.io.Serializable;
  */
 public class EmpresaDto implements Serializable {
 
+    private static final long serialVersionUID = -9097542490569888328L;
+	
     private Integer id;
     private String nome;
 

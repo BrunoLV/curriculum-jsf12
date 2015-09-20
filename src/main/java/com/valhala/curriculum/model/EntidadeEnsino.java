@@ -12,6 +12,8 @@ import java.io.Serializable;
 @Table(name = "tb_entidade_ensino")
 public class EntidadeEnsino extends BaseEntity implements Serializable {
 
+    private static final long serialVersionUID = -8567451816869419417L;
+	
     @Column(name = "nome", unique = true, nullable = false)
     private String nome;
 

@@ -13,6 +13,8 @@ import java.util.Date;
  */
 public class ExperienciaProfissionalDto implements Serializable {
 
+    private static final long serialVersionUID = -4149267492527781920L;
+	
     private Integer id;
     private Date dataInicio;
     private Date dataSaida;

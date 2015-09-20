@@ -14,6 +14,8 @@ import java.util.List;
  */
 public class CurriculoDto implements Serializable {
 
+    private static final long serialVersionUID = 8152403301735095677L;
+	
     private Integer id;
     private UsuarioDto usuario = new UsuarioDto();
     private List<ExperienciaProfissionalDto> listaExperienciaProfissional = new ArrayList<ExperienciaProfissionalDto>();

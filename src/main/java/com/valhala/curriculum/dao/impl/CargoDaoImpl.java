@@ -10,6 +10,7 @@ import com.valhala.curriculum.model.Cargo;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -32,7 +33,8 @@ public class CargoDaoImpl extends BaseDao<Cargo> implements CargoDao {
 
     public List<Cargo> listarTodos() {
         Query query = this.manager.createQuery(JPQL_ALL_CARGO);
-        List<Cargo> cargos = query.getResultList();
+        @SuppressWarnings("unchecked")
+		List<Cargo> cargos = query.getResultList();
         return cargos;
     }
 

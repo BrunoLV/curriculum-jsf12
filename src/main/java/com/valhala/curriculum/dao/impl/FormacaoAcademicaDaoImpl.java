@@ -5,6 +5,7 @@ import com.valhala.curriculum.model.FormacaoAcademica;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -26,7 +27,8 @@ public class FormacaoAcademicaDaoImpl extends BaseDao<FormacaoAcademica> impleme
 
     public List<FormacaoAcademica> listarTodos() {
         Query query = this.manager.createQuery(JPQL_ALL_FORMACAO_ACADEMICA);
-        List<FormacaoAcademica> formacoes = query.getResultList();
+        @SuppressWarnings("unchecked")
+		List<FormacaoAcademica> formacoes = query.getResultList();
         return formacoes;
     }
 }

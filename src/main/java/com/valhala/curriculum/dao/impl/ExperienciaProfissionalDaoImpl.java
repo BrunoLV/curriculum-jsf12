@@ -5,6 +5,7 @@ import com.valhala.curriculum.model.ExperienciaProfissional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -26,7 +27,8 @@ public class ExperienciaProfissionalDaoImpl extends BaseDao<ExperienciaProfissio
 
     public List<ExperienciaProfissional> listarTodos() {
         Query query = this.manager.createQuery(SQL_ALL_EXPERIENCIAS);
-        List<ExperienciaProfissional> experiencias = query.getResultList();
+        @SuppressWarnings("unchecked")
+		List<ExperienciaProfissional> experiencias = query.getResultList();
         return experiencias;
     }
 

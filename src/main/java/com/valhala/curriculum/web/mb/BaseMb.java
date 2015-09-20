@@ -17,7 +17,9 @@ import java.io.Serializable;
  */
 public abstract class BaseMb implements Serializable {
 
-    protected FacesContext getFacesContext() {
+    private static final long serialVersionUID = -3230696492429374223L;
+
+	protected FacesContext getFacesContext() {
         return FacesContext.getCurrentInstance();
     }
 

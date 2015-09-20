@@ -18,6 +18,8 @@ import java.util.Set;
 @Table(name = "tb_usuario")
 public class Usuario extends BaseEntity implements Serializable {
 
+    private static final long serialVersionUID = 6995562910263380576L;
+	
     @Column(name = "nome", nullable = false)
     private String nome;
     @Column(name = "email", unique = true, nullable = false)

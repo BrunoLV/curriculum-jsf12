@@ -19,7 +19,9 @@ import java.util.List;
  */
 public class CargoMb extends BaseMb {
 
-    private static final String ID_EDICAO_SESSAO = "idParaEdicao";
+    private static final long serialVersionUID = 4240025875447639696L;
+
+	private static final String ID_EDICAO_SESSAO = "idParaEdicao";
 
     @EJB
     private CargoService cargoService;
