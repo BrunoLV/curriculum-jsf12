@@ -1,11 +1,12 @@
 package com.valhala.curriculum.mappers;
 
-import com.valhala.curriculum.dto.CurriculoDto;
-import com.valhala.curriculum.model.Curriculo;
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-import java.util.List;
+import com.valhala.curriculum.dto.CurriculoDto;
+import com.valhala.curriculum.model.Curriculo;
 
 /**
  * Created by bruno on 15/09/15.
@@ -14,13 +15,13 @@ import java.util.List;
 public interface CurriculoComRelacionamentoMapper {
 
     CurriculoComRelacionamentoMapper INSTANCE = Mappers.getMapper(CurriculoComRelacionamentoMapper.class);
-
+    
     Curriculo curriculoDtoToCurriculo(CurriculoDto curriculoDto);
 
     CurriculoDto curriculoToCurriculoDto(Curriculo curriculo);
 
     List<Curriculo> listaCurriculoDtoToListaCurriculo(List<CurriculoDto> listaCurriculoDto);
-
     List<CurriculoDto> listaCurriculoToListaCurriculoDto(List<Curriculo> listaCurriculo);
+
 
 }

@@ -21,12 +21,6 @@ public class CargoDto implements Serializable {
         super();
     }
 
-    public CargoDto(Integer id, String nome) {
-        super();
-        this.id = id;
-        this.nome = nome;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -41,6 +35,31 @@ public class CargoDto implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 21;
+        hash = 31 * hash + (this.nome == null ? 0 : this.nome.hashCode());
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof CargoDto)) {
+            return false;
+        }
+        final CargoDto other = (CargoDto) obj;
+        
+        return other.nome.equals(this.nome);
+    }
+
+    @Override
+    public String toString() {
+        return "Cargo{" + "id=" + id + ", nome=" + nome + '}';
     }
 
 }

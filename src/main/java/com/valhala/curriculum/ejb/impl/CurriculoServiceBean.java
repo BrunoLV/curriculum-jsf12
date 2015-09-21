@@ -50,11 +50,11 @@ public class CurriculoServiceBean extends BaseServiceBean implements CurriculoSe
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Curriculo salvar(Curriculo curriculo) {
-        List<ExperienciaProfissional> experienciasProfissionais = curriculo.getListaExperienciaProfissional();
+        Set<ExperienciaProfissional> experienciasProfissionais = curriculo.getExperienciasProfissionais();
         for (ExperienciaProfissional exp : experienciasProfissionais) {
             exp.setCurriculo(curriculo);
         }
-        List<FormacaoAcademica> formacaoAcademicas = curriculo.getListaFormacaoAcademica();
+        Set<FormacaoAcademica> formacaoAcademicas = curriculo.getFormacoesAcademicas();
         for (FormacaoAcademica fa : formacaoAcademicas) {
             fa.setCurriculo(curriculo);
         }
@@ -64,11 +64,11 @@ public class CurriculoServiceBean extends BaseServiceBean implements CurriculoSe
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void editar(Curriculo curriculo) {
-        List<ExperienciaProfissional> experienciasProfissionais = curriculo.getListaExperienciaProfissional();
+        Set<ExperienciaProfissional> experienciasProfissionais = curriculo.getExperienciasProfissionais();
         for (ExperienciaProfissional exp : experienciasProfissionais) {
             exp.setCurriculo(curriculo);
         }
-        List<FormacaoAcademica> formacaoAcademicas = curriculo.getListaFormacaoAcademica();
+        Set<FormacaoAcademica> formacaoAcademicas = curriculo.getFormacoesAcademicas();
         for (FormacaoAcademica fa : formacaoAcademicas) {
             fa.setCurriculo(curriculo);
         }
@@ -76,21 +76,22 @@ public class CurriculoServiceBean extends BaseServiceBean implements CurriculoSe
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void editar(Curriculo curriculo, @SuppressWarnings("rawtypes") Map<String, List> mapRemocaoRelacionamento) {
-        Set<String> keySet = mapRemocaoRelacionamento.keySet();
+    public void editar(Curriculo curriculo, @SuppressWarnings("rawtypes") Map<String, Set> mapRemocaoRelacionamento) {
+    	this.editar(curriculo);
+    	Set<String> keySet = mapRemocaoRelacionamento.keySet();
         for (String key : keySet) {
             if (key.equals("ExperienciaProfissional")) {
                 @SuppressWarnings("unchecked")
-				List<ExperienciaProfissional> exps = mapRemocaoRelacionamento.get(key);
+				Set<ExperienciaProfissional> exps = mapRemocaoRelacionamento.get(key);
                 for (ExperienciaProfissional exp : exps) {
-                    exp = this.experienciaProfissionalDao.buscarPorId(exp.getId());
+                	exp = this.experienciaProfissionalDao.buscarPorId(exp.getId());
                     exp.setCurriculo(null);
                     this.experienciaProfissionalDao.deletar(exp);
                 }
             }
             if (key.equals("FormacaoAcademica")) {
                 @SuppressWarnings("unchecked")
-				List<FormacaoAcademica> fas = mapRemocaoRelacionamento.get(key);
+				Set<FormacaoAcademica> fas = mapRemocaoRelacionamento.get(key);
                 for (FormacaoAcademica fa : fas) {
                     fa = this.formacaoAcademicaDao.buscarPorId(fa.getId());
                     fa.setCurriculo(null);
@@ -98,7 +99,7 @@ public class CurriculoServiceBean extends BaseServiceBean implements CurriculoSe
                 }
             }
         }
-        this.editar(curriculo);
+        
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -122,89 +123,6 @@ public class CurriculoServiceBean extends BaseServiceBean implements CurriculoSe
     public Curriculo buscarPorIdComRelacionamento(Serializable id) {
         Curriculo curriculo = this.curriculoDao.buscarPorIdComRelacionamento(id);
         return curriculo;
-    }
-
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void salvar(Curriculo curriculo,
-                       List<ExperienciaProfissional> experienciasProfissionaisInclusao,
-                       List<FormacaoAcademica> formacoesAcademicasInclusao) {
-        for (ExperienciaProfissional ex : experienciasProfissionaisInclusao) {
-            curriculo.adicionarExperienciaProfissional(ex);
-        }
-
-        for (FormacaoAcademica fa : formacoesAcademicasInclusao) {
-            curriculo.adicionarFormacaoAcademica(fa);
-        }
-        salvar(curriculo);
-    }
-
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void editar(Curriculo curriculo,
-                       List<ExperienciaProfissional> experienciasProfissionaisInclusao,
-                       List<FormacaoAcademica> formacoesAcademicasInclusao,
-                       List<ExperienciaProfissional> experienciasProfissionaisRemocao,
-                       List<FormacaoAcademica> formacoesAcademicasRemocao) {
-        editar(curriculo);
-        adicionarRelacoesAoCurriculo(curriculo, experienciasProfissionaisInclusao, formacoesAcademicasInclusao);
-        removerRelacoesDoCurriculo(curriculo, experienciasProfissionaisRemocao, formacoesAcademicasRemocao);
-    }
-
-    private void adicionarRelacoesAoCurriculo(Curriculo curriculo,
-                                              List<ExperienciaProfissional> experienciasProfissionais,
-                                              List<FormacaoAcademica> formacoesAcademicas) {
-        curriculo = this.curriculoDao.buscarPorId(curriculo.getId());
-        tratarListaExperienciasProfissionais(curriculo, experienciasProfissionais);
-        tratarListaFormacoesAcademicas(curriculo, formacoesAcademicas);
-    }
-
-    private void removerRelacoesDoCurriculo(Curriculo curriculo,
-                                            List<ExperienciaProfissional> experienciasProfissionais,
-                                            List<FormacaoAcademica> formacoesAcademicas) {
-        curriculo = this.curriculoDao.buscarPorIdComRelacionamento(curriculo.getId());
-        removerExperienciasProfissionais(curriculo, experienciasProfissionais);
-        removerFormacoesAcademicas(curriculo, formacoesAcademicas);
-    }
-
-    private void removerExperienciasProfissionais(Curriculo curriculo, List<ExperienciaProfissional> experienciasProfissionais) {
-        for (ExperienciaProfissional ex : experienciasProfissionais) {
-            ex = experienciaProfissionalDao.buscarPorId(ex.getId());
-            curriculo.removerExperienciaProfissional(ex);
-            curriculoDao.editar(curriculo);
-            experienciaProfissionalDao.deletar(ex);
-        }
-    }
-
-    private void removerFormacoesAcademicas(Curriculo curriculo, List<FormacaoAcademica> formacoesAcademicas) {
-        for (FormacaoAcademica fa : formacoesAcademicas) {
-            fa = formacaoAcademicaDao.buscarPorId(fa.getId());
-            curriculo.removerFormacaoAcademica(fa);
-            curriculoDao.editar(curriculo);
-            formacaoAcademicaDao.deletar(fa);
-        }
-    }
-
-    private void tratarListaExperienciasProfissionais(Curriculo curriculo, List<ExperienciaProfissional> experienciasProfissionais) {
-        for (ExperienciaProfissional ex : experienciasProfissionais) {
-            if (ex.getId() != null && ex.getId() > 0) {
-                ex = experienciaProfissionalDao.buscarPorId(ex.getId());
-            }
-            if (!curriculo.getListaExperienciaProfissional().contains(ex)) {
-                curriculo.adicionarExperienciaProfissional(ex);
-                curriculoDao.editar(curriculo);
-            }
-        }
-    }
-
-    private void tratarListaFormacoesAcademicas(Curriculo curriculo, List<FormacaoAcademica> formacoesAcademicas) {
-        for (FormacaoAcademica fa : formacoesAcademicas) {
-            if (fa.getId() != null && fa.getId() > 0) {
-                fa = formacaoAcademicaDao.buscarPorId(fa.getId());
-            }
-            if (!curriculo.getListaFormacaoAcademica().contains(fa)) {
-                curriculo.adicionarFormacaoAcademica(fa);
-                curriculoDao.editar(curriculo);
-            }
-        }
     }
 
 }

@@ -6,36 +6,58 @@ and open the template in the editor.
 -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:rich="http://richfaces.org/rich"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:a4j="http://richfaces.org/a4j">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j">
 
 <ui:composition template="/WEB-INF/template/template-with-menu.xhtml">
-    <ui:define name="content">
+	<ui:define name="content">
 
-        <h:form id="cadastroCurso">
-            <rich:panel>
-                <rich:messages id="globalMessages" globalOnly="true" showSummary="false" showDetail="true"/>
-                <f:facet name="header">
-                    <h:outputText value="#{msgs['text.panel.cadcurso']}"/>
-                </f:facet>
-                <h:inputHidden id="idInputHidden" value="#{cursoMB.curso.id}"/>
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="#{msgs['label.form.nome']}" for="nomeInputText"/>
-                    <h:inputText id="nomeInputText" value="#{cursoMB.curso.nome}"/>
-                    <f:facet name="footer">
-                        <a4j:commandButton id="salvarCommandButton" value="#{msgs['label.button.salvar']}"
-                                           action="#{cursoMB.salvar}"/>
-                    </f:facet>
-                </h:panelGrid>
-            </rich:panel>
-            <br/>
-            <h:commandButton id="listagemCommandButton" value="#{msgs['label.button.listar']}" action="listar"/>
-        </h:form>
+		<h:form id="cadastroCurso">
+			<rich:panel>
+				<rich:messages id="globalMessages" globalOnly="true"
+					showSummary="false" showDetail="true">
+					<f:facet name="errorMarker">
+						<h:graphicImage url="/images/error.png" />
+					</f:facet>
+					<f:facet name="infoMarker">
+						<h:graphicImage url="/images/Info.png" />
+					</f:facet>
+					<f:facet name="fatalMarker">
+						<h:graphicImage url="/images/fatal.png" />
+					</f:facet>
+					<f:facet name="warnMarker">
+						<h:graphicImage url="/images/warning.png" />
+					</f:facet>
+				</rich:messages>
+				<f:facet name="header">
+					<h:outputText value="#{msgs['text.panel.cadcurso']}" />
+				</f:facet>
+				<h:inputHidden id="idInputHidden" value="#{cursoMB.curso.id}" />
+				<h:panelGrid columns="2">
+					<h:outputLabel value="#{msgs['label.form.nome']}"
+						for="nomeInputText" />
+					<h:inputText id="nomeInputText" value="#{cursoMB.curso.nome}" />
+					<f:facet name="footer">
+						<rich:toolTip for="salvarCommandLink"
+							value="#{msgs['label.button.salvar']}" />
+						<a4j:commandLink id="salvarCommandLink" action="#{cursoMB.salvar}">
+							<h:graphicImage url="/images/save.png" />
+						</a4j:commandLink>
+					</f:facet>
+				</h:panelGrid>
+			</rich:panel>
+			<br />
+			<rich:toolTip for="listagemCommandLink"
+				value="#{msgs['label.button.listar']}" />
+			<h:commandLink id="listagemCommandLink" action="listar">
+				<h:graphicImage url="/images/back.png" />
+			</h:commandLink>
+		</h:form>
 
-    </ui:define>
+	</ui:define>
 </ui:composition>
 
 </html>

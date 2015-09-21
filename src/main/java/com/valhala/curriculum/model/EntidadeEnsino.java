@@ -3,6 +3,7 @@ package com.valhala.curriculum.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
 import java.io.Serializable;
 
 /**
@@ -28,5 +29,30 @@ public class EntidadeEnsino extends BaseEntity implements Serializable {
     public void setNome(String nome) {
         this.nome = nome;
     }
+    
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 21;
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof EntidadeEnsino)) {
+			return false;
+		}
+		EntidadeEnsino other = (EntidadeEnsino) obj;
+	
+		return other.nome.equals(this.nome);
+	}
+
+	@Override
+	public String toString() {
+		return "EntidadeEnsino [nome=" + nome + "]";
+	}
 
 }

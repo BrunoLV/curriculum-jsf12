@@ -16,7 +16,7 @@ public class CurriculoDaoImpl extends BaseDao<Curriculo> implements CurriculoDao
 
     private static final String SQL_ALL_CURRICULO = "SELECT c FROM Curriculo AS c";
     private static final String SQL_CURRICULO_RELACAO = "SELECT c FROM Curriculo AS c " +
-            "LEFT OUTER JOIN FETCH c.listaExperienciaProfissional " +
+            "LEFT OUTER JOIN FETCH c.experienciasProfissionais " +
             "WHERE c.id = :id";
 
     public CurriculoDaoImpl(EntityManager manager) {
@@ -35,9 +35,6 @@ public class CurriculoDaoImpl extends BaseDao<Curriculo> implements CurriculoDao
         Query query = this.manager.createQuery(SQL_ALL_CURRICULO);
         @SuppressWarnings("unchecked")
 		List<Curriculo> curriculos = query.getResultList();
-        for (Curriculo curriculo : curriculos) {
-            curriculo.getListaExperienciaProfissional();
-        }
         return curriculos;
     }
 

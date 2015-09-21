@@ -20,12 +20,27 @@ and open the template in the editor.
                     <h:outputText value="#{msgs['text.panel.listusuario']}"/>
                 </f:facet>
 
-                <rich:messages id="globalMessages" globalOnly="true" showSummary="false" showDetail="true"/>
+                <rich:messages id="globalMessages" globalOnly="true"
+					showSummary="false" showDetail="true">
+					<f:facet name="errorMarker">
+						<h:graphicImage url="/images/error.png" />
+					</f:facet>
+					<f:facet name="infoMarker">
+						<h:graphicImage url="/images/Info.png" />
+					</f:facet>
+					<f:facet name="fatalMarker">
+						<h:graphicImage url="/images/fatal.png" />
+					</f:facet>
+					<f:facet name="warnMarker">
+						<h:graphicImage url="/images/warning.png" />
+					</f:facet>
+				</rich:messages>
 
                 <br/>
-                <h:commandButton id="novoCommandButton" value="#{msgs['label.button.novo']}"
-                                 rendered="#{controleSessaoMB.userInRoleAdmin}" action="novo"/>
-                <br/>
+                <h:commandLink id="novoCommandLink"
+                                 rendered="#{controleSessaoMB.userInRoleAdmin}" action="novo">
+                	<h:graphicImage url="/images/new.png" />
+                </h:commandLink><br/>
                 <br/>
 
                 <rich:dataTable id="usuarioDataTable" value="#{usuarioMB.listaUsuario}" var="usuario" rows="10">
@@ -48,14 +63,16 @@ and open the template in the editor.
                         <h:outputText value="#{usuario.email}"/>
                     </rich:column>
                     <rich:column rendered="#{controleSessaoMB.userInRoleAdmin}">
-                        <h:commandLink value="#{msgs['label.button.editar']}" action="editar"
+                    	<rich:toolTip for="editarCommandLink" value="#{msgs['label.button.editar']}" />
+                        <h:commandLink id="editarCommandLink" action="editar"
                                        rendered="#{usuario.email != controleSessaoMB.principalName}">
                             <f:actionListener type="com.valhala.curriculum.web.listeners.EdicaoActionListener"/>
                             <f:param id="idEdicao" name="idEdicao" value="#{usuario.id}"/>
                         </h:commandLink>
                     </rich:column>
                     <rich:column rendered="#{controleSessaoMB.userInRoleAdmin}">
-                        <a4j:commandLink value="#{msgs['label.button.deletar']}" action="#{usuarioMB.deletar}"
+                    	<rich:toolTip for = "deletarCommandLink" value = "#{msgs['label.button.deletar']}" />
+                        <a4j:commandLink id="deletarCommandLink" action="#{usuarioMB.deletar}"
                                          rendered="#{usuario.email != controleSessaoMB.principalName}"
                                          reRender="usuarioDataTable">
                             <f:setPropertyActionListener value="#{usuario.id}" target="#{usuarioMB.usuario.id}"/>

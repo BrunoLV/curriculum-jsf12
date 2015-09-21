@@ -40,24 +40,22 @@ public class Empresa extends BaseEntity implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 89 * hash + (this.nome != null ? this.nome.hashCode() : 0);
+        int hash = 21;
+        hash = 31 * hash + (this.nome == null ? 0 : this.nome.hashCode());
         return hash;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
+        if (obj == this) {
+            return true;
         }
-        if (getClass() != obj.getClass()) {
+        if (!(obj instanceof Empresa)) {
             return false;
         }
         final Empresa other = (Empresa) obj;
-        if (!this.nome.equals(other.nome)) {
-            return false;
-        }
-        return true;
+        
+        return other.nome.equals(this.nome);
     }
 
     @Override

@@ -20,8 +20,8 @@ public interface CurriculoSemRelacionamentoMapper {
 
 
     @Mappings({
-            @Mapping(target = "listaExperienciaProfissional", ignore = true),
-            @Mapping(target = "listaFormacaoAcademica", ignore = true)
+            @Mapping(target = "experienciasProfissionais", ignore = true),
+            @Mapping(target = "formacoesAcademicas", ignore = true)
     })
     Curriculo curriculoDtoToCurriculo(CurriculoDto curriculoDto);
 

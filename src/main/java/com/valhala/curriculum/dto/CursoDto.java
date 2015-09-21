@@ -31,4 +31,27 @@ public class CursoDto implements Serializable {
     public void setNome(String nome) {
         this.nome = nome;
     }
+    
+	@Override
+	public int hashCode() {
+		int result = 21;
+		result = 31 * result + (nome == null ? 0 : nome.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof CursoDto))
+			return false;
+		CursoDto other = (CursoDto) obj;
+		
+		return other.nome.equals(this.nome);
+	}
+
+	@Override
+	public String toString() {
+		return "Curso [nome=" + nome + "]";
+	}
 }

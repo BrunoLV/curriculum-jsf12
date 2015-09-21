@@ -26,12 +26,6 @@ public class Cargo extends BaseEntity implements Serializable {
         super();
     }
 
-    public Cargo(Integer id, String nome) {
-        super();
-        this.id = id;
-        this.nome = nome;
-    }
-
     public String getNome() {
         return nome;
     }
@@ -42,8 +36,8 @@ public class Cargo extends BaseEntity implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 47 * hash + (this.nome != null ? this.nome.hashCode() : 0);
+        int hash = 21;
+        hash = 31 * hash + (this.nome == null ? 0 : this.nome.hashCode());
         return hash;
     }
 
@@ -52,14 +46,12 @@ public class Cargo extends BaseEntity implements Serializable {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (!(obj instanceof Cargo)) {
             return false;
         }
         final Cargo other = (Cargo) obj;
-        if ((this.nome == null) ? (other.nome != null) : !this.nome.equals(other.nome)) {
-            return false;
-        }
-        return true;
+        
+        return other.nome.equals(this.nome);
     }
 
     @Override

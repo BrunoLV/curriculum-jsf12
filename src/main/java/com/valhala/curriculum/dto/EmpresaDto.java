@@ -40,5 +40,30 @@ public class EmpresaDto implements Serializable {
     public void setNome(String nome) {
         this.nome = nome;
     }
+    
+    @Override
+    public int hashCode() {
+        int hash = 21;
+        hash = 31 * hash + (this.nome == null ? 0 : this.nome.hashCode());
+        return hash;
+    }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof EmpresaDto)) {
+            return false;
+        }
+        final EmpresaDto other = (EmpresaDto) obj;
+        
+        return other.nome.equals(this.nome);
+    }
+
+    @Override
+    public String toString() {
+        return "Empresa{" + "id=" + id + ", nome=" + nome + '}';
+    }
+    
 }

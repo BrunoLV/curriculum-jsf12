@@ -20,12 +20,28 @@ and open the template in the editor.
                     <h:outputText value="#{msgs['text.panel.listempresa']}"/>
                 </f:facet>
 
-                <rich:messages id="globalMessages" globalOnly="true" showSummary="false" showDetail="true"/>
+                <rich:messages id="globalMessages" globalOnly="true"
+					showSummary="false" showDetail="true">
+					<f:facet name="errorMarker">
+						<h:graphicImage url="/images/error.png" />
+					</f:facet>
+					<f:facet name="infoMarker">
+						<h:graphicImage url="/images/Info.png" />
+					</f:facet>
+					<f:facet name="fatalMarker">
+						<h:graphicImage url="/images/fatal.png" />
+					</f:facet>
+					<f:facet name="warnMarker">
+						<h:graphicImage url="/images/warning.png" />
+					</f:facet>
+				</rich:messages>
 
                 <br/>
-                <h:commandButton id="novoCommandButton" value="#{msgs['label.button.novo']}"
-                                 rendered="#{controleSessaoMB.userInRoleAdmin}" action="novo"/>
-                <br/>
+                <rich:toolTip for="novoCommandLink" value="#{msgs['label.button.novo']}" />
+                <h:commandLink id="novoCommandLink"
+                                 rendered="#{controleSessaoMB.userInRoleAdmin}" action="novo">
+                	<h:graphicImage url="/images/new.png" />
+                </h:commandLink><br/>
                 <br/>
 
                 <rich:dataTable id="empresaDataTable" value="#{empresaMB.listaEmpresa}" var="empresa" rows="10">
@@ -42,15 +58,20 @@ and open the template in the editor.
                         <h:outputText value="#{empresa.nome}"/>
                     </rich:column>
                     <rich:column rendered="#{controleSessaoMB.userInRoleAdmin}">
-                        <h:commandLink value="#{msgs['label.button.editar']}" action="editar">
+                        <rich:toolTip for="editarCommandLink" value="#{msgs['label.button.editar']}" />
+                        <h:commandLink id="editarCommandLink" action="editar">
+                        	<h:graphicImage url="/images/edit.png" />
                             <f:actionListener type="com.valhala.curriculum.web.listeners.EdicaoActionListener"/>
                             <f:param id="idEdicao" name="idEdicao" value="#{empresa.id}"/>
                         </h:commandLink>
                     </rich:column>
                     <rich:column rendered="#{controleSessaoMB.userInRoleAdmin}">
-                        <a4j:commandLink value="#{msgs['label.button.deletar']}" action="#{empresaMB.deletar}"
-                                         reRender="empresaDataTable">
+                    	<rich:toolTip for = "deletarCommandLink" value = "#{msgs['label.button.deletar']}" />
+                        <a4j:commandLink id="deletarCommandLink"
+                        				 action="#{empresaMB.deletar}"
+                                         reRender="empresasDataTable">
                             <f:setPropertyActionListener value="#{empresa.id}" target="#{empresaMB.empresa.id}"/>
+                            <h:graphicImage url="/images/delete.png" />
                         </a4j:commandLink>
                     </rich:column>
                     <f:facet name="footer">

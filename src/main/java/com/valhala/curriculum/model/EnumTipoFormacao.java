@@ -5,13 +5,24 @@ package com.valhala.curriculum.model;
  */
 public enum EnumTipoFormacao {
 
-    CURSO_LIVRE,
-    TECNICO,
-    SUPERIOR_BACHARELADO,
-    SUPERIOR_LICENCIATURA,
-    POS_GRADUACAO,
-    MESTRADO,
-    DOUTORADO,
-    POS_DOUTORADO
+    CURSO_LIVRE("Curso Livre"),
+    TECNICO("Técnico"),
+    SUPERIOR_BACHARELADO("Superior Bacharelado"),
+    SUPERIOR_LICENCIATURA("Superior Licenciatura"),
+    POS_GRADUACAO("Pós Graduação"),
+    MESTRADO("Mestrado"),
+    DOUTORADO("Doutorado"),
+    POS_DOUTORADO("Pós Doutorado"),
+    MBA("MBA");
+    
+    private String descricao;
+    
+    private EnumTipoFormacao(String descricao) {
+    	this.descricao = descricao;
+	}
+    
+    public String getDescricao() {
+		return descricao;
+	}
 
 }

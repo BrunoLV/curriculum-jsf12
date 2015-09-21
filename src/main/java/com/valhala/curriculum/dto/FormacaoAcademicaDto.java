@@ -68,5 +68,44 @@ public class FormacaoAcademicaDto implements Serializable {
     public void setTipoFormacao(EnumTipoFormacaoDto tipoFormacao) {
         this.tipoFormacao = tipoFormacao;
     }
+    
+	@Override
+	public int hashCode() {
+		int result = 21;
+		result = 31 * result + ((curso == null) ? 0 : curso.hashCode());
+		result = 31 * result + ((dataInicio == null) ? 0 : dataInicio.hashCode());
+		result = 31 * result + ((dataTermino == null) ? 0 : dataTermino.hashCode());
+		result = 31 * result + ((entidadeEnsino == null) ? 0 : entidadeEnsino.hashCode());
+		result = 31 * result + ((tipoFormacao == null) ? 0 : tipoFormacao.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof FormacaoAcademicaDto))
+			return false;
+		FormacaoAcademicaDto other = (FormacaoAcademicaDto) obj;
+
+		return other.dataInicio.equals(this.dataInicio) && 
+				other.dataTermino.equals(this.dataTermino) && 
+				other.tipoFormacao.equals(this.tipoFormacao) && 
+				other.curso.equals(this.curso) &&
+				other.entidadeEnsino.equals(this.entidadeEnsino);
+	}
+
+	@Override
+	public String toString() {
+		return "FormacaoAcademica ["
+				+ (curso != null ? "curso=" + curso + ", " : "")
+				+ (entidadeEnsino != null ? "entidadeEnsino=" + entidadeEnsino
+						+ ", " : "")
+				+ (dataInicio != null ? "dataInicio=" + dataInicio + ", " : "")
+				+ (dataTermino != null ? "dataTermino=" + dataTermino + ", "
+						: "")
+				+ (tipoFormacao != null ? "tipoFormacao=" + tipoFormacao : "")
+				+ "]";
+	}
 
 }

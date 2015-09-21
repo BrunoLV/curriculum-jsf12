@@ -25,14 +25,6 @@ public class ExperienciaProfissionalDto implements Serializable {
     public ExperienciaProfissionalDto() {
     }
 
-    public ExperienciaProfissionalDto(Integer id, Date dataInicio, Date dataSaida, CargoDto cargo, EmpresaDto empresa) {
-        this.id = id;
-        this.dataInicio = dataInicio;
-        this.dataSaida = dataSaida;
-        this.cargo = cargo;
-        this.empresa = empresa;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -80,4 +72,37 @@ public class ExperienciaProfissionalDto implements Serializable {
     public void setCurriculo(CurriculoDto curriculo) {
         this.curriculo = curriculo;
     }
+    
+    @Override
+	public int hashCode() {
+		int result = 21;
+		result = 31 * result + ((cargo == null) ? 0 : cargo.hashCode());
+		result = 31 * result + ((dataInicio == null) ? 0 : dataInicio.hashCode());
+		result = 31 * result + ((dataSaida == null) ? 0 : dataSaida.hashCode());
+		result = 31 * result + ((empresa == null) ? 0 : empresa.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof ExperienciaProfissionalDto))
+			return false;
+		ExperienciaProfissionalDto other = (ExperienciaProfissionalDto) obj;
+		
+		return other.dataInicio.equals(this.dataInicio) && 
+				other.dataSaida.equals(this.dataSaida) && 
+				other.cargo.equals(this.cargo) && 
+				other.empresa.equals(this.empresa);
+	}
+
+	@Override
+	public String toString() {
+		return "ExperienciaProfissional ["
+				+ (dataInicio != null ? "dataInicio=" + dataInicio + ", " : "")
+				+ (dataSaida != null ? "dataSaida=" + dataSaida + ", " : "")
+				+ (empresa != null ? "empresa=" + empresa + ", " : "")
+				+ (cargo != null ? "cargo=" + cargo : "") + "]";
+	}
 }

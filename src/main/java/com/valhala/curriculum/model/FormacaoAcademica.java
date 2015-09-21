@@ -1,6 +1,7 @@
 package com.valhala.curriculum.model;
 
 import javax.persistence.*;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -16,6 +17,7 @@ public class FormacaoAcademica extends BaseEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_curso")
     private Curso curso;
+    
     @ManyToOne
     @JoinColumn(name = "id_entidade_ensino")
     private EntidadeEnsino entidadeEnsino;
@@ -85,10 +87,54 @@ public class FormacaoAcademica extends BaseEntity implements Serializable {
     }
 
     public void setCurriculo(Curriculo curriculo) {
+    	if (curriculo == null) {
+			if (this.curriculo != null) {
+				this.curriculo.getFormacoesAcademicas().remove(this);
+			}
+		}
         this.curriculo = curriculo;
         if (curriculo != null) {
-            this.curriculo.adicionarFormacaoAcademica(this);
+            this.curriculo.getFormacoesAcademicas().add(this);
         }
     }
+
+	@Override
+	public int hashCode() {
+		int result = 21;
+		result = 31 * result + ((curso == null) ? 0 : curso.hashCode());
+		result = 31 * result + ((dataInicio == null) ? 0 : dataInicio.hashCode());
+		result = 31 * result + ((dataTermino == null) ? 0 : dataTermino.hashCode());
+		result = 31 * result + ((entidadeEnsino == null) ? 0 : entidadeEnsino.hashCode());
+		result = 31 * result + ((tipoFormacao == null) ? 0 : tipoFormacao.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof FormacaoAcademica))
+			return false;
+		FormacaoAcademica other = (FormacaoAcademica) obj;
+
+		return other.dataInicio.equals(this.dataInicio) && 
+				other.dataTermino.equals(this.dataTermino) && 
+				other.tipoFormacao.equals(this.tipoFormacao) && 
+				other.curso.equals(this.curso) &&
+				other.entidadeEnsino.equals(this.entidadeEnsino);
+	}
+
+	@Override
+	public String toString() {
+		return "FormacaoAcademica ["
+				+ (curso != null ? "curso=" + curso + ", " : "")
+				+ (entidadeEnsino != null ? "entidadeEnsino=" + entidadeEnsino
+						+ ", " : "")
+				+ (dataInicio != null ? "dataInicio=" + dataInicio + ", " : "")
+				+ (dataTermino != null ? "dataTermino=" + dataTermino + ", "
+						: "")
+				+ (tipoFormacao != null ? "tipoFormacao=" + tipoFormacao : "")
+				+ "]";
+	}
 
 }

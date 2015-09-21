@@ -6,6 +6,7 @@
 package com.valhala.curriculum.model;
 
 import javax.persistence.*;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -26,12 +27,14 @@ public class ExperienciaProfissional extends BaseEntity implements Serializable 
     @Temporal(TemporalType.DATE)
     private Date dataSaida;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_curriculo")
     private Curriculo curriculo;
+    
     @ManyToOne
     @JoinColumn(name = "id_empresa")
     private Empresa empresa;
+    
     @ManyToOne
     @JoinColumn(name = "id_cargo")
     private Cargo cargo;
@@ -69,10 +72,14 @@ public class ExperienciaProfissional extends BaseEntity implements Serializable 
     }
 
     public void setCurriculo(Curriculo curriculo) {
-
+    	if (curriculo == null) {
+			if (this.curriculo != null) { 
+				this.curriculo.getExperienciasProfissionais().remove(this);
+			}
+		}
         this.curriculo = curriculo;
         if (curriculo != null) {
-            this.curriculo.adicionarExperienciaProfissional(this);
+            this.curriculo.getExperienciasProfissionais().add(this);
         }
     }
 
@@ -91,44 +98,38 @@ public class ExperienciaProfissional extends BaseEntity implements Serializable 
     public void setCargo(Cargo cargo) {
         this.cargo = cargo;
     }
+    
+	@Override
+	public int hashCode() {
+		int result = 21;
+		result = 31 * result + ((cargo == null) ? 0 : cargo.hashCode());
+		result = 31 * result + ((dataInicio == null) ? 0 : dataInicio.hashCode());
+		result = 31 * result + ((dataSaida == null) ? 0 : dataSaida.hashCode());
+		result = 31 * result + ((empresa == null) ? 0 : empresa.hashCode());
+		return result;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 59 * hash + (this.dataInicio != null ? this.dataInicio.hashCode() : 0);
-        hash = 59 * hash + (this.dataSaida != null ? this.dataSaida.hashCode() : 0);
-        hash = 59 * hash + (this.empresa != null ? this.empresa.hashCode() : 0);
-        hash = 59 * hash + (this.cargo != null ? this.cargo.hashCode() : 0);
-        return hash;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof ExperienciaProfissional))
+			return false;
+		ExperienciaProfissional other = (ExperienciaProfissional) obj;
+		
+		return other.dataInicio.equals(this.dataInicio) && 
+				other.dataSaida.equals(this.dataSaida) && 
+				other.cargo.equals(this.cargo) && 
+				other.empresa.equals(this.empresa);
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final ExperienciaProfissional other = (ExperienciaProfissional) obj;
-        if (!this.dataInicio.equals(other.dataInicio)) {
-            return false;
-        }
-        if (!this.dataSaida.equals(other.dataSaida)) {
-            return false;
-        }
-        if (!this.empresa.equals(other.empresa)) {
-            return false;
-        }
-        if (!this.cargo.equals(other.cargo)) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "ExperienciaProfissional{" + "id=" + id + ", dataInicio=" + dataInicio + ", dataSaida=" + dataSaida + ", curriculo=" + curriculo + ", empresa=" + empresa + ", cargo=" + cargo + '}';
-    }
+	@Override
+	public String toString() {
+		return "ExperienciaProfissional ["
+				+ (dataInicio != null ? "dataInicio=" + dataInicio + ", " : "")
+				+ (dataSaida != null ? "dataSaida=" + dataSaida + ", " : "")
+				+ (empresa != null ? "empresa=" + empresa + ", " : "")
+				+ (cargo != null ? "cargo=" + cargo : "") + "]";
+	}
 
 }
