@@ -9,13 +9,21 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:f="http://java.sun.com/jsf/core">
 
 <body>
-<ui:composition>
-    <h6 style="font-family: Tahoma" align="center"><h:outputFormat value="#{msgs['text.footer']}"/></h6>
-</ui:composition>
+	<ui:composition>
+		<br />
+		<h:form>
+			<rich:separator />
+			<h6 align="center">
+				<h:outputFormat value="#{msgs['text.footer']}" />
+			</h6>
+		</h:form>
+	</ui:composition>
 </body>
 
 </html>
