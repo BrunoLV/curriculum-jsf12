@@ -11,7 +11,6 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -33,7 +32,7 @@ public class Curriculo extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "curriculo", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<ExperienciaProfissional> experienciasProfissionais = new LinkedHashSet<ExperienciaProfissional>();
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "curriculo", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "curriculo", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<FormacaoAcademica> formacoesAcademicas = new LinkedHashSet<FormacaoAcademica>();
 
     public Curriculo() {

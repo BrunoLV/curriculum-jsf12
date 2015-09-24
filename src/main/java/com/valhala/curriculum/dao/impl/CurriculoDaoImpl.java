@@ -16,6 +16,7 @@ public class CurriculoDaoImpl extends BaseDao<Curriculo> implements CurriculoDao
 
     private static final String SQL_ALL_CURRICULO = "SELECT c FROM Curriculo AS c";
     private static final String SQL_CURRICULO_RELACAO = "SELECT c FROM Curriculo AS c " +
+    		"LEFT OUTER JOIN FETCH c.formacoesAcademicas " +
             "LEFT OUTER JOIN FETCH c.experienciasProfissionais " +
             "WHERE c.id = :id";
 
