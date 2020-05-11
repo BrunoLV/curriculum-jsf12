@@ -1,2 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pageflow:Pageflow xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14427080184300" configfile="/curriculum-jsf12/src/main/webapp/WEB-INF/faces-config.xml"/>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15888173676560" configfile="/curriculum-jsf12/src/main/webapp/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="1138" id="pf15888174955461" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15888174955472 pf15888174955473 pf15888174955474 pf15888174955475 pf15888174955476 pf15888174955477" path="/*"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/protected/user/listagem-cargos.xhtml" x="338" y="178" id="pf15888174955478" referenceLink="//@navigationRule.7/@fromViewId|" outlinks="pf15888174955479 pf158881749554710" inlinks="pf15888174955472 pf158881749554711" path="/pages/protected/user/listagem-cargos.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/protected/user/listagem-empresa.xhtml" x="338" y="562" id="pf158881749554712" referenceLink="//@navigationRule.8/@fromViewId|" outlinks="pf158881749554713 pf158881749554714" inlinks="pf15888174955473 pf158881749554715" path="/pages/protected/user/listagem-empresa.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/protected/user/listagem-usuario.xhtml" x="338" y="946" id="pf158881749554716" referenceLink="//@navigationRule.9/@fromViewId|" outlinks="pf158881749554717 pf158881749554718" inlinks="pf15888174955474 pf158881749554719" path="/pages/protected/user/listagem-usuario.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/protected/user/listagem-curriculo.xhtml" x="338" y="1330" id="pf158881749554720" referenceLink="//@navigationRule.10/@fromViewId|" outlinks="pf158881749554721 pf158881749554722" inlinks="pf15888174955475 pf158881749554723" path="/pages/protected/user/listagem-curriculo.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/protected/user/listagem-cursos.xhtml" x="338" y="1714" id="pf158881749554724" referenceLink="//@navigationRule.11/@fromViewId|" outlinks="pf158881749554825 pf158881749554826" inlinks="pf15888174955476 pf158881749554827" path="/pages/protected/user/listagem-cursos.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/protected/user/listagem-entidade-ensino.xhtml" x="338" y="2098" id="pf158881749554828" referenceLink="//@navigationRule.12/@fromViewId|" outlinks="pf158881749554829 pf158881749554830" inlinks="pf15888174955477 pf158881749554831" path="/pages/protected/user/listagem-entidade-ensino.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/protected/admin/cadastro-cargos.xhtml" x="554" y="178" id="pf158881749554832" referenceLink="//@navigationRule.7/@navigationCase.1/@toViewId|" outlinks="pf158881749554711" inlinks="pf15888174955479 pf158881749554710" path="/pages/protected/admin/cadastro-cargos.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/protected/admin/cadastro-empresa.xhtml" x="554" y="562" id="pf158881749554833" referenceLink="//@navigationRule.8/@navigationCase.1/@toViewId|" outlinks="pf158881749554715" inlinks="pf158881749554713 pf158881749554714" path="/pages/protected/admin/cadastro-empresa.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/protected/admin/cadastro-usuario.xhtml" x="554" y="946" id="pf158881749554834" referenceLink="//@navigationRule.9/@navigationCase.1/@toViewId|" outlinks="pf158881749554719" inlinks="pf158881749554717 pf158881749554718" path="/pages/protected/admin/cadastro-usuario.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/protected/admin/cadastro-curriculo.xhtml" x="554" y="1330" id="pf158881749554835" referenceLink="//@navigationRule.10/@navigationCase.1/@toViewId|" outlinks="pf158881749554723" inlinks="pf158881749554721 pf158881749554722" path="/pages/protected/admin/cadastro-curriculo.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/protected/admin/cadastro-cursos.xhtml" x="554" y="1714" id="pf158881749554836" referenceLink="//@navigationRule.11/@navigationCase.1/@toViewId|" outlinks="pf158881749554827" inlinks="pf158881749554825 pf158881749554826" path="/pages/protected/admin/cadastro-cursos.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/protected/admin/cadastro-entidade-ensino.xhtml" x="554" y="2098" id="pf158881749554837" referenceLink="//@navigationRule.12/@navigationCase.1/@toViewId|" outlinks="pf158881749554831" inlinks="pf158881749554829 pf158881749554830" path="/pages/protected/admin/cadastro-entidade-ensino.xhtml"/>
+  <links id="pf15888174955472" target="pf15888174955478" source="pf15888174955461" outcome="cargos" redirect="true"/>
+  <links id="pf15888174955473" target="pf158881749554712" source="pf15888174955461" outcome="empresas" redirect="true"/>
+  <links id="pf15888174955474" target="pf158881749554716" source="pf15888174955461" outcome="usuarios" redirect="true"/>
+  <links id="pf15888174955475" target="pf158881749554720" source="pf15888174955461" outcome="curriculos" redirect="true"/>
+  <links id="pf15888174955476" target="pf158881749554724" source="pf15888174955461" outcome="cursos" redirect="true"/>
+  <links id="pf15888174955477" target="pf158881749554828" source="pf15888174955461" outcome="entidadesEnsino" redirect="true"/>
+  <links id="pf158881749554711" target="pf15888174955478" source="pf158881749554832" outcome="listar" redirect="true"/>
+  <links id="pf158881749554715" target="pf158881749554712" source="pf158881749554833" outcome="listar" redirect="true"/>
+  <links id="pf158881749554719" target="pf158881749554716" source="pf158881749554834" outcome="listar" redirect="true"/>
+  <links id="pf158881749554723" target="pf158881749554720" source="pf158881749554835" outcome="listar" redirect="true"/>
+  <links id="pf158881749554827" target="pf158881749554724" source="pf158881749554836" outcome="listar" redirect="true"/>
+  <links id="pf158881749554831" target="pf158881749554828" source="pf158881749554837" outcome="listar" redirect="true"/>
+  <links id="pf15888174955479" target="pf158881749554832" source="pf15888174955478" outcome="novo" redirect="true"/>
+  <links id="pf158881749554710" target="pf158881749554832" source="pf15888174955478" outcome="editar" redirect="true"/>
+  <links id="pf158881749554713" target="pf158881749554833" source="pf158881749554712" outcome="novo" redirect="true"/>
+  <links id="pf158881749554714" target="pf158881749554833" source="pf158881749554712" outcome="editar" redirect="true"/>
+  <links id="pf158881749554717" target="pf158881749554834" source="pf158881749554716" outcome="novo" redirect="true"/>
+  <links id="pf158881749554718" target="pf158881749554834" source="pf158881749554716" outcome="editar" redirect="true"/>
+  <links id="pf158881749554721" target="pf158881749554835" source="pf158881749554720" outcome="novo" redirect="true"/>
+  <links id="pf158881749554722" target="pf158881749554835" source="pf158881749554720" outcome="editar" redirect="true"/>
+  <links id="pf158881749554825" target="pf158881749554836" source="pf158881749554724" outcome="novo" redirect="true"/>
+  <links id="pf158881749554826" target="pf158881749554836" source="pf158881749554724" outcome="editar" redirect="true"/>
+  <links id="pf158881749554829" target="pf158881749554837" source="pf158881749554828" outcome="novo" redirect="true"/>
+  <links id="pf158881749554830" target="pf158881749554837" source="pf158881749554828" outcome="editar" redirect="true"/>
+</pageflow:Pageflow>

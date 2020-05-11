@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="curriculum-jsf12:war">
-    <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="curriculum-jsf12.war">
-      <element id="artifact" artifact-name="curriculum-jsf12:war exploded" />
-    </root>
-  </artifact>
-</component>

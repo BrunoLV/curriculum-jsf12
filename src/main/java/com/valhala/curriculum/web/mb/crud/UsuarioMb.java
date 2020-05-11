@@ -1,13 +1,17 @@
 package com.valhala.curriculum.web.mb.crud;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.faces.model.SelectItem;
+
+import com.valhala.curriculum.dto.RolesDto;
 import com.valhala.curriculum.dto.UsuarioDto;
 import com.valhala.curriculum.ejb.UsuarioService;
 import com.valhala.curriculum.mappers.UsuarioMapper;
 import com.valhala.curriculum.web.mb.BaseMb;
-
-import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
-import java.util.List;
 
 public class UsuarioMb extends BaseMb {
 
@@ -17,8 +21,18 @@ public class UsuarioMb extends BaseMb {
 
     private UsuarioDto usuario;
     private List<UsuarioDto> listaUsuario;
+    
+    private List<SelectItem> papeis = new ArrayList<SelectItem>();
 
-    private UsuarioMapper usuarioMapper = UsuarioMapper.INSTANCE;
+    public List<SelectItem> getPapeis() {
+		return papeis;
+	}
+
+	public void setPapeis(List<SelectItem> papeis) {
+		this.papeis = papeis;
+	}
+
+	private UsuarioMapper usuarioMapper = UsuarioMapper.INSTANCE;
 
     @EJB
     private UsuarioService service;
@@ -31,8 +45,14 @@ public class UsuarioMb extends BaseMb {
             removeAtributoSessao(ID_EDICAO_SESSAO);
         } else {
             this.usuario = new UsuarioDto();
+            this.usuario.setPapeis(new ArrayList<RolesDto>());
         }
         this.listaUsuario = usuarioMapper.listaUsuarioToListaUsuarioDto(this.service.buscarTodos());
+        
+        papeis = new ArrayList<SelectItem>();
+        for (RolesDto rolesDto : RolesDto.values()) {
+			papeis.add(new SelectItem(rolesDto, rolesDto.getNome()));
+		}
     }
 
     public void salvar() {

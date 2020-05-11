@@ -6,17 +6,21 @@
 package com.valhala.curriculum.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author bruno
  */
 public class UsuarioDto implements Serializable {
 
-    private static final long serialVersionUID = -9216022405443925385L;
+	private static final long serialVersionUID = -9216022405443925385L;
 	
     private Integer id;
     private String nome;
     private String email;
+    private String senha;
+    private List<RolesDto> papeis = new ArrayList<RolesDto>();
 
     public Integer getId() {
         return id;
@@ -41,6 +45,22 @@ public class UsuarioDto implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+    
+    public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public List<RolesDto> getPapeis() {
+		return papeis;
+	}
+
+	public void setPapeis(List<RolesDto> papeis) {
+		this.papeis = papeis;
+	}
     
     @Override
     public int hashCode() {

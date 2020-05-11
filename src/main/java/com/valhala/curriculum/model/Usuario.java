@@ -5,11 +5,19 @@
  */
 package com.valhala.curriculum.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.Table;
 
 /**
  * @author bruno
@@ -19,19 +27,21 @@ import java.util.Set;
 public class Usuario extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 6995562910263380576L;
-	
-    @Column(name = "nome", nullable = false)
+
+	@Column(name = "nome", nullable = false)
     private String nome;
     @Column(name = "email", unique = true, nullable = false)
     private String email;
+    @Column(name = "senha", unique = true, nullable = false)
+    private String senha;
+    
+    @ElementCollection(fetch = FetchType.EAGER)
+    @JoinTable(name = "tb_papeis_usuario", joinColumns = @JoinColumn(name = "id_usuario"))
+    @Column(name = "papel", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private List<Roles> papeis = new ArrayList<Roles>();
 
     public Usuario() {
-    }
-
-    public Usuario(Integer id, String nome, String email, Set<Curriculo> curriculos) {
-        this.id = id;
-        this.nome = nome;
-        this.email = email;
     }
 
     public String getNome() {
@@ -49,6 +59,22 @@ public class Usuario extends BaseEntity implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+    
+    public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public List<Roles> getPapeis() {
+		return papeis;
+	}
+
+	public void setPapeis(List<Roles> papeis) {
+		this.papeis = papeis;
+	}
 
     @Override
     public int hashCode() {

@@ -68,6 +68,7 @@ and open the template in the editor.
                                        rendered="#{usuario.email != controleSessaoMB.principalName}">
                             <f:actionListener type="com.valhala.curriculum.web.listeners.EdicaoActionListener"/>
                             <f:param id="idEdicao" name="idEdicao" value="#{usuario.id}"/>
+                            <h:graphicImage url="/images/edit.png" />
                         </h:commandLink>
                     </rich:column>
                     <rich:column rendered="#{controleSessaoMB.userInRoleAdmin}">
@@ -76,6 +77,7 @@ and open the template in the editor.
                                          rendered="#{usuario.email != controleSessaoMB.principalName}"
                                          reRender="usuarioDataTable">
                             <f:setPropertyActionListener value="#{usuario.id}" target="#{usuarioMB.usuario.id}"/>
+                        	<h:graphicImage url="/images/delete.png" />
                         </a4j:commandLink>
                     </rich:column>
                     <f:facet name="footer">

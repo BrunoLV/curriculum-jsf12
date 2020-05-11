@@ -43,6 +43,15 @@ and open the template in the editor.
 					<h:outputLabel value="#{msgs['label.form.email']}"
 						for="emailInputText" />
 					<h:inputText id="emailInputText" value="#{usuarioMB.usuario.email}" />
+					<h:outputLabel value="#{msgs['label.form.senha']}"
+						for="senhaInputSecret" />
+					<h:inputSecret id="senhaInputSecret"
+						value="#{usuarioMB.usuario.senha}" />
+					<h:outputLabel value="#{msgs['label.form.papeis']}" />
+					<rich:pickList value="#{usuarioMB.usuario.papeis}" showButtonsLabel="false">
+						<f:selectItems value="#{usuarioMB.papeis}" />
+						<f:converter converterId="rolesConverter" />
+					</rich:pickList>
 					<f:facet name="footer">
 						<rich:toolTip for="salvarCommandLink"
 							value="#{msgs['label.button.salvar']}" />
