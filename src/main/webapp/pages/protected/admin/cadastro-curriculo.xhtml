@@ -63,16 +63,18 @@ and open the template in the editor.
 								<h:outputLabel value="#{msgs['label.form.empresa']}"
 									for="empresaSelectOneMenu" />
 								<h:selectOneMenu id="empresaSelectOneMenu"
-									value="#{curriculoMB.experienciaProfissional.empresa.id}">
+									value="#{curriculoMB.experienciaProfissional.empresa}">
 									<f:selectItem itemDisabled="true" itemLabel="Selecione..." />
 									<f:selectItems value="#{curriculoMB.listaEmpresa}" />
+									<f:converter converterId="empresaConverter" />
 								</h:selectOneMenu>
 								<h:outputLabel value="#{msgs['label.form.cargo']}"
 									for="cargoSelectOneMenu" />
 								<h:selectOneMenu id="cargoSelectOneMenu"
-									value="#{curriculoMB.experienciaProfissional.cargo.id}">
+									value="#{curriculoMB.experienciaProfissional.cargo}">
 									<f:selectItem itemDisabled="true" itemLabel="Selecione..." />
 									<f:selectItems value="#{curriculoMB.listaCargo}" />
+									<f:converter converterId="cargoConverter" />
 								</h:selectOneMenu>
 								<h:outputLabel value="#{msgs['label.form.dataInicio']}"
 									for="dataInicioCalendar" />
@@ -158,16 +160,18 @@ and open the template in the editor.
 								<h:outputLabel value="#{msgs['label.form.entidadeEnsino']}"
 									for="entidadeEnsinoSelectOneMenu" />
 								<h:selectOneMenu id="entidadeEnsinoSelectOneMenu"
-									value="#{curriculoMB.formacaoAcademica.entidadeEnsino.id}">
+									value="#{curriculoMB.formacaoAcademica.entidadeEnsino}">
 									<f:selectItem itemDisabled="true" itemLabel="Selecione..." />
 									<f:selectItems value="#{curriculoMB.listaEntidadeEnsino}" />
+									<f:converter converterId="entidadeEnsinoConverter" />
 								</h:selectOneMenu>
 								<h:outputLabel value="#{msgs['label.form.curso']}"
 									for="cursoSelectOneMenu" />
 								<h:selectOneMenu id="cursoSelectOneMenu"
-									value="#{curriculoMB.formacaoAcademica.curso.id}">
+									value="#{curriculoMB.formacaoAcademica.curso}">
 									<f:selectItem itemDisabled="true" itemLabel="Selecione..." />
 									<f:selectItems value="#{curriculoMB.listaCurso}" />
+									<f:converter converterId="cursoConverter" />
 								</h:selectOneMenu>
 								<h:outputLabel value="#{msgs['label.form.tipoFormacao']}"
 									for="tipoFormacaoSelectOneMenu" />

@@ -1,78 +1,75 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.valhala.curriculum.web.mb.crud;
 
-import com.valhala.curriculum.dto.EmpresaDto;
-import com.valhala.curriculum.ejb.EmpresaService;
-import com.valhala.curriculum.mappers.EmpresaMapper;
-import com.valhala.curriculum.web.mb.BaseMb;
+import java.lang.reflect.Type;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import java.util.List;
 
-/**
- * @author bruno
- */
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
+
+import com.valhala.curriculum.dto.EmpresaDto;
+import com.valhala.curriculum.ejb.EmpresaService;
+import com.valhala.curriculum.model.Empresa;
+import com.valhala.curriculum.web.mb.BaseMb;
+
+import lombok.Getter;
+import lombok.Setter;
+
 public class EmpresaMb extends BaseMb {
 
-    private static final long serialVersionUID = 5906333509526366720L;
+	private static final long serialVersionUID = 5906333509526366720L;
 
 	private static final String ID_EDICAO_SESSAO = "idParaEdicao";
 
-    @EJB
-    private EmpresaService service;
-    private EmpresaDto empresa;
-    private List<EmpresaDto> listaEmpresa;
+	@EJB
+	private EmpresaService service;
 
-    private EmpresaMapper empresaMapper = EmpresaMapper.INSTANCE;
+	@Getter
+	@Setter
+	private EmpresaDto empresa;
 
-    @PostConstruct
-    private void init() {
-        Integer id = (Integer) getAtributoSessao(ID_EDICAO_SESSAO);
-        if (id != null && id > 0) {
-            this.empresa = empresaMapper.empresaToEmpresaDto(this.service.pesquisarPorId(id));
-            removeAtributoSessao(ID_EDICAO_SESSAO);
-        } else {
-            this.empresa = new EmpresaDto();
-        }
-        this.listaEmpresa = empresaMapper.listaEmpresaToListaEmpresaDto(this.service.buscarTodos());
-    }
+	@Getter
+	@Setter
+	private List<EmpresaDto> listaEmpresa;
 
-    public void salvar() {
-        if (empresa.getId() == 0) {
-            empresa.setId(null);
-            this.service.salvar(empresaMapper.empresaDtoToEmpresa(this.empresa));
-            inserirMensagemInformativa("Empresa inserida com sucesso!!!");
-        } else {
-            this.service.editar(empresaMapper.empresaDtoToEmpresa(this.empresa));
-            inserirMensagemInformativa("Empresa editada com sucesso!!!");
-        }
-    }
+	ModelMapper modelMapper = new ModelMapper();
 
-    public void deletar() {
-        this.service.deletar(empresaMapper.empresaDtoToEmpresa(this.empresa));
-        this.listaEmpresa = empresaMapper.listaEmpresaToListaEmpresaDto(this.service.buscarTodos());
-        inserirMensagemInformativa("Empresa removida com sucesso!!!");
-    }
+	public void deletar() {
+		this.service.deletar(modelMapper.map(this.empresa, Empresa.class));
+		carregaListaEmpresas();
+		inserirMensagemInformativa("Empresa removida com sucesso!!!");
+	}
 
-    public EmpresaDto getEmpresa() {
-        return empresa;
-    }
+	@PostConstruct
+	private void init() {
+		Integer id = (Integer) getAtributoSessao(ID_EDICAO_SESSAO);
+		if (id != null && id > 0) {
+			this.empresa = modelMapper.map(this.service.pesquisarPorId(id), EmpresaDto.class);
+			removeAtributoSessao(ID_EDICAO_SESSAO);
+		} else {
+			this.empresa = new EmpresaDto();
+		}
+		carregaListaEmpresas();
+	}
 
-    public void setEmpresa(EmpresaDto empresa) {
-        this.empresa = empresa;
-    }
+	private void carregaListaEmpresas() {
+		Type type = new TypeToken<List<EmpresaDto>>() {
+		}.getType();
+		this.listaEmpresa = modelMapper.map(this.service.buscarTodos(), type);
+	}
 
-    public List<EmpresaDto> getListaEmpresa() {
-        return listaEmpresa;
-    }
-
-    public void setListaEmpresa(List<EmpresaDto> listaEmpresa) {
-        this.listaEmpresa = listaEmpresa;
-    }
+	public void salvar() {
+		Empresa empresaPersistencia = modelMapper.map(this.empresa, Empresa.class);
+		if (empresa.getId() == 0) {
+			empresa.setId(null);
+			this.service.salvar(empresaPersistencia);
+			inserirMensagemInformativa("Empresa inserida com sucesso!!!");
+		} else {
+			this.service.editar(empresaPersistencia);
+			inserirMensagemInformativa("Empresa editada com sucesso!!!");
+		}
+	}
 
 }

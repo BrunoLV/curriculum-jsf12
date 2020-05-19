@@ -4,7 +4,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
-import com.valhala.curriculum.dto.RolesDto;
+import com.valhala.curriculum.dto.enumerados.RolesDto;
 
 public class RolesConverter implements Converter {
 

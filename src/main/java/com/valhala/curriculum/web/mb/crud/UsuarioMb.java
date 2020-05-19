@@ -1,5 +1,6 @@
 package com.valhala.curriculum.web.mb.crud;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,11 +8,17 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.model.SelectItem;
 
-import com.valhala.curriculum.dto.RolesDto;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
+
 import com.valhala.curriculum.dto.UsuarioDto;
+import com.valhala.curriculum.dto.enumerados.RolesDto;
 import com.valhala.curriculum.ejb.UsuarioService;
-import com.valhala.curriculum.mappers.UsuarioMapper;
+import com.valhala.curriculum.model.Usuario;
 import com.valhala.curriculum.web.mb.BaseMb;
+
+import lombok.Getter;
+import lombok.Setter;
 
 public class UsuarioMb extends BaseMb {
 
@@ -19,73 +26,62 @@ public class UsuarioMb extends BaseMb {
 
 	private static final String ID_EDICAO_SESSAO = "idParaEdicao";
 
+	@Getter
+	@Setter
     private UsuarioDto usuario;
-    private List<UsuarioDto> listaUsuario;
     
+	@Getter
+	@Setter
+	private List<UsuarioDto> listaUsuario;
+    
+	@Getter
+	@Setter
     private List<SelectItem> papeis = new ArrayList<SelectItem>();
 
-    public List<SelectItem> getPapeis() {
-		return papeis;
-	}
-
-	public void setPapeis(List<SelectItem> papeis) {
-		this.papeis = papeis;
-	}
-
-	private UsuarioMapper usuarioMapper = UsuarioMapper.INSTANCE;
-
-    @EJB
+	@EJB
     private UsuarioService service;
+	
+	ModelMapper modelMapper = new ModelMapper();
+
+	public void deletar() {
+        this.service.deletar(modelMapper.map(usuario, Usuario.class));
+        carregaListaUsuarios();
+        inserirMensagemInformativa("Usuario removido com sucesso!!!");
+    }
 
     @PostConstruct
     private void init() {
         Integer id = (Integer) getAtributoSessao(ID_EDICAO_SESSAO);
         if (id != null && id > 0) {
-            this.usuario = usuarioMapper.usuarioToUsuarioDto(this.service.pesquisarPorId(id));
+            this.usuario = modelMapper.map(this.service.pesquisarPorId(id), UsuarioDto.class);
             removeAtributoSessao(ID_EDICAO_SESSAO);
         } else {
             this.usuario = new UsuarioDto();
             this.usuario.setPapeis(new ArrayList<RolesDto>());
         }
-        this.listaUsuario = usuarioMapper.listaUsuarioToListaUsuarioDto(this.service.buscarTodos());
+        carregaListaUsuarios();
         
-        papeis = new ArrayList<SelectItem>();
-        for (RolesDto rolesDto : RolesDto.values()) {
-			papeis.add(new SelectItem(rolesDto, rolesDto.getNome()));
+        for (RolesDto r : RolesDto.values()) {
+			papeis.add(new SelectItem(r, r.getNome()));
 		}
+        
     }
+
+	private void carregaListaUsuarios() {
+		Type type = new TypeToken<List<UsuarioDto>>() {}.getType();
+        this.listaUsuario = modelMapper.map(this.service.buscarTodos(), type);
+	}
 
     public void salvar() {
-        if (this.usuario.getId() == 0) {
+        Usuario usuarioPersistencia = modelMapper.map(usuario, Usuario.class);
+		if (this.usuario.getId() == 0) {
             usuario.setId(null);
-            this.service.salvar(usuarioMapper.usuarioDtoToUsuario(usuario));
+            this.service.salvar(usuarioPersistencia);
             inserirMensagemInformativa("Usuario inserido com sucesso!!!");
         } else {
-            this.service.editar(usuarioMapper.usuarioDtoToUsuario(usuario));
+            this.service.editar(usuarioPersistencia);
             inserirMensagemInformativa("Usuario editado com sucesso!!!");
         }
-    }
-
-    public void deletar() {
-        this.service.deletar(usuarioMapper.usuarioDtoToUsuario(usuario));
-        this.listaUsuario = usuarioMapper.listaUsuarioToListaUsuarioDto(this.service.buscarTodos());
-        inserirMensagemInformativa("Usuario removido com sucesso!!!");
-    }
-
-    public UsuarioDto getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(UsuarioDto usuario) {
-        this.usuario = usuario;
-    }
-
-    public List<UsuarioDto> getListaUsuario() {
-        return listaUsuario;
-    }
-
-    public void setListaUsuario(List<UsuarioDto> listaUsuario) {
-        this.listaUsuario = listaUsuario;
     }
 
 }

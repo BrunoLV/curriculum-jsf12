@@ -1,11 +1,8 @@
-package com.valhala.curriculum.dto;
+package com.valhala.curriculum.model.enumerados;
 
-/**
- * Created by bruno on 17/09/15.
- */
-public enum EnumTipoFormacaoDto {
+public enum TipoFormacao {
 
-	CURSO_LIVRE("Curso Livre"),
+    CURSO_LIVRE("Curso Livre"),
     TECNICO("Técnico"),
     SUPERIOR_BACHARELADO("Superior Bacharelado"),
     SUPERIOR_LICENCIATURA("Superior Licenciatura"),
@@ -17,7 +14,7 @@ public enum EnumTipoFormacaoDto {
     
     private String descricao;
     
-    private EnumTipoFormacaoDto(String descricao) {
+    private TipoFormacao(String descricao) {
     	this.descricao = descricao;
 	}
     

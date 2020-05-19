@@ -8,9 +8,6 @@ import javax.ejb.Local;
 
 import com.valhala.curriculum.model.Curriculo;
 
-/**
- * Created by bruno on 05/09/15.
- */
 @Local
 public interface CurriculoService extends BaseService<Curriculo> {
 

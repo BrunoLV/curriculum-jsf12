@@ -1,22 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.valhala.curriculum.web.mb.crud;
 
-import com.valhala.curriculum.dto.EntidadeEnsinoDto;
-import com.valhala.curriculum.ejb.EntidadeEnsinoService;
-import com.valhala.curriculum.mappers.EntidadeEnsinoMapper;
-import com.valhala.curriculum.web.mb.BaseMb;
+import java.lang.reflect.Type;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import java.util.List;
 
-/**
- * @author bruno
- */
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
+
+import com.valhala.curriculum.dto.EntidadeEnsinoDto;
+import com.valhala.curriculum.ejb.EntidadeEnsinoService;
+import com.valhala.curriculum.model.EntidadeEnsino;
+import com.valhala.curriculum.web.mb.BaseMb;
+
+import lombok.Getter;
+import lombok.Setter;
+
 public class EntidadeEnsinoMb extends BaseMb {
 
     private static final long serialVersionUID = -1623101515692059906L;
@@ -25,54 +25,50 @@ public class EntidadeEnsinoMb extends BaseMb {
 
     @EJB
     private EntidadeEnsinoService entidadeEnsinoService;
+    
+    @Getter
+    @Setter
     private EntidadeEnsinoDto entidadeEnsino;
+
+    @Getter
+    @Setter
     private List<EntidadeEnsinoDto> listaEntidadeEnsino;
 
-    private EntidadeEnsinoMapper entidadeEnsinoMapper = EntidadeEnsinoMapper.INSTANCE;
+    ModelMapper modelMapper = new ModelMapper();
+
+    public void deletar() {
+        this.entidadeEnsinoService.deletar(modelMapper.map(entidadeEnsino, EntidadeEnsino.class));
+        carregaListaEntidadesEnsino();
+        inserirMensagemInformativa("EntidadeEnsino removido com sucesso!!!");
+    }
 
     @PostConstruct
     private void init() {
         Integer id = (Integer) getAtributoSessao(ID_EDICAO_SESSAO);
         if (id != null && id > 0) {
-            this.entidadeEnsino = entidadeEnsinoMapper.entidadeEnsinoToEntidadeEnsinoDto(this.entidadeEnsinoService.pesquisarPorId(id));
+            this.entidadeEnsino = modelMapper.map(this.entidadeEnsinoService.pesquisarPorId(id), EntidadeEnsinoDto.class);
             removeAtributoSessao(ID_EDICAO_SESSAO);
         } else {
             this.entidadeEnsino = new EntidadeEnsinoDto();
         }
-        this.listaEntidadeEnsino = entidadeEnsinoMapper.listaEntidadeEnsinoToListaEntidadeEnsinoDto(this.entidadeEnsinoService.buscarTodos());
-    } // fim do metodo init
+        carregaListaEntidadesEnsino();
+    }
+
+	private void carregaListaEntidadesEnsino() {
+		Type type = new TypeToken<List<EntidadeEnsinoDto>>(){}.getType();
+        this.listaEntidadeEnsino = modelMapper.map(this.entidadeEnsinoService.buscarTodos(), type);
+	}
 
     public void salvar() {
-        if (entidadeEnsino.getId() == 0) {
+        EntidadeEnsino entidadeEnsinoPersistencia = modelMapper.map(entidadeEnsino, EntidadeEnsino.class);
+		if (entidadeEnsino.getId() == 0) {
             entidadeEnsino.setId(null);
-            this.entidadeEnsinoService.salvar(entidadeEnsinoMapper.entidadeEnsinoDtoToEntidadeEnsino(entidadeEnsino));
+            this.entidadeEnsinoService.salvar(entidadeEnsinoPersistencia);
             inserirMensagemInformativa("EntidadeEnsino inserido com sucesso!!!");
         } else {
-            this.entidadeEnsinoService.editar(entidadeEnsinoMapper.entidadeEnsinoDtoToEntidadeEnsino(entidadeEnsino));
+            this.entidadeEnsinoService.editar(entidadeEnsinoPersistencia);
             inserirMensagemInformativa("EntidadeEnsino editado com sucesso!!!");
-        } // fim do bloco if/else
-    } // fim do metodo salvar
-
-    public void deletar() {
-        this.entidadeEnsinoService.deletar(entidadeEnsinoMapper.entidadeEnsinoDtoToEntidadeEnsino(entidadeEnsino));
-        this.listaEntidadeEnsino = entidadeEnsinoMapper.listaEntidadeEnsinoToListaEntidadeEnsinoDto(this.entidadeEnsinoService.buscarTodos());
-        inserirMensagemInformativa("EntidadeEnsino removido com sucesso!!!");
-    } // fim do metodo deletar
-
-    public EntidadeEnsinoDto getEntidadeEnsino() {
-        return entidadeEnsino;
+        }
     }
 
-    public void setEntidadeEnsino(EntidadeEnsinoDto entidadeEnsino) {
-        this.entidadeEnsino = entidadeEnsino;
-    }
-
-    public List<EntidadeEnsinoDto> getListaEntidadeEnsino() {
-        return listaEntidadeEnsino;
-    }
-
-    public void setListaEntidadeEnsino(List<EntidadeEnsinoDto> listaEntidadeEnsino) {
-        this.listaEntidadeEnsino = listaEntidadeEnsino;
-    }
-
-} // fim da classe EntidadeEnsinoMb
+}

@@ -1,5 +1,6 @@
 package com.valhala.curriculum.web.mb.crud;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -11,240 +12,250 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.model.SelectItem;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
+
 import com.valhala.curriculum.dto.CargoDto;
 import com.valhala.curriculum.dto.CurriculoDto;
 import com.valhala.curriculum.dto.CursoDto;
 import com.valhala.curriculum.dto.EmpresaDto;
 import com.valhala.curriculum.dto.EntidadeEnsinoDto;
-import com.valhala.curriculum.dto.EnumTipoFormacaoDto;
 import com.valhala.curriculum.dto.ExperienciaProfissionalDto;
 import com.valhala.curriculum.dto.FormacaoAcademicaDto;
 import com.valhala.curriculum.dto.UsuarioDto;
+import com.valhala.curriculum.dto.enumerados.TipoFormacaoDto;
 import com.valhala.curriculum.ejb.CargoService;
 import com.valhala.curriculum.ejb.CurriculoService;
 import com.valhala.curriculum.ejb.CursoService;
 import com.valhala.curriculum.ejb.EmpresaService;
 import com.valhala.curriculum.ejb.EntidadeEnsinoService;
 import com.valhala.curriculum.ejb.UsuarioService;
-import com.valhala.curriculum.mappers.CargoMapper;
-import com.valhala.curriculum.mappers.CurriculoComRelacionamentoMapper;
-import com.valhala.curriculum.mappers.CurriculoSemRelacionamentoMapper;
-import com.valhala.curriculum.mappers.CursoMapper;
-import com.valhala.curriculum.mappers.EmpresaMapper;
-import com.valhala.curriculum.mappers.EntidadeEnsinoMapper;
-import com.valhala.curriculum.mappers.ExperienciaProfissionalMapper;
-import com.valhala.curriculum.mappers.FormacaoAcademicaMapper;
-import com.valhala.curriculum.mappers.UsuarioMapper;
+import com.valhala.curriculum.mapper.CurriculoSemRelacionamentoMap;
+import com.valhala.curriculum.model.Cargo;
+import com.valhala.curriculum.model.Curriculo;
+import com.valhala.curriculum.model.Curso;
+import com.valhala.curriculum.model.Empresa;
+import com.valhala.curriculum.model.EntidadeEnsino;
+import com.valhala.curriculum.model.ExperienciaProfissional;
+import com.valhala.curriculum.model.FormacaoAcademica;
+import com.valhala.curriculum.model.Usuario;
 import com.valhala.curriculum.web.mb.BaseMb;
 import com.valhala.curriculum.web.mb.controle.ControleSessaoMb;
 
-/**
- * Created by bruno on 05/09/15.
- */
+import lombok.Getter;
+import lombok.Setter;
+
 public class CurriculoMb extends BaseMb {
 
-    private static final long serialVersionUID = -7851091313961665265L;
+	private static final long serialVersionUID = -7851091313961665265L;
 
 	private static final String ID_EDICAO_SESSAO = "idParaEdicao";
 
-    @EJB
-    private CurriculoService curriculoService;
-    @EJB
-    private CargoService cargoService;
-    @EJB
-    private EmpresaService empresaService;
-    @EJB
-    private UsuarioService usuarioService;
-    @EJB
-    private CursoService cursoService;
-    @EJB
-    private EntidadeEnsinoService entidadeEnsinoService;
+	@EJB
+	private CurriculoService curriculoService;
 
-    private CurriculoDto curriculo;
-    private List<CurriculoDto> listaCurriculo;
+	@EJB
+	private CargoService cargoService;
 
-    private List<SelectItem> listaEmpresa = new ArrayList<SelectItem>();
-    private List<SelectItem> listaCargo = new ArrayList<SelectItem>();
-    private List<SelectItem> listaCurso = new ArrayList<SelectItem>();
-    private List<SelectItem> listaEntidadeEnsino = new ArrayList<SelectItem>();
+	@EJB
+	private EmpresaService empresaService;
 
-    private ControleSessaoMb controleSessaoMb;
+	@EJB
+	private UsuarioService usuarioService;
 
-    private Set<ExperienciaProfissionalDto> listaExperienciaProfissionalRemover = new LinkedHashSet<ExperienciaProfissionalDto>();
-    private Set<FormacaoAcademicaDto> listaFormacaoAcademicaRemover = new LinkedHashSet<FormacaoAcademicaDto>();
+	@EJB
+	private CursoService cursoService;
 
-    private CurriculoComRelacionamentoMapper curriculoComRelacionamentoMapper = CurriculoComRelacionamentoMapper.INSTANCE;
-    private CurriculoSemRelacionamentoMapper curriculoSemRelacionamentoMapper = CurriculoSemRelacionamentoMapper.INSTANCE;
-    private EmpresaMapper empresaMapper = EmpresaMapper.INSTANCE;
-    private UsuarioMapper usuarioMapper = UsuarioMapper.INSTANCE;
-    private CargoMapper cargoMapper = CargoMapper.INSTANCE;
-    private ExperienciaProfissionalMapper experienciaProfissionalMapper = ExperienciaProfissionalMapper.INSTANCE;
-    private CursoMapper cursoMapper = CursoMapper.INSTANCE;
-    private EntidadeEnsinoMapper entidadeEnsinoMapper = EntidadeEnsinoMapper.INSTANCE;
-    private FormacaoAcademicaMapper formacaoAcademicaMapper = FormacaoAcademicaMapper.INSTANCE;
+	@EJB
+	private EntidadeEnsinoService entidadeEnsinoService;
 
-    private ExperienciaProfissionalDto experienciaProfissional;
-    private FormacaoAcademicaDto formacaoAcademica;
+	@Getter
+	@Setter
+	private CurriculoDto curriculo;
 
-    public CurriculoDto getCurriculo() {
-        return curriculo;
-    }
+	@Getter
+	@Setter
+	private List<CurriculoDto> listaCurriculo;
 
-    public void setCurriculo(CurriculoDto curriculo) {
-        this.curriculo = curriculo;
-    }
+	@Getter
+	private List<SelectItem> listaEmpresa = new ArrayList<SelectItem>();
 
-    @PostConstruct
-    private void init() {
-        Integer id = (Integer) getAtributoSessao(ID_EDICAO_SESSAO);
-        if (id != null && id > 0) {
-            this.curriculo = curriculoComRelacionamentoMapper.curriculoToCurriculoDto(this.curriculoService.buscarPorIdComRelacionamento(id));
-            removeAtributoSessao(ID_EDICAO_SESSAO);
-        } else {
-            this.curriculo = new CurriculoDto();
-        }
-        initCargos();
-        initEmpresas();
-        initCursos();
-        initEntidadesEnsino();
-        experienciaProfissional = new ExperienciaProfissionalDto();
-        formacaoAcademica = new FormacaoAcademicaDto();
-        this.listaCurriculo = curriculoSemRelacionamentoMapper.listaCurriculoToListaCurriculoDto(this.curriculoService.buscarTodos());
-    }
+	@Getter
+	private List<SelectItem> listaCargo = new ArrayList<SelectItem>();
 
-    private void initCargos() {
-        List<CargoDto> dtos = cargoMapper.listaCargoToListaCargoDto(this.cargoService.buscarTodos());
-        for (CargoDto dto : dtos) {
-            this.listaCargo.add(new SelectItem(dto.getId(), dto.getNome()));
-        }
-    }
+	@Getter
+	private List<SelectItem> listaCurso = new ArrayList<SelectItem>();
 
-    private void initCursos() {
-        List<CursoDto> dtos = cursoMapper.listaCursoToListaCursoDto(this.cursoService.buscarTodos());
-        for (CursoDto dto : dtos) {
-            this.listaCurso.add(new SelectItem(dto.getId(), dto.getNome()));
-        }
-    }
+	@Getter
+	private List<SelectItem> listaEntidadeEnsino = new ArrayList<SelectItem>();
 
-    private void initEntidadesEnsino() {
-        List<EntidadeEnsinoDto> dtos = entidadeEnsinoMapper.listaEntidadeEnsinoToListaEntidadeEnsinoDto(this.entidadeEnsinoService.buscarTodos());
-        for (EntidadeEnsinoDto dto : dtos) {
-            this.listaEntidadeEnsino.add(new SelectItem(dto.getId(), dto.getNome()));
-        }
-    }
+	@Getter
+	@Setter
+	private ControleSessaoMb controleSessaoMb;
 
-    private void initEmpresas() {
-        List<EmpresaDto> dtos = empresaMapper.listaEmpresaToListaEmpresaDto(this.empresaService.buscarTodos());
-        for (EmpresaDto dto : dtos) {
-            this.listaEmpresa.add(new SelectItem(dto.getId(), dto.getNome()));
-        }
-    }
+	private Set<ExperienciaProfissionalDto> listaExperienciaProfissionalRemover = new LinkedHashSet<ExperienciaProfissionalDto>();
 
-    public void salvar() {
-        UsuarioDto usuario = usuarioMapper.usuarioToUsuarioDto(this.usuarioService.buscarUsuarioPorEmail(controleSessaoMb.getPrincipalName()));
-        this.curriculo.setUsuario(usuario);
-        if (this.curriculo.getId() == 0) {
-            this.curriculo.setId(null);
-            this.curriculoService.salvar(curriculoComRelacionamentoMapper.curriculoDtoToCurriculo(curriculo));
-            inserirMensagemInformativa("Curriculo inserido com sucesso!!!");
-            this.curriculo = new CurriculoDto();
-        } else {
-            @SuppressWarnings("rawtypes")
+	private Set<FormacaoAcademicaDto> listaFormacaoAcademicaRemover = new LinkedHashSet<FormacaoAcademicaDto>();
+
+	@Getter
+	@Setter
+	private ExperienciaProfissionalDto experienciaProfissional;
+
+	@Getter
+	@Setter
+	private FormacaoAcademicaDto formacaoAcademica;
+
+	ModelMapper modelMapper = new ModelMapper();
+
+	public void deletar() {
+		this.curriculoService.deletar(modelMapper.map(this.curriculo, Curriculo.class));
+		carregaListaCurriculos();
+		inserirMensagemInformativa("Curriculo removido com sucesso!!!");
+	}
+
+	public List<SelectItem> getTiposFormacao() {
+		List<SelectItem> selectItems = new ArrayList<SelectItem>();
+		TipoFormacaoDto[] enumTipoFormacaoDtos = TipoFormacaoDto.values();
+		for (int i = 0; i < enumTipoFormacaoDtos.length; i++) {
+			selectItems.add(new SelectItem(enumTipoFormacaoDtos[i]));
+		}
+		return selectItems;
+	}
+
+	public void incluirExperiencia() {
+		this.curriculo.adicionaExperienciaProfissional(this.experienciaProfissional);
+		this.experienciaProfissional = new ExperienciaProfissionalDto();
+	}
+
+	public void incluirFormacao() {
+		this.curriculo.adicionaFormacaoAcademica(this.formacaoAcademica);
+		this.formacaoAcademica = new FormacaoAcademicaDto();
+	}
+
+	@PostConstruct
+	private void init() {
+		Integer id = (Integer) getAtributoSessao(ID_EDICAO_SESSAO);
+		if (id != null && id > 0) {
+			final Curriculo curriculoEdicao = this.curriculoService.buscarPorIdComRelacionamento(id);
+			this.curriculo = modelMapper.map(curriculoEdicao, CurriculoDto.class);
+			removeAtributoSessao(ID_EDICAO_SESSAO);
+		} else {
+			this.curriculo = new CurriculoDto();
+		}
+		initCargos();
+		initEmpresas();
+		initCursos();
+		initEntidadesEnsino();
+		experienciaProfissional = new ExperienciaProfissionalDto();
+		formacaoAcademica = new FormacaoAcademicaDto();
+		carregaListaCurriculos();
+	}
+
+	private void carregaListaCurriculos() {
+		
+		ModelMapper mapperCurriculo = new ModelMapper();
+		mapperCurriculo.addMappings(new CurriculoSemRelacionamentoMap());
+		
+		Type type = new TypeToken<List<CurriculoDto>>() {}.getType();
+		this.listaCurriculo = mapperCurriculo.map(this.curriculoService.buscarTodos(), type);
+	}
+
+	private void initCargos() {
+		final List<Cargo> cargos = this.cargoService.buscarTodos();
+
+		Type type = new TypeToken<List<CargoDto>>() {
+		}.getType();
+		final List<CargoDto> dtos = modelMapper.map(cargos, type);
+
+		for (CargoDto dto : dtos) {
+			this.listaCargo.add(new SelectItem(dto, dto.getId() + "-" + dto.getNome()));
+		}
+	}
+
+	private void initCursos() {
+		final List<Curso> cursos = this.cursoService.buscarTodos();
+
+		Type type = new TypeToken<List<CursoDto>>() {
+		}.getType();
+		final List<CursoDto> dtos = modelMapper.map(cursos, type);
+
+		for (CursoDto dto : dtos) {
+			this.listaCurso.add(new SelectItem(dto, dto.getId() + "-" + dto.getNome()));
+		}
+	}
+
+	private void initEmpresas() {
+		final List<Empresa> empresas = this.empresaService.buscarTodos();
+
+		Type type = new TypeToken<List<EmpresaDto>>() {
+		}.getType();
+		final List<EmpresaDto> dtos = modelMapper.map(empresas, type);
+		
+		for (EmpresaDto dto : dtos) {
+			this.listaEmpresa.add(new SelectItem(dto, dto.getId() + "-" + dto.getNome()));
+		}
+	}
+
+	private void initEntidadesEnsino() {
+		final List<EntidadeEnsino> entidadesEnsino = this.entidadeEnsinoService.buscarTodos();
+
+		Type type = new TypeToken<List<EntidadeEnsinoDto>>() {
+		}.getType();
+		final List<EntidadeEnsinoDto> dtos = modelMapper.map(entidadesEnsino, type);
+		
+		for (EntidadeEnsinoDto dto : dtos) {
+			this.listaEntidadeEnsino.add(new SelectItem(dto, dto.getId() + "-" + dto.getNome()));
+		}
+	}
+
+	public void removerExperiencia() {
+		this.curriculo.removeExperienciaProfissional(this.experienciaProfissional);
+		if (this.experienciaProfissional.getId() != null && this.experienciaProfissional.getId() > 0) {
+			listaExperienciaProfissionalRemover.add(experienciaProfissional);
+		}
+		this.experienciaProfissional = new ExperienciaProfissionalDto();
+	}
+
+	public void removerFormacao() {
+		this.curriculo.removeFormacaoAcademica(this.formacaoAcademica);
+		this.curriculo.getFormacoesAcademicas().remove(this.formacaoAcademica);
+		if (this.formacaoAcademica.getId() != null && this.formacaoAcademica.getId() > 0) {
+			listaFormacaoAcademicaRemover.add(formacaoAcademica);
+		}
+		this.formacaoAcademica = new FormacaoAcademicaDto();
+	}
+
+	public void salvar() {
+		final Usuario usuario = this.usuarioService.buscarUsuarioPorEmail(controleSessaoMb.getPrincipalName());
+
+		final UsuarioDto usuarioDto = modelMapper.map(usuario, UsuarioDto.class);
+
+		this.curriculo.setUsuario(usuarioDto);
+		if (this.curriculo.getId() == 0) {
+			this.curriculo.setId(null);
+			this.curriculoService.salvar(modelMapper.map(curriculo, Curriculo.class));
+			inserirMensagemInformativa("Curriculo inserido com sucesso!!!");
+			this.curriculo = new CurriculoDto();
+		} else {
+			@SuppressWarnings("rawtypes")
 			Map<String, Set> mapaDeListaRemocaoRelacionamento = new HashMap<String, Set>();
-            mapaDeListaRemocaoRelacionamento.put("ExperienciaProfissional", experienciaProfissionalMapper.setExperienciaProfissionalDtoToSetExperienciaProfissional(this.listaExperienciaProfissionalRemover));
-            mapaDeListaRemocaoRelacionamento.put("FormacaoAcademica", formacaoAcademicaMapper.setFormacaoAcademicaDtoToSetFormacaoAcademica(this.listaFormacaoAcademicaRemover));
-            this.curriculoService.editar(curriculoComRelacionamentoMapper.curriculoDtoToCurriculo(this.curriculo), mapaDeListaRemocaoRelacionamento);
-            inserirMensagemInformativa("Curriculo editado com sucesso!!!");
-        }
-        this.experienciaProfissional = new ExperienciaProfissionalDto();
-        this.formacaoAcademica = new FormacaoAcademicaDto();
-    }
 
-    public void incluirExperiencia() {
-        this.experienciaProfissional.setCargo(cargoMapper.cargoToCargoDto(this.cargoService.pesquisarPorId(this.experienciaProfissional.getCargo().getId())));
-        this.experienciaProfissional.setEmpresa(empresaMapper.empresaToEmpresaDto(this.empresaService.pesquisarPorId(this.experienciaProfissional.getEmpresa().getId())));
-        this.curriculo.getExperienciasProfissionais().add(this.experienciaProfissional);
-        this.experienciaProfissional = new ExperienciaProfissionalDto();
-    }
+			Type tipoExperienciaProfissional = new TypeToken<Set<ExperienciaProfissional>>() {}.getType();
+			Set<ExperienciaProfissional> experienciasRemover = modelMapper.map(this.listaExperienciaProfissionalRemover, tipoExperienciaProfissional);
+			mapaDeListaRemocaoRelacionamento.put("ExperienciaProfissional", experienciasRemover);
 
-    public void incluirFormacao() {
-        this.formacaoAcademica.setCurso(cursoMapper.cursoToCursoDto(this.cursoService.pesquisarPorId(this.formacaoAcademica.getCurso().getId())));
-        this.formacaoAcademica.setEntidadeEnsino(entidadeEnsinoMapper.entidadeEnsinoToEntidadeEnsinoDto(this.entidadeEnsinoService.pesquisarPorId(this.formacaoAcademica.getEntidadeEnsino().getId())));
-        this.curriculo.getFormacoesAcademicas().add(this.formacaoAcademica);
-        this.formacaoAcademica = new FormacaoAcademicaDto();
-    }
+			Type tipoFormacaoAcademica = new TypeToken<Set<FormacaoAcademica>>() {}.getType();
+			Set<FormacaoAcademica> formacoesRemover = modelMapper.map(this.listaFormacaoAcademicaRemover, tipoFormacaoAcademica);
+			mapaDeListaRemocaoRelacionamento.put("FormacaoAcademica", formacoesRemover);
 
-    public void removerExperiencia() {
-        this.curriculo.getExperienciasProfissionais().remove(this.experienciaProfissional);
-        if (this.experienciaProfissional.getId() != null && this.experienciaProfissional.getId() > 0) {
-            listaExperienciaProfissionalRemover.add(experienciaProfissional);
-        }
-        this.experienciaProfissional = new ExperienciaProfissionalDto();
-    }
-
-    public void removerFormacao() {
-        this.curriculo.getFormacoesAcademicas().remove(this.formacaoAcademica);
-        if (this.formacaoAcademica.getId() != null && this.formacaoAcademica.getId() > 0) {
-            listaFormacaoAcademicaRemover.add(formacaoAcademica);
-        }
-        this.formacaoAcademica = new FormacaoAcademicaDto();
-    }
-
-    public void deletar() {
-        this.curriculoService.deletar(curriculoComRelacionamentoMapper.curriculoDtoToCurriculo(this.curriculo));
-        this.listaCurriculo = curriculoSemRelacionamentoMapper.listaCurriculoToListaCurriculoDto(this.curriculoService.buscarTodos());
-        inserirMensagemInformativa("Curriculo removido com sucesso!!!");
-    }
-
-    public List<CurriculoDto> getListaCurriculo() {
-        return listaCurriculo;
-    }
-
-    public void setListaCurriculo(List<CurriculoDto> listaCurriculo) {
-        this.listaCurriculo = listaCurriculo;
-    }
-
-    public ExperienciaProfissionalDto getExperienciaProfissional() {
-        return experienciaProfissional;
-    }
-
-    public void setExperienciaProfissional(ExperienciaProfissionalDto experienciaProfissional) {
-        this.experienciaProfissional = experienciaProfissional;
-    }
-
-    public FormacaoAcademicaDto getFormacaoAcademica() {
-        return formacaoAcademica;
-    }
-
-    public void setFormacaoAcademica(FormacaoAcademicaDto formacaoAcademica) {
-        this.formacaoAcademica = formacaoAcademica;
-    }
-
-    public List<SelectItem> getListaEmpresa() {
-        return listaEmpresa;
-    }
-
-    public List<SelectItem> getListaCargo() {
-        return listaCargo;
-    }
-
-    public List<SelectItem> getListaCurso() {
-        return listaCurso;
-    }
-
-    public List<SelectItem> getListaEntidadeEnsino() {
-        return listaEntidadeEnsino;
-    }
-
-    public ControleSessaoMb getControleSessaoMb() {
-        return controleSessaoMb;
-    }
-
-    public void setControleSessaoMb(ControleSessaoMb controleSessaoMb) {
-        this.controleSessaoMb = controleSessaoMb;
-    }
-    
-    public List<FormacaoAcademicaDto> getFormacoes() {
+			this.curriculoService.editar(modelMapper.map(curriculo, Curriculo.class), mapaDeListaRemocaoRelacionamento);
+			inserirMensagemInformativa("Curriculo editado com sucesso!!!");
+		}
+		this.experienciaProfissional = new ExperienciaProfissionalDto();
+		this.formacaoAcademica = new FormacaoAcademicaDto();
+	}
+	
+	public List<FormacaoAcademicaDto> getFormacoes() {
     	return new ArrayList<FormacaoAcademicaDto>(this.curriculo.getFormacoesAcademicas());
     }
     
@@ -252,12 +263,4 @@ public class CurriculoMb extends BaseMb {
     	return new ArrayList<ExperienciaProfissionalDto>(this.curriculo.getExperienciasProfissionais());
     }
 
-    public List<SelectItem> getTiposFormacao() {
-        List<SelectItem> selectItems = new ArrayList<SelectItem>();
-        EnumTipoFormacaoDto[] enumTipoFormacaoDtos = EnumTipoFormacaoDto.values();
-        for (int i = 0; i < enumTipoFormacaoDtos.length; i++) {
-            selectItems.add(new SelectItem(enumTipoFormacaoDtos[i]));
-        }
-        return selectItems;
-    }
 }

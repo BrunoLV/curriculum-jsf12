@@ -1,78 +1,74 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.valhala.curriculum.web.mb.crud;
 
-import com.valhala.curriculum.dto.CursoDto;
-import com.valhala.curriculum.ejb.CursoService;
-import com.valhala.curriculum.mappers.CursoMapper;
-import com.valhala.curriculum.web.mb.BaseMb;
+import java.lang.reflect.Type;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import java.util.List;
 
-/**
- * @author bruno
- */
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
+
+import com.valhala.curriculum.dto.CursoDto;
+import com.valhala.curriculum.ejb.CursoService;
+import com.valhala.curriculum.model.Curso;
+import com.valhala.curriculum.web.mb.BaseMb;
+
+import lombok.Getter;
+import lombok.Setter;
+
 public class CursoMb extends BaseMb {
 
-    private static final long serialVersionUID = 6604716796555886204L;
+	private static final long serialVersionUID = 6604716796555886204L;
 
 	private static final String ID_EDICAO_SESSAO = "idParaEdicao";
 
-    @EJB
-    private CursoService cursoService;
-    private CursoDto curso;
-    private List<CursoDto> listaCurso;
+	@EJB
+	private CursoService cursoService;
 
-    private CursoMapper cursoMapper = CursoMapper.INSTANCE;
+	@Getter
+	@Setter
+	private CursoDto curso;
 
-    @PostConstruct
-    private void init() {
-        Integer id = (Integer) getAtributoSessao(ID_EDICAO_SESSAO);
-        if (id != null && id > 0) {
-            this.curso = cursoMapper.cursoToCursoDto(this.cursoService.pesquisarPorId(id));
-            removeAtributoSessao(ID_EDICAO_SESSAO);
-        } else {
-            this.curso = new CursoDto();
-        }
-        this.listaCurso = cursoMapper.listaCursoToListaCursoDto(this.cursoService.buscarTodos());
-    } // fim do metodo init
+	@Getter
+	@Setter
+	private List<CursoDto> listaCurso;
 
-    public void salvar() {
-        if (curso.getId() == 0) {
-            curso.setId(null);
-            this.cursoService.salvar(cursoMapper.cursoDtoToCurso(curso));
-            inserirMensagemInformativa("Curso inserido com sucesso!!!");
-        } else {
-            this.cursoService.editar(cursoMapper.cursoDtoToCurso(curso));
-            inserirMensagemInformativa("Curso editado com sucesso!!!");
-        } // fim do bloco if/else
-    } // fim do metodo salvar
+	ModelMapper modelMapper = new ModelMapper();
 
-    public void deletar() {
-        this.cursoService.deletar(cursoMapper.cursoDtoToCurso(curso));
-        this.listaCurso = cursoMapper.listaCursoToListaCursoDto(this.cursoService.buscarTodos());
-        inserirMensagemInformativa("Curso removido com sucesso!!!");
-    } // fim do metodo deletar
+	public void deletar() {
+		this.cursoService.deletar(modelMapper.map(curso, Curso.class));
+		carregaListaCursos();
+		inserirMensagemInformativa("Curso removido com sucesso!!!");
+	}
 
-    public CursoDto getCurso() {
-        return curso;
-    }
+	@PostConstruct
+	private void init() {
+		Integer id = (Integer) getAtributoSessao(ID_EDICAO_SESSAO);
+		if (id != null && id > 0) {
+			this.curso = modelMapper.map(this.cursoService.pesquisarPorId(id), CursoDto.class);
+			removeAtributoSessao(ID_EDICAO_SESSAO);
+		} else {
+			this.curso = new CursoDto();
+		}
+		carregaListaCursos();
+	}
 
-    public void setCurso(CursoDto curso) {
-        this.curso = curso;
-    }
+	private void carregaListaCursos() {
+		Type type = new TypeToken<List<CursoDto>>() {
+		}.getType();
+		this.listaCurso = modelMapper.map(this.cursoService.buscarTodos(), type);
+	}
 
-    public List<CursoDto> getListaCurso() {
-        return listaCurso;
-    }
+	public void salvar() {
+		if (curso.getId() == 0) {
+			curso.setId(null);
+			this.cursoService.salvar(modelMapper.map(curso, Curso.class));
+			inserirMensagemInformativa("Curso inserido com sucesso!!!");
+		} else {
+			this.cursoService.editar(modelMapper.map(curso, Curso.class));
+			inserirMensagemInformativa("Curso editado com sucesso!!!");
+		}
+	}
 
-    public void setListaCurso(List<CursoDto> listaCurso) {
-        this.listaCurso = listaCurso;
-    }
-
-} // fim da classe CursoMb
+}

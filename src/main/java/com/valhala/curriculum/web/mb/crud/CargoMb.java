@@ -1,78 +1,75 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.valhala.curriculum.web.mb.crud;
 
-import com.valhala.curriculum.dto.CargoDto;
-import com.valhala.curriculum.ejb.CargoService;
-import com.valhala.curriculum.mappers.CargoMapper;
-import com.valhala.curriculum.web.mb.BaseMb;
+import java.lang.reflect.Type;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import java.util.List;
 
-/**
- * @author bruno
- */
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
+
+import com.valhala.curriculum.dto.CargoDto;
+import com.valhala.curriculum.ejb.CargoService;
+import com.valhala.curriculum.model.Cargo;
+import com.valhala.curriculum.web.mb.BaseMb;
+
+import lombok.Getter;
+import lombok.Setter;
+
 public class CargoMb extends BaseMb {
 
-    private static final long serialVersionUID = 4240025875447639696L;
+	private static final long serialVersionUID = 4240025875447639696L;
 
 	private static final String ID_EDICAO_SESSAO = "idParaEdicao";
 
-    @EJB
-    private CargoService cargoService;
-    private CargoDto cargo;
-    private List<CargoDto> listaCargo;
+	@EJB
+	private CargoService cargoService;
 
-    private CargoMapper cargoMapper = CargoMapper.INSTANCE;
+	@Getter
+	@Setter
+	private CargoDto cargo;
 
-    @PostConstruct
-    private void init() {
-        Integer id = (Integer) getAtributoSessao(ID_EDICAO_SESSAO);
-        if (id != null && id > 0) {
-            this.cargo = cargoMapper.cargoToCargoDto(this.cargoService.pesquisarPorId(id));
-            removeAtributoSessao(ID_EDICAO_SESSAO);
-        } else {
-            this.cargo = new CargoDto();
-        }
-        this.listaCargo = cargoMapper.listaCargoToListaCargoDto(this.cargoService.buscarTodos());
-    } // fim do metodo init
+	@Getter
+	@Setter
+	private List<CargoDto> listaCargo;
 
-    public void salvar() {
-        if (cargo.getId() == 0) {
-            cargo.setId(null);
-            this.cargoService.salvar(cargoMapper.cargoDtoToCargo(cargo));
-            inserirMensagemInformativa("Cargo inserido com sucesso!!!");
-        } else {
-            this.cargoService.editar(cargoMapper.cargoDtoToCargo(cargo));
-            inserirMensagemInformativa("Cargo editado com sucesso!!!");
-        } // fim do bloco if/else
-    } // fim do metodo salvar
+	ModelMapper modelMapper = new ModelMapper();
 
-    public void deletar() {
-        this.cargoService.deletar(cargoMapper.cargoDtoToCargo(cargo));
-        this.listaCargo = cargoMapper.listaCargoToListaCargoDto(this.cargoService.buscarTodos());
-        inserirMensagemInformativa("Cargo removido com sucesso!!!");
-    } // fim do metodo deletar
+	public void deletar() {
+		Cargo entity = modelMapper.map(cargo, Cargo.class);
+		this.cargoService.deletar(entity);
+		carregaListaCargos();
+		inserirMensagemInformativa("Cargo removido com sucesso!!!");
+	}
 
-    public CargoDto getCargo() {
-        return cargo;
-    }
+	@PostConstruct
+	private void init() {
+		Integer id = (Integer) getAtributoSessao(ID_EDICAO_SESSAO);
+		if (id != null && id > 0) {
+			this.cargo = modelMapper.map(this.cargoService.pesquisarPorId(id), CargoDto.class);
+			removeAtributoSessao(ID_EDICAO_SESSAO);
+		} else {
+			this.cargo = new CargoDto();
+		}
+		carregaListaCargos();
+	}
 
-    public void setCargo(CargoDto cargo) {
-        this.cargo = cargo;
-    }
+	private void carregaListaCargos() {
+		Type type = new TypeToken<List<CargoDto>>() {
+		}.getType();
+		this.listaCargo = modelMapper.map(this.cargoService.buscarTodos(), type);
+	}
 
-    public List<CargoDto> getListaCargo() {
-        return listaCargo;
-    }
+	public void salvar() {
+		if (cargo.getId() == 0) {
+			cargo.setId(null);
+			this.cargoService.salvar(modelMapper.map(cargo, Cargo.class));
+			inserirMensagemInformativa("Cargo inserido com sucesso!!!");
+		} else {
+			this.cargoService.editar(modelMapper.map(cargo, Cargo.class));
+			inserirMensagemInformativa("Cargo editado com sucesso!!!");
+		}
+	}
 
-    public void setListaCargo(List<CargoDto> listaCargo) {
-        this.listaCargo = listaCargo;
-    }
-
-} // fim da classe CargoMb
+}

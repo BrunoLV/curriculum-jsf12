@@ -5,29 +5,25 @@
  */
 package com.valhala.curriculum.dao;
 
-import com.valhala.curriculum.model.BaseEntity;
-
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * @param <T>
- * @author bruno
- */
+import com.valhala.curriculum.model.BaseEntity;
+
 public interface Dao<T extends BaseEntity> {
-
-    T salvar(T t);
-
-    void editar(T t);
-
-    void deletar(T t);
 
     T buscarPorId(Serializable id);
 
     T buscarPorIdComRelacionamento(Serializable id);
 
+    void deletar(T t);
+
+    void editar(T t);
+
     List<T> listarTodos();
 
     boolean objetoContidoNaSessao(T t);
+
+    T salvar(T t);
 
 }
