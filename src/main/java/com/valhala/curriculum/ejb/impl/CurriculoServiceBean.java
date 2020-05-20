@@ -139,4 +139,10 @@ public class CurriculoServiceBean extends BaseServiceBean implements CurriculoSe
         return curriculo;
     }
 
+	@Override
+	public List<Curriculo> buscaPorUsuarioId(Serializable idUsuario) {
+		List<Curriculo> curriculos = this.curriculoDao.buscaPorIdUsuario(idUsuario);
+        return curriculos;
+	}
+
 }

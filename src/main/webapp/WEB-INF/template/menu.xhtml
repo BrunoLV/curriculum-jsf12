@@ -24,12 +24,13 @@
                         <h:outputText value="Cadastros"/>
                     </h:panelGroup>
                 </f:facet>
-                <rich:menuItem value="Usuarios" action="usuarios"/>
-                <rich:menuItem value="Cargos" action="cargos"/>
-                <rich:menuItem value="Empresa" action="empresas"/>
-                <rich:menuItem value="Cursos" action="cursos"/>
-                <rich:menuItem value="Entidades de Ensino" action="entidadesEnsino"/>
+                <rich:menuItem value="Usuarios" action="usuarios" rendered="#{controleSessaoMB.userInRoleAdmin}" />
+                <rich:menuItem value="Cargos" action="cargos" rendered="#{controleSessaoMB.userInRoleAdmin}"/>
+                <rich:menuItem value="Empresa" action="empresas" rendered="#{controleSessaoMB.userInRoleAdmin}"/>
+                <rich:menuItem value="Cursos" action="cursos" rendered="#{controleSessaoMB.userInRoleAdmin}"/>
+                <rich:menuItem value="Entidades de Ensino" action="entidadesEnsino" rendered="#{controleSessaoMB.userInRoleAdmin}"/>
                 <rich:menuItem value="Curriculos" action="curriculos"/>
+                <rich:menuItem value="Dados Pessoais" action="dadosPessoais"/>
             </rich:dropDownMenu>
         </rich:toolBar>
     </h:form>

@@ -7,8 +7,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -22,7 +22,7 @@ public class Curriculo extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = -3875979851399236476L;
 
-	@OneToOne
+	@ManyToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 

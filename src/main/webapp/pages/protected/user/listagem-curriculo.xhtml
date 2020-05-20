@@ -38,8 +38,7 @@ and open the template in the editor.
 
                 <br/>
                 <rich:toolTip for="novoCommandLink" value="#{msgs['label.button.novo']}" />
-                <h:commandLink id="novoCommandLink"
-                                 rendered="#{controleSessaoMB.userInRoleAdmin}" action="novo">
+                <h:commandLink id="novoCommandLink" action="novo">
                 	<h:graphicImage url="/images/new.png" />
                 </h:commandLink><br/>
                 <br/>
@@ -57,7 +56,7 @@ and open the template in the editor.
                         </f:facet>
                         <h:outputText value="#{curriculo.usuario.nome}"/>
                     </rich:column>
-                    <rich:column rendered="#{controleSessaoMB.userInRoleAdmin}">
+                    <rich:column>
                         <rich:toolTip for="editarCommandLink" value="#{msgs['label.button.editar']}" />
                         <h:commandLink id="editarCommandLink" action="editar">
                         	<h:graphicImage url="/images/edit.png" />
@@ -65,7 +64,7 @@ and open the template in the editor.
                             <f:param id="idEdicao" name="idEdicao" value="#{curriculo.id}"/>
                         </h:commandLink>
                     </rich:column>
-                    <rich:column rendered="#{controleSessaoMB.userInRoleAdmin}">
+                    <rich:column>
                     	<rich:toolTip for = "deletarCommandLink" value = "#{msgs['label.button.deletar']}" />
                         <a4j:commandLink id="deletarCommandLink"
                         				 action="#{curriculoMB.deletar}"

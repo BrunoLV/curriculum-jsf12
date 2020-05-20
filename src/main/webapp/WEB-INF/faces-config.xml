@@ -12,6 +12,12 @@
 	</converter>
 	
 	<converter>
+		<display-name>tipoFormacaoConverter</display-name>
+		<converter-id>tipoFormacaoConverter</converter-id>
+		<converter-class>com.valhala.curriculum.web.converters.TipoFormacaoConverter</converter-class>
+	</converter>
+	
+	<converter>
 		<display-name>empresaConverter</display-name>
 		<converter-id>empresaConverter</converter-id>
 		<converter-class>com.valhala.curriculum.web.converters.EmpresaConverter</converter-class>
@@ -69,6 +75,10 @@
         <managed-bean-name>dadosPessoaisMB</managed-bean-name>
         <managed-bean-class>com.valhala.curriculum.web.mb.crud.DadosPessoaisMb</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>controleSessaoMb</property-name>
+            <value>#{controleSessaoMB}</value>
+        </managed-property>
     </managed-bean>
 
     <managed-bean>
@@ -110,7 +120,7 @@
 
         <navigation-case>
             <from-outcome>curriculos</from-outcome>
-            <to-view-id>/pages/protected/admin/listagem-curriculo.xhtml</to-view-id>
+            <to-view-id>/pages/protected/user/listagem-curriculo.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
 
@@ -123,6 +133,12 @@
         <navigation-case>
             <from-outcome>entidadesEnsino</from-outcome>
             <to-view-id>/pages/protected/admin/listagem-entidade-ensino.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>dadosPessoais</from-outcome>
+            <to-view-id>/pages/protected/user/dados-pessoais.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>
@@ -155,10 +171,10 @@
     </navigation-rule>
 
     <navigation-rule>
-        <from-view-id>/pages/protected/admin/cadastro-curriculo.xhtml</from-view-id>
+        <from-view-id>/pages/protected/user/cadastro-curriculo.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>listar</from-outcome>
-            <to-view-id>/pages/protected/admin/listagem-curriculo.xhtml</to-view-id>
+            <to-view-id>/pages/protected/user/listagem-curriculo.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>
@@ -230,17 +246,17 @@
     </navigation-rule>
 
     <navigation-rule>
-        <from-view-id>/pages/protected/admin/listagem-curriculo.xhtml</from-view-id>
+        <from-view-id>/pages/protected/user/listagem-curriculo.xhtml</from-view-id>
 
         <navigation-case>
             <from-outcome>novo</from-outcome>
-            <to-view-id>/pages/protected/admin/cadastro-curriculo.xhtml</to-view-id>
+            <to-view-id>/pages/protected/user/cadastro-curriculo.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
 
         <navigation-case>
             <from-outcome>editar</from-outcome>
-            <to-view-id>/pages/protected/admin/cadastro-curriculo.xhtml</to-view-id>
+            <to-view-id>/pages/protected/user/cadastro-curriculo.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>

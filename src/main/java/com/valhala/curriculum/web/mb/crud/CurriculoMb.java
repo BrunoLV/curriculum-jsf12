@@ -22,7 +22,6 @@ import com.valhala.curriculum.dto.EmpresaDto;
 import com.valhala.curriculum.dto.EntidadeEnsinoDto;
 import com.valhala.curriculum.dto.ExperienciaProfissionalDto;
 import com.valhala.curriculum.dto.FormacaoAcademicaDto;
-import com.valhala.curriculum.dto.UsuarioDto;
 import com.valhala.curriculum.dto.enumerados.TipoFormacaoDto;
 import com.valhala.curriculum.ejb.CargoService;
 import com.valhala.curriculum.ejb.CurriculoService;
@@ -116,8 +115,8 @@ public class CurriculoMb extends BaseMb {
 	public List<SelectItem> getTiposFormacao() {
 		List<SelectItem> selectItems = new ArrayList<SelectItem>();
 		TipoFormacaoDto[] enumTipoFormacaoDtos = TipoFormacaoDto.values();
-		for (int i = 0; i < enumTipoFormacaoDtos.length; i++) {
-			selectItems.add(new SelectItem(enumTipoFormacaoDtos[i]));
+		for (TipoFormacaoDto tipoFormacaoDto : enumTipoFormacaoDtos) {
+			selectItems.add(new SelectItem(tipoFormacaoDto, tipoFormacaoDto.getDescricao()));
 		}
 		return selectItems;
 	}
@@ -152,12 +151,14 @@ public class CurriculoMb extends BaseMb {
 	}
 
 	private void carregaListaCurriculos() {
-		
+
 		ModelMapper mapperCurriculo = new ModelMapper();
 		mapperCurriculo.addMappings(new CurriculoSemRelacionamentoMap());
-		
-		Type type = new TypeToken<List<CurriculoDto>>() {}.getType();
-		this.listaCurriculo = mapperCurriculo.map(this.curriculoService.buscarTodos(), type);
+
+		Type type = new TypeToken<List<CurriculoDto>>() {
+		}.getType();
+		this.listaCurriculo = mapperCurriculo
+				.map(this.curriculoService.buscaPorUsuarioId(controleSessaoMb.obtemUsuarioLogado().getId()), type);
 	}
 
 	private void initCargos() {
@@ -190,7 +191,7 @@ public class CurriculoMb extends BaseMb {
 		Type type = new TypeToken<List<EmpresaDto>>() {
 		}.getType();
 		final List<EmpresaDto> dtos = modelMapper.map(empresas, type);
-		
+
 		for (EmpresaDto dto : dtos) {
 			this.listaEmpresa.add(new SelectItem(dto, dto.getId() + "-" + dto.getNome()));
 		}
@@ -202,7 +203,7 @@ public class CurriculoMb extends BaseMb {
 		Type type = new TypeToken<List<EntidadeEnsinoDto>>() {
 		}.getType();
 		final List<EntidadeEnsinoDto> dtos = modelMapper.map(entidadesEnsino, type);
-		
+
 		for (EntidadeEnsinoDto dto : dtos) {
 			this.listaEntidadeEnsino.add(new SelectItem(dto, dto.getId() + "-" + dto.getNome()));
 		}
@@ -227,40 +228,42 @@ public class CurriculoMb extends BaseMb {
 
 	public void salvar() {
 		final Usuario usuario = this.usuarioService.buscarUsuarioPorEmail(controleSessaoMb.getPrincipalName());
-
-		final UsuarioDto usuarioDto = modelMapper.map(usuario, UsuarioDto.class);
-
-		this.curriculo.setUsuario(usuarioDto);
+		Curriculo curriculoPersistencia = modelMapper.map(curriculo, Curriculo.class);
+		curriculoPersistencia.setUsuario(usuario);
 		if (this.curriculo.getId() == 0) {
 			this.curriculo.setId(null);
-			this.curriculoService.salvar(modelMapper.map(curriculo, Curriculo.class));
+			this.curriculoService.salvar(curriculoPersistencia);
 			inserirMensagemInformativa("Curriculo inserido com sucesso!!!");
 			this.curriculo = new CurriculoDto();
 		} else {
 			@SuppressWarnings("rawtypes")
 			Map<String, Set> mapaDeListaRemocaoRelacionamento = new HashMap<String, Set>();
 
-			Type tipoExperienciaProfissional = new TypeToken<Set<ExperienciaProfissional>>() {}.getType();
-			Set<ExperienciaProfissional> experienciasRemover = modelMapper.map(this.listaExperienciaProfissionalRemover, tipoExperienciaProfissional);
+			Type tipoExperienciaProfissional = new TypeToken<Set<ExperienciaProfissional>>() {
+			}.getType();
+			Set<ExperienciaProfissional> experienciasRemover = modelMapper.map(this.listaExperienciaProfissionalRemover,
+					tipoExperienciaProfissional);
 			mapaDeListaRemocaoRelacionamento.put("ExperienciaProfissional", experienciasRemover);
 
-			Type tipoFormacaoAcademica = new TypeToken<Set<FormacaoAcademica>>() {}.getType();
-			Set<FormacaoAcademica> formacoesRemover = modelMapper.map(this.listaFormacaoAcademicaRemover, tipoFormacaoAcademica);
+			Type tipoFormacaoAcademica = new TypeToken<Set<FormacaoAcademica>>() {
+			}.getType();
+			Set<FormacaoAcademica> formacoesRemover = modelMapper.map(this.listaFormacaoAcademicaRemover,
+					tipoFormacaoAcademica);
 			mapaDeListaRemocaoRelacionamento.put("FormacaoAcademica", formacoesRemover);
 
-			this.curriculoService.editar(modelMapper.map(curriculo, Curriculo.class), mapaDeListaRemocaoRelacionamento);
+			this.curriculoService.editar(curriculoPersistencia, mapaDeListaRemocaoRelacionamento);
 			inserirMensagemInformativa("Curriculo editado com sucesso!!!");
 		}
 		this.experienciaProfissional = new ExperienciaProfissionalDto();
 		this.formacaoAcademica = new FormacaoAcademicaDto();
 	}
-	
+
 	public List<FormacaoAcademicaDto> getFormacoes() {
-    	return new ArrayList<FormacaoAcademicaDto>(this.curriculo.getFormacoesAcademicas());
-    }
-    
-    public List<ExperienciaProfissionalDto> getExperiencias() {
-    	return new ArrayList<ExperienciaProfissionalDto>(this.curriculo.getExperienciasProfissionais());
-    }
+		return new ArrayList<FormacaoAcademicaDto>(this.curriculo.getFormacoesAcademicas());
+	}
+
+	public List<ExperienciaProfissionalDto> getExperiencias() {
+		return new ArrayList<ExperienciaProfissionalDto>(this.curriculo.getExperienciasProfissionais());
+	}
 
 }

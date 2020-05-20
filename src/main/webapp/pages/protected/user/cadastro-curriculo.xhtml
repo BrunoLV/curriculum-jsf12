@@ -179,6 +179,7 @@ and open the template in the editor.
 									value="#{curriculoMB.formacaoAcademica.tipoFormacao}">
 									<f:selectItem itemDisabled="true" itemLabel="Selecione..." />
 									<f:selectItems value="#{curriculoMB.tiposFormacao}" />
+									<f:converter converterId="tipoFormacaoConverter" />
 								</h:selectOneMenu>
 								<h:outputLabel value="#{msgs['label.form.dataInicio']}"
 									for="dataInicioCursoCalendar" />
@@ -227,7 +228,7 @@ and open the template in the editor.
 									<f:facet name="header">
 										<h:outputText value="#{msgs['label.column.tipoFormacao']}" />
 									</f:facet>
-									<h:outputText value="#{formacao.tipoFormacao}" />
+									<h:outputText value="#{formacao.tipoFormacao.descricao}" />
 								</rich:column>
 								<rich:column>
 									<f:facet name="header">

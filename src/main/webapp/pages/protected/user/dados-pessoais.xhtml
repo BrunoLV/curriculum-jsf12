@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+<ui:composition template="/WEB-INF/template/template-with-menu.xhtml">
+
+	<ui:define name="content">
+
+		<h:form id="cadastroDadosPessoais">
+			
+			<rich:panel>
+				
+				<rich:messages id="globalMessages" 
+							   globalOnly="true" 
+							   showSummary="false" 
+							   showDetail="true">
+					<f:facet name="errorMarker">
+						<h:graphicImage url="/images/error.png" />
+					</f:facet>
+					<f:facet name="infoMarker">
+						<h:graphicImage url="/images/Info.png" />
+					</f:facet>
+					<f:facet name="fatalMarker">
+						<h:graphicImage url="/images/fatal.png" />
+					</f:facet>
+					<f:facet name="warnMarker">
+						<h:graphicImage url="/images/warning.png" />
+					</f:facet>
+				</rich:messages>
+				
+				<f:facet name="header">
+					<h:outputText value="#{msgs['text.panel.dadosPessoais']}" />
+				</f:facet>
+				
+				<h:panelGrid columns="2">
+				
+					<h:outputLabel value="#{msgs['label.form.nome']}"
+								   for="nomeInputText" />
+					<h:inputText id="nomeInputText"
+								 size="30" 
+								 value="#{dadosPessoaisMB.dadosPessoais.nome}" />
+								 
+					<h:outputLabel value="#{msgs['label.form.sobrenome']}"
+								   for="sobrenomeInputText" />
+					<h:inputText id="sobrenomeInputText" 
+							 	 size="30"
+								 value="#{dadosPessoaisMB.dadosPessoais.sobrenome}" />
+					
+					<h:outputLabel value="#{msgs['label.form.dataNascimento']}"
+								   for="dataNascimentoCalendar" />
+					<rich:calendar id="dataNascimentoCalendar" 
+								   datePattern="dd/MM/yyyy"
+								   value="#{dadosPessoaisMB.dadosPessoais.dataNascimento}" />
+								   
+					<h:outputLabel value="#{msgs['label.form.titulo']}"
+								   for="tituloInputText" />
+					<h:inputText id="tituloInputText" 
+								 size="60"
+								 value="#{dadosPessoaisMB.dadosPessoais.titulo}" />
+								 
+					<h:outputLabel value="#{msgs['label.form.email']}"
+								   for="emailInputText" />
+					<h:inputText id="emailInputText" 
+								 size="60"
+								 value="#{dadosPessoaisMB.dadosPessoais.email}" />
+								 
+					<h:outputLabel value="#{msgs['label.form.telefone']}"
+								   for="telefoneInputText" />
+					<h:inputText id="telefoneInputText" 
+								 size="30"
+								 value="#{dadosPessoaisMB.dadosPessoais.telefone}" />				
+					
+				</h:panelGrid>
+				
+				<br/>
+				
+				<rich:panel>
+					<f:facet name="header">
+						<h:outputText value="#{msgs['text.panel.endereco']}" />
+					</f:facet>
+					
+					<h:panelGrid columns="2">
+					
+						<h:outputLabel value="#{msgs['label.form.logradouro']}" 
+									   for="logradouroInputText" />
+						<h:inputText id="logradouroInputText"
+									 size="100"
+									 value="#{dadosPessoaisMB.dadosPessoais.endereco.logradouro}" />
+					
+						<h:outputLabel value="#{msgs['label.form.numeroEndereco']}"
+									   for="numeroEnderecoInputText" />
+						<h:inputText id="numeroEnderecoInputText"
+									 value="#{dadosPessoaisMB.dadosPessoais.endereco.numero}" />
+					
+						<h:outputLabel value="#{msgs['label.form.bairro']}"
+									   for="bairroInputText" />
+						<h:inputText id="bairroInputText"
+									 size="60"
+									 value="#{dadosPessoaisMB.dadosPessoais.endereco.bairro}" />
+									 
+						<h:outputLabel value="#{msgs['label.form.cidade']}"
+									   for="cidadeInputText" />
+						<h:inputText id="cidadeInputText"
+									 size="60"
+									 value="#{dadosPessoaisMB.dadosPessoais.endereco.cidade}" />
+									 
+						<h:outputLabel value="#{msgs['label.form.estado']}"
+									   for="estadoSelectOne" />
+						<h:selectOneMenu id="cargoSelectOneMenu"
+										 value="#{dadosPessoaisMB.dadosPessoais.endereco.estado}">
+							<f:selectItem itemDisabled="true" itemLabel="Selecione..." />
+							<f:selectItems value="#{dadosPessoaisMB.estados}" />
+						</h:selectOneMenu>
+					
+					</h:panelGrid>
+					
+				</rich:panel>
+				
+				<br/>
+				
+				<rich:toolTip for="salvarCommandLink"
+							  value="#{msgs['label.button.salvar']}" />
+				<a4j:commandLink id="salvarCommandLink" 
+								 action="#{dadosPessoaisMB.salvar}">
+					<h:graphicImage url="/images/save.png" />
+				</a4j:commandLink>
+				
+			</rich:panel>
+			
+			<br />
+			
+			<rich:toolTip for="listagemCommandLink"
+						  value="#{msgs['label.button.listar']}" />
+			<h:commandLink id="listagemCommandLink" 
+						   action="listar">
+				<h:graphicImage url="/images/back.png" />
+			</h:commandLink>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+
+</html>

@@ -12,6 +12,9 @@ import com.valhala.curriculum.model.Curriculo;
 public class CurriculoDaoImpl extends BaseDao<Curriculo> implements CurriculoDao {
 
     private static final String JPQL_TODOS_CURRICULO = "SELECT c FROM Curriculo AS c";
+    
+    private static final String JPQL_CURRICULO_USUARIO = "SELECT c FROM Curriculo AS c WHERE c.usuario.id = :idUsuario";
+    
     private static final String JPQL_CURRICULO_RELACAO = "SELECT c FROM Curriculo AS c " +
     		"LEFT JOIN FETCH c.formacoesAcademicas " +
             "LEFT JOIN FETCH c.experienciasProfissionais " +
@@ -28,6 +31,15 @@ public class CurriculoDaoImpl extends BaseDao<Curriculo> implements CurriculoDao
         query.setParameter("id", id);
         Curriculo curriculo = (Curriculo) query.getSingleResult();
         return curriculo;
+    }
+    
+    @Override
+    public List<Curriculo> buscaPorIdUsuario(Serializable idUsuario) {
+    	Query query = this.manager.createQuery(JPQL_CURRICULO_USUARIO);
+    	query.setParameter("idUsuario", idUsuario);
+        @SuppressWarnings("unchecked")
+		List<Curriculo> curriculos = query.getResultList();
+        return curriculos;
     }
 
     @Override
