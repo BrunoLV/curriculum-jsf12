@@ -75,9 +75,10 @@ and open the template in the editor.
                     </rich:column>
                     <rich:column>
                     	<rich:toolTip for="downloadCommandLink" value="#{msgs['label.button.download']}" />
-                    	<h:commandLink id="downloadCommandLink" value="Download"
+                    	<h:commandLink id="downloadCommandLink"
                     				   action="#{curriculoMB.download}">
                     		<f:setPropertyActionListener value="#{curriculo.id}" target="#{curriculoMB.curriculo.id}" />
+                    		<h:graphicImage url="/images/download.png" />
                     	</h:commandLink>
             
                     </rich:column>
