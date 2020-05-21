@@ -32,6 +32,10 @@ public class Endereco extends BaseEntity implements Serializable  {
 	
 	@OneToOne
 	@JoinColumn(name = "id_dados_pessoais", nullable = false)
-	private DadosPessoais dadosPessoais; 
+	private DadosPessoais dadosPessoais;
+
+	public String completo() {
+		return logradouro + ", " + numero + " - " + bairro + " - " + cidade + "/" + estado;
+	} 
 
 }

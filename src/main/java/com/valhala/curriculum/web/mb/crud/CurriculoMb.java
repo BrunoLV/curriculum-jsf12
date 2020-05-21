@@ -1,5 +1,7 @@
 package com.valhala.curriculum.web.mb.crud;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,11 +12,14 @@ import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.HttpServletResponse;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 
+import com.itextpdf.text.DocumentException;
 import com.valhala.curriculum.dto.CargoDto;
 import com.valhala.curriculum.dto.CurriculoDto;
 import com.valhala.curriculum.dto.CursoDto;
@@ -26,13 +31,16 @@ import com.valhala.curriculum.dto.enumerados.TipoFormacaoDto;
 import com.valhala.curriculum.ejb.CargoService;
 import com.valhala.curriculum.ejb.CurriculoService;
 import com.valhala.curriculum.ejb.CursoService;
+import com.valhala.curriculum.ejb.DadosPessoaisService;
 import com.valhala.curriculum.ejb.EmpresaService;
 import com.valhala.curriculum.ejb.EntidadeEnsinoService;
 import com.valhala.curriculum.ejb.UsuarioService;
+import com.valhala.curriculum.gerador.pdf.GeradorPDFCurriculo;
 import com.valhala.curriculum.mapper.CurriculoSemRelacionamentoMap;
 import com.valhala.curriculum.model.Cargo;
 import com.valhala.curriculum.model.Curriculo;
 import com.valhala.curriculum.model.Curso;
+import com.valhala.curriculum.model.DadosPessoais;
 import com.valhala.curriculum.model.Empresa;
 import com.valhala.curriculum.model.EntidadeEnsino;
 import com.valhala.curriculum.model.ExperienciaProfissional;
@@ -64,6 +72,9 @@ public class CurriculoMb extends BaseMb {
 
 	@EJB
 	private CursoService cursoService;
+
+	@EJB
+	private DadosPessoaisService dadosPessoaisService;
 
 	@EJB
 	private EntidadeEnsinoService entidadeEnsinoService;
@@ -256,6 +267,27 @@ public class CurriculoMb extends BaseMb {
 		}
 		this.experienciaProfissional = new ExperienciaProfissionalDto();
 		this.formacaoAcademica = new FormacaoAcademicaDto();
+	}
+
+	public void download() {
+		Curriculo entidadeCurriculo = curriculoService.buscarPorIdComRelacionamento(curriculo.getId());
+		DadosPessoais dadosPessoais = dadosPessoaisService
+				.buscarPorIdUsario(controleSessaoMb.obtemUsuarioLogado().getId());
+		try {
+			HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext()
+					.getResponse();
+			byte[] dados = GeradorPDFCurriculo.geraPdf(dadosPessoais, entidadeCurriculo);
+			response.reset();
+			response.setContentType("application/pdf");
+			response.setHeader("Content-disposition", "attachment; filename=curriculo.pdf");
+			OutputStream outputStream = response.getOutputStream();
+			outputStream.write(dados);
+			outputStream.flush();
+			outputStream.close();
+			FacesContext.getCurrentInstance().responseComplete();
+		} catch (DocumentException | IOException e) {
+			inserirMensagemDeErro("Ocorreu um erro no download");
+		}
 	}
 
 	public List<FormacaoAcademicaDto> getFormacoes() {

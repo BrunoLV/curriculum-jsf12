@@ -34,4 +34,8 @@ public class DadosPessoais extends BaseEntity implements Serializable {
 	@JoinColumn(name = "id_usuario", nullable = false)
 	private Usuario usuario;
 
+	public String getNomeInteiro() {
+		return nome + " " + sobrenome;
+	}
+
 }

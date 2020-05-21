@@ -65,13 +65,21 @@ and open the template in the editor.
                         </h:commandLink>
                     </rich:column>
                     <rich:column>
-                    	<rich:toolTip for = "deletarCommandLink" value = "#{msgs['label.button.deletar']}" />
+                    	<rich:toolTip for="deletarCommandLink" value="#{msgs['label.button.deletar']}" />
                         <a4j:commandLink id="deletarCommandLink"
                         				 action="#{curriculoMB.deletar}"
                                          reRender="curriculosDataTable">
                             <f:setPropertyActionListener value="#{curriculo.id}" target="#{curriculoMB.curriculo.id}"/>
                             <h:graphicImage url="/images/delete.png" />
                         </a4j:commandLink>
+                    </rich:column>
+                    <rich:column>
+                    	<rich:toolTip for="downloadCommandLink" value="#{msgs['label.button.download']}" />
+                    	<h:commandLink id="downloadCommandLink" value="Download"
+                    				   action="#{curriculoMB.download}">
+                    		<f:setPropertyActionListener value="#{curriculo.id}" target="#{curriculoMB.curriculo.id}" />
+                    	</h:commandLink>
+            
                     </rich:column>
                     <f:facet name="footer">
                         <rich:datascroller pageIndexVar="indexPagina" pagesVar="paginas">
