@@ -1,0 +1,1 @@
+cd ./server/jboss-6.1.0.Final/bin && sh run.sh -b 0.0.0.0

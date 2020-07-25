@@ -6,3 +6,5 @@
 /.metadata
 /bin/
 /.tern-project
+.factorypath
+.vscode/settings.json

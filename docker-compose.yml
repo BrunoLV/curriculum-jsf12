@@ -1,0 +1,30 @@
+
+version: '3.7'
+services:
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: curriculo_db
+      MYSQL_USER: curriculum
+      MYSQL_PASSWORD: curriculum
+    ports:
+      - 3306:3306
+
+  webapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    links:
+      - "db:database"
+    depends_on:
+      - db
+    ports:
+      - 8080:8080
+    restart: on-failure
+    entrypoint: ./wait-for-it.sh database:3306 -t 1000 -- ./entrypoint.sh 
+
+networks:
+  curriculum-network:
+    driver: custom-driver-1
