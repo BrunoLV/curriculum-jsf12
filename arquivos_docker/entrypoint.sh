@@ -1,1 +1,1 @@
-cd ./server/jboss-6.1.0.Final/bin && sh run.sh -b 0.0.0.0
+cd ./server/jboss-6.1.0.Final/bin && sh run.sh -b 0.0.0.0 -DdatabaseName=$DATABASE_NAME -DdatabaseHost=$DATABASE_HOST -DdatabaseUser=$DATABASE_USER -DdatabasePassword=$DATABASE_PASSWORD -DdatabasePort=$DATABASE_PORT
